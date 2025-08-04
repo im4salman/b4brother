@@ -6,6 +6,7 @@ import { FaShieldHalved as FaShield } from 'react-icons/fa6';
 import { useAnalytics } from '../contexts/AnalyticsContext';
 
 const Contact = () => {
+  const { trackFormSubmission, trackWhatsAppRedirect } = useAnalytics();
   const [formData, setFormData] = useState({
     name: '',
     email: '',

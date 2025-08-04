@@ -103,10 +103,10 @@ const Header = () => {
                             </div>
                         </Link>
 
-                        {/* Premium Desktop Navigation */}
-                        <div className="hidden lg:flex items-center gap-8 xl:gap-12">
+                        {/* Desktop Navigation */}
+                        <div className="hidden lg:flex items-center gap-8">
                             {/* Navigation Menu */}
-                            <ul className="flex items-center gap-8 xl:gap-10" role="menubar">
+                            <ul className="flex items-center gap-8" role="menubar">
                                 {navItem.map((item, index) => (
                                     <li key={index} role="none">
                                         {item.isExternal ? (

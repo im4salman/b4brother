@@ -52,14 +52,14 @@ export const AnalyticsProvider = ({ children }) => {
         return visitorId;
     };
 
-    const trackClick = (element, location = 'unknown') => {
+    const trackClick = useCallback((element, location = 'unknown') => {
         const visitorId = getVisitorId();
         const timestamp = new Date().toISOString();
-        
+
         setAnalytics(prev => {
             const newUniqueVisitors = new Set(prev.uniqueVisitors);
             newUniqueVisitors.add(visitorId);
-            
+
             return {
                 ...prev,
                 totalClicks: prev.totalClicks + 1,
@@ -73,7 +73,7 @@ export const AnalyticsProvider = ({ children }) => {
                 }]
             };
         });
-    };
+    }, []);
 
     const trackFormSubmission = (formType, formData) => {
         const visitorId = getVisitorId();

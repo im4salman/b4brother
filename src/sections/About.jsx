@@ -4,14 +4,31 @@ import { slideUpVariants, zoomInVariants } from './animation';
 
 const About = () => {
     return (
-        <section id='about' className='w-full bg-secondary-800 py-20 md:py-32'>
+        <section id='about' className='w-full bg-gradient-to-b from-white via-gray-50/50 to-white py-24 md:py-32'>
             <div className='container mx-auto px-6 lg:px-8'>
-                <div className='flex lg:flex-row flex-col justify-between items-start gap-12 lg:gap-16'>
+                {/* Section Header */}
+                <motion.div
+                    initial='hidden'
+                    whileInView='visible'
+                    variants={slideUpVariants}
+                    className='text-center mb-20'
+                >
+                    <div className="inline-flex items-center space-x-3 bg-primary-50 rounded-full px-6 py-2 mb-6">
+                        <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
+                        <span className="text-primary-700 text-sm font-medium tracking-wide">About Excellence</span>
+                    </div>
+                    <h2 className='text-4xl md:text-5xl lg:text-6xl font-display font-bold text-secondary-900 mb-6 leading-tight'>
+                        Crafting <span className="text-primary-600">Architectural</span> Excellence
+                    </h2>
+                    <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-500 to-transparent mx-auto mb-8"></div>
+                </motion.div>
+
+                <div className='grid lg:grid-cols-12 gap-16 items-center'>
                     <motion.div
                         initial='hidden'
                         whileInView='visible'
                         variants={slideUpVariants}
-                        className='lg:w-[60%] w-full flex flex-col justify-center items-start gap-6'
+                        className='lg:col-span-7 space-y-12'
                     >
                         <motion.span
                             variants={slideUpVariants}

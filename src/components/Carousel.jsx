@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import LazyImage from "./LazyImage";
+import './HeroAnimations.css';
 
 const Carousel = ({ mediaItems = [], autoPlay = true }) => {
   const [current, setCurrent] = useState(0);

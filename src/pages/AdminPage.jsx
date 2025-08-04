@@ -216,7 +216,30 @@ const AdminPage = ({ onLogout }) => {
                         </div>
                     </div>
                 );
-            
+
+            case 'stored-form':
+                return (
+                    <div key={item.id} className={`${baseClasses} border-indigo-500`}>
+                        <div className="flex items-start justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                                <FaEnvelope className="w-4 h-4 text-indigo-500" />
+                                <span className="font-medium text-indigo-700">Stored Form Data - {item.type}</span>
+                            </div>
+                            <span className="text-sm text-gray-500">{formatDate(item.timestamp)}</span>
+                        </div>
+                        <div className="text-sm space-y-1">
+                            {item.data?.name && <p><strong>Name:</strong> {item.data.name}</p>}
+                            {item.data?.email && <p><strong>Email:</strong> {item.data.email}</p>}
+                            {item.data?.phone && <p><strong>Phone:</strong> {item.data.phone}</p>}
+                            {item.data?.service && <p><strong>Service:</strong> {item.data.service}</p>}
+                            {item.data?.budget && <p><strong>Budget:</strong> {item.data.budget}</p>}
+                            {item.data?.timeline && <p><strong>Timeline:</strong> {item.data.timeline}</p>}
+                            {item.data?.query && <p><strong>Query:</strong> {item.data.query}</p>}
+                            {item.data?.message && <p><strong>Message:</strong> {item.data.message.substring(0, 100)}...</p>}
+                        </div>
+                    </div>
+                );
+
             default:
                 return null;
         }

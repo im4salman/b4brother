@@ -174,30 +174,22 @@ const Header = () => {
                     aria-hidden={!isMenuOpen}
                 >
                     <div className="container mx-auto px-6 py-6">
-                        <ul className="flex flex-col gap-3 mb-8" role="menu">
+                        <ul className="flex flex-col gap-2 mb-6" role="menu">
                             {navItem.map((item, index) => (
                                 <li key={index} role="none">
                                     {item.isExternal ? (
                                         <button
                                             onClick={() => handleNavigation(item.path)}
-                                            className="block w-full text-left text-secondary-700 hover:text-primary-600 hover:bg-gradient-to-r hover:from-primary-50 hover:to-accent-50 font-semibold text-lg py-5 px-6 rounded-2xl transition-all duration-400 border border-transparent hover:border-primary-200 shadow-sm hover:shadow-md"
+                                            className="block w-full text-left text-secondary-700 hover:text-primary-600 hover:bg-gray-50 font-medium text-lg py-3 px-4 rounded-lg transition-colors duration-300"
                                             role="menuitem"
                                             tabIndex={isMenuOpen ? 0 : -1}
                                         >
-                                            <div className="flex items-center justify-between">
-                                                <span className="relative">
-                                                    {item.link}
-                                                    <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-accent-500 transition-all duration-300 group-hover:w-full"></div>
-                                                </span>
-                                                <svg className="w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                                </svg>
-                                            </div>
+                                            {item.link}
                                         </button>
                                     ) : (
                                         <Link
                                             to={item.path}
-                                            className="group block text-secondary-700 hover:text-primary-600 hover:bg-gradient-to-r hover:from-primary-50 hover:to-accent-50 font-semibold text-lg py-5 px-6 rounded-2xl transition-all duration-400 border border-transparent hover:border-primary-200 shadow-sm hover:shadow-md"
+                                            className="block text-secondary-700 hover:text-primary-600 hover:bg-gray-50 font-medium text-lg py-3 px-4 rounded-lg transition-colors duration-300"
                                             spy={true}
                                             smooth={true}
                                             offset={-100}
@@ -206,15 +198,7 @@ const Header = () => {
                                             role="menuitem"
                                             tabIndex={isMenuOpen ? 0 : -1}
                                         >
-                                            <div className="flex items-center justify-between">
-                                                <span className="relative">
-                                                    {item.link}
-                                                    <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-accent-500 transition-all duration-300 group-hover:w-full"></div>
-                                                </span>
-                                                <svg className="w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                                </svg>
-                                            </div>
+                                            {item.link}
                                         </Link>
                                     )}
                                 </li>

@@ -100,10 +100,12 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
               <div className="w-full max-w-7xl mx-auto">
                 {/* Animated Background Elements */}
                 <div className="absolute inset-0 pointer-events-none">
-                  <div className="absolute top-20 left-10 w-2 h-2 bg-primary-400 rounded-full animate-pulse"></div>
-                  <div className="absolute top-32 right-20 w-3 h-3 bg-accent-400 rounded-full animate-bounce" style={{animationDelay: '0.5s'}}></div>
-                  <div className="absolute bottom-40 left-20 w-1.5 h-1.5 bg-primary-300 rounded-full animate-ping" style={{animationDelay: '1s'}}></div>
-                  <div className="absolute bottom-32 right-32 w-2.5 h-2.5 bg-accent-300 rounded-full animate-pulse" style={{animationDelay: '1.5s'}}></div>
+                  <div className="absolute top-20 left-10 w-4 h-4 bg-primary-400 rounded-full float-element"></div>
+                  <div className="absolute top-32 right-20 w-6 h-6 bg-accent-400 rounded-full float-element"></div>
+                  <div className="absolute bottom-40 left-20 w-3 h-3 bg-primary-300 rounded-full float-element"></div>
+                  <div className="absolute bottom-32 right-32 w-5 h-5 bg-accent-300 rounded-full float-element"></div>
+                  <div className="absolute top-1/2 left-8 w-2 h-2 bg-white/40 rounded-full float-element"></div>
+                  <div className="absolute top-1/3 right-8 w-3 h-3 bg-white/30 rounded-full float-element"></div>
                 </div>
 
                 {/* Main Hero Content */}

@@ -68,12 +68,13 @@ module.exports = {
       animation: {
         'type': 'type 3s steps(30, end), blink .75s step-end infinite',
         'blink': 'blink .75s step-end infinite',
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-up': 'slideUp 0.5s ease-out',
+        'fade-in': 'fadeIn 0.8s ease-out forwards',
+        'slide-up': 'slideUp 0.8s ease-out forwards',
         'slide-down': 'slideDown 0.5s ease-out',
-        'scale-in': 'scaleIn 0.3s ease-out',
+        'scale-in': 'scaleIn 0.6s ease-out forwards',
         'pulse-slow': 'pulse 3s infinite',
-        'bounce-soft': 'bounceSoft 1s ease-in-out',
+        'bounce-soft': 'bounceSoft 2s ease-in-out infinite',
+        'glow-pulse': 'glowPulse 2s ease-in-out infinite',
       },
       keyframes: {
         type: {

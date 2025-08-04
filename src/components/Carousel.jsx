@@ -94,121 +94,148 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
             </>
           )}
 
-          {/* Hero Content - Only on first slide */}
+          {/* Award-Winning Hero Content - Only on first slide */}
           {index === current && index === 0 && (
-            <div className="absolute inset-0 flex items-center justify-center px-4 md:px-8 z-30">
-              <div className="w-full max-w-7xl mx-auto">
-                {/* Animated Background Elements */}
-                <div className="absolute inset-0 pointer-events-none">
-                  <div className="absolute top-20 left-10 w-4 h-4 bg-primary-400 rounded-full float-element"></div>
-                  <div className="absolute top-32 right-20 w-6 h-6 bg-accent-400 rounded-full float-element"></div>
-                  <div className="absolute bottom-40 left-20 w-3 h-3 bg-primary-300 rounded-full float-element"></div>
-                  <div className="absolute bottom-32 right-32 w-5 h-5 bg-accent-300 rounded-full float-element"></div>
-                  <div className="absolute top-1/2 left-8 w-2 h-2 bg-white/40 rounded-full float-element"></div>
-                  <div className="absolute top-1/3 right-8 w-3 h-3 bg-white/30 rounded-full float-element"></div>
-                </div>
+            <div className="absolute inset-0 z-30">
+              {/* Sophisticated Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black/70"></div>
 
-                {/* Main Hero Content */}
-                <div className="text-center space-y-8">
-                  {/* Dynamic Tagline */}
-                  <div className="space-y-4 animate-fade-in">
-                    <div className="inline-block px-6 py-2 bg-primary-500/20 backdrop-blur-sm rounded-full border border-primary-400/30">
-                      <span className="text-primary-300 text-sm md:text-base font-medium tracking-wider uppercase">
-                        🏗️ Premium Construction Services
-                      </span>
-                    </div>
-                  </div>
+              {/* Premium Hero Layout */}
+              <div className="relative h-full flex items-center">
+                <div className="container mx-auto px-6 lg:px-8">
+                  <div className="grid lg:grid-cols-12 gap-8 items-center min-h-[80vh]">
 
-                  {/* Bold Main Heading with Stagger Animation */}
-                  <div className="space-y-6">
-                    <h1 className="font-montserrat font-black text-white leading-none">
-                      <div className="text-6xl md:text-8xl lg:text-9xl mb-2">
-                        <span className="hero-letter">B</span>
-                        <span className="hero-letter text-primary-400">E</span>
-                        <span className="hero-letter">L</span>
-                        <span className="hero-letter">I</span>
-                        <span className="hero-letter">E</span>
-                        <span className="hero-letter">V</span>
-                        <span className="hero-letter">E</span>
+                    {/* Left Column - Main Content */}
+                    <div className="lg:col-span-7 space-y-12">
+
+                      {/* Premium Badge */}
+                      <div className="animate-fade-in">
+                        <div className="inline-flex items-center space-x-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl px-6 py-3">
+                          <div className="w-2 h-2 bg-primary-400 rounded-full animate-pulse"></div>
+                          <span className="text-white/90 text-sm font-medium tracking-wide">Premier Construction Excellence</span>
+                        </div>
                       </div>
-                      <div className="text-4xl md:text-6xl lg:text-7xl gradient-text mb-4 animate-slide-up font-black" style={{animationDelay: '0.9s'}}>
-                        IN BEST BUILDS
+
+                      {/* Sophisticated Typography */}
+                      <div className="space-y-8">
+                        <div className="space-y-4 animate-slide-up" style={{animationDelay: '0.2s'}}>
+                          <h1 className="font-inter text-white leading-tight">
+                            <div className="text-5xl md:text-7xl lg:text-8xl font-light mb-4">
+                              <span className="font-extralight">Believe in</span>
+                            </div>
+                            <div className="text-6xl md:text-8xl lg:text-9xl font-bold mb-4">
+                              <span className="bg-gradient-to-r from-primary-300 via-primary-400 to-accent-400 bg-clip-text text-transparent">Best Builds</span>
+                            </div>
+                            <div className="text-7xl md:text-9xl lg:text-[10rem] font-black tracking-tight">
+                              <span className="text-white drop-shadow-2xl">BOLD</span>
+                            </div>
+                          </h1>
+                        </div>
+
+                        {/* Elegant Separator */}
+                        <div className="animate-scale-in" style={{animationDelay: '0.6s'}}>
+                          <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-400 to-transparent"></div>
+                        </div>
+
+                        {/* Company Identity */}
+                        <div className="space-y-6 animate-fade-in" style={{animationDelay: '0.8s'}}>
+                          <div className="space-y-2">
+                            <h2 className="text-4xl md:text-5xl font-bold text-white font-montserrat">
+                              <span className="text-primary-400">B4</span><span className="font-light">Brothers</span>
+                            </h2>
+                            <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed max-w-2xl">
+                              Crafting architectural excellence through innovative design and
+                              <span className="text-primary-300 font-medium"> meticulous craftsmanship</span>
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Premium CTA Section */}
+                        <div className="space-y-6 animate-slide-up" style={{animationDelay: '1.2s'}}>
+                          <div className="flex flex-col sm:flex-row gap-4">
+                            <a
+                              href="#contact"
+                              className="group relative bg-primary-500 hover:bg-primary-600 text-white font-semibold py-4 px-8 rounded-xl overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                              aria-label="Start your construction journey"
+                            >
+                              <span className="relative z-10 flex items-center">
+                                Start Your Journey
+                                <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                              </span>
+                              <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-accent-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </a>
+                            <a
+                              href="tel:+919733221114"
+                              className="border-2 border-white/30 hover:border-white text-white hover:bg-white/10 font-semibold py-4 px-8 rounded-xl transition-all duration-300 backdrop-blur-sm"
+                              aria-label="Call for consultation"
+                            >
+                              📞 +91 97332 21114
+                            </a>
+                          </div>
+
+                          {/* Trust Elements */}
+                          <div className="flex items-center space-x-6 text-white/70 text-sm">
+                            <div className="flex items-center space-x-2">
+                              <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+                              <span>Licensed & Insured</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+                              <span>5+ Years Excellence</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+                              <span>150+ Projects</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div className="text-7xl md:text-9xl lg:text-[12rem] text-accent-400 font-black animate-slide-up bold-glow" style={{animationDelay: '1s'}}>
-                        BOLD
+                    </div>
+
+                    {/* Right Column - Elegant Stats */}
+                    <div className="lg:col-span-5 space-y-8">
+                      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 animate-fade-in" style={{animationDelay: '1.0s'}}>
+                        <div className="grid grid-cols-2 gap-8">
+                          <div className="text-center space-y-2">
+                            <div className="text-4xl font-bold text-primary-400">150+</div>
+                            <div className="text-white/80 text-sm uppercase tracking-wide">Projects</div>
+                          </div>
+                          <div className="text-center space-y-2">
+                            <div className="text-4xl font-bold text-accent-400">4.9★</div>
+                            <div className="text-white/80 text-sm uppercase tracking-wide">Rating</div>
+                          </div>
+                          <div className="text-center space-y-2">
+                            <div className="text-4xl font-bold text-primary-400">5+</div>
+                            <div className="text-white/80 text-sm uppercase tracking-wide">Years</div>
+                          </div>
+                          <div className="text-center space-y-2">
+                            <div className="text-4xl font-bold text-accent-400">24/7</div>
+                            <div className="text-white/80 text-sm uppercase tracking-wide">Support</div>
+                          </div>
+                        </div>
                       </div>
-                    </h1>
 
-                    {/* Dynamic Underline */}
-                    <div className="flex justify-center animate-scale-in" style={{animationDelay: '1.2s'}}>
-                      <div className="w-32 md:w-48 h-2 bg-gradient-to-r from-primary-500 via-accent-500 to-primary-500 rounded-full shadow-glow"></div>
+                      {/* Services Preview */}
+                      <div className="space-y-4 animate-slide-up" style={{animationDelay: '1.4s'}}>
+                        <div className="text-white/90 text-lg font-medium">Our Expertise</div>
+                        <div className="space-y-3">
+                          {['Residential Construction', 'Commercial Projects', 'Interior Design', 'Renovation Services'].map((service, idx) => (
+                            <div key={idx} className="flex items-center space-x-3 text-white/70 hover:text-white transition-colors">
+                              <div className="w-1 h-1 bg-primary-400 rounded-full"></div>
+                              <span className="text-sm">{service}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <a href="#services" className="inline-flex items-center text-primary-400 hover:text-primary-300 text-sm font-medium transition-colors">
+                          View All Services
+                          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </a>
+                      </div>
                     </div>
-                  </div>
-
-                  {/* Company Name & Subtitle */}
-                  <div className="space-y-4 animate-fade-in" style={{animationDelay: '1.4s'}}>
-                    <h2 className="text-3xl md:text-5xl font-bold text-white font-montserrat">
-                      <span className="text-primary-400">B4</span>Brothers
-                    </h2>
-                    <p className="text-xl md:text-2xl text-white/90 font-light max-w-3xl mx-auto leading-relaxed">
-                      Transforming visions into architectural masterpieces with
-                      <span className="text-primary-400 font-semibold"> bold construction excellence</span>
-                    </p>
-                  </div>
-
-                  {/* Impressive Stats Row */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl mx-auto animate-slide-up" style={{animationDelay: '1.6s'}}>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
-                      <div className="text-3xl md:text-4xl font-black text-primary-400 mb-2">150+</div>
-                      <div className="text-white/80 text-sm md:text-base font-medium">Bold Projects</div>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
-                      <div className="text-3xl md:text-4xl font-black text-accent-400 mb-2">5+</div>
-                      <div className="text-white/80 text-sm md:text-base font-medium">Years Strong</div>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
-                      <div className="text-3xl md:text-4xl font-black text-primary-400 mb-2">4.9</div>
-                      <div className="text-white/80 text-sm md:text-base font-medium">⭐ Rating</div>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
-                      <div className="text-3xl md:text-4xl font-black text-accent-400 mb-2">24/7</div>
-                      <div className="text-white/80 text-sm md:text-base font-medium">Support</div>
-                    </div>
-                  </div>
-
-                  {/* Bold Action Buttons */}
-                  <div className="flex flex-col sm:flex-row gap-6 justify-center items-center max-w-3xl mx-auto animate-bounce-soft" style={{animationDelay: '1.8s'}}>
-                    <a
-                      href="#contact"
-                      className="btn-bold-hover bg-gradient-to-r from-primary-500 via-accent-500 to-primary-500 hover:from-accent-600 hover:via-primary-600 hover:to-accent-600 text-white font-black py-6 px-12 rounded-3xl transition-all duration-500 inline-flex items-center justify-center group shadow-2xl hover:shadow-glow-strong transform hover:scale-110 text-xl tracking-wider border-2 border-white/20"
-                      aria-label="Get your bold construction quote"
-                    >
-                      ⚡ BUILD BOLD NOW ⚡
-                      <svg className="w-7 h-7 ml-4 transform group-hover:translate-x-3 group-hover:rotate-12 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
-                    </a>
-                    <a
-                      href="tel:+919733221114"
-                      className="btn-bold-hover border-4 border-primary-400 hover:bg-primary-400 text-primary-400 hover:text-black font-black py-6 px-10 rounded-3xl transition-all duration-500 inline-flex items-center justify-center backdrop-blur-md hover:shadow-2xl transform hover:scale-105 text-lg tracking-wide"
-                      aria-label="Call for bold construction consultation"
-                    >
-                      📞 CALL NOW
-                    </a>
-                    <a
-                      href="#projects"
-                      className="btn-bold-hover border-4 border-white/40 hover:bg-white/20 text-white font-black py-6 px-8 rounded-3xl transition-all duration-500 inline-flex items-center justify-center backdrop-blur-md hover:shadow-xl transform hover:scale-105 text-lg"
-                      aria-label="View bold construction portfolio"
-                    >
-                      🏗️ PORTFOLIO
-                    </a>
-                  </div>
-
-                  {/* Trust Indicator */}
-                  <div className="animate-fade-in" style={{animationDelay: '2s'}}>
-                    <p className="text-white/70 text-sm md:text-base">
-                      💎 Licensed • Insured • Trusted by 150+ clients across India
-                    </p>
                   </div>
                 </div>
               </div>

@@ -509,7 +509,85 @@ const AdminPage = ({ onLogout }) => {
                         )}
                     </div>
                 </div>
+
+                {/* Testimonials Management */}
+                <div className="bg-white rounded-lg shadow-soft mt-8">
+                    <div className="p-6 border-b">
+                        <div className="flex items-center justify-between">
+                            <h2 className="text-lg font-semibold text-gray-800">
+                                Client Testimonials Management
+                            </h2>
+                            <button
+                                onClick={() => setShowTestimonialForm(true)}
+                                className="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg text-sm"
+                            >
+                                Add New Testimonial
+                            </button>
+                        </div>
+                    </div>
+                    <div className="p-6">
+                        {testimonials.length > 0 ? (
+                            <div className="space-y-4">
+                                {testimonials.map((testimonial) => (
+                                    <div key={testimonial.id} className="border border-gray-200 rounded-lg p-4">
+                                        <div className="flex items-start justify-between">
+                                            <div className="flex-1">
+                                                <div className="flex items-center gap-3 mb-2">
+                                                    {testimonial.image && (
+                                                        <img
+                                                            src={testimonial.image}
+                                                            alt={testimonial.name}
+                                                            className="w-12 h-12 rounded-full object-cover"
+                                                        />
+                                                    )}
+                                                    <div>
+                                                        <h4 className="font-medium text-gray-800">{testimonial.name}</h4>
+                                                        <p className="text-sm text-gray-600">{testimonial.post}</p>
+                                                        <div className="flex items-center gap-1">
+                                                            {Array.from({length: testimonial.rating}).map((_, i) => (
+                                                                <span key={i} className="text-yellow-400">⭐</span>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p className="text-sm text-gray-700">{testimonial.about}</p>
+                                            </div>
+                                            <div className="flex gap-2 ml-4">
+                                                <button
+                                                    onClick={() => {
+                                                        setEditingTestimonial(testimonial);
+                                                        setShowTestimonialForm(true);
+                                                    }}
+                                                    className="text-blue-500 hover:text-blue-700 text-sm"
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    onClick={() => {
+                                                        if (confirm('Are you sure you want to delete this testimonial?')) {
+                                                            deleteTestimonial(testimonial.id);
+                                                        }
+                                                    }}
+                                                    className="text-red-500 hover:text-red-700 text-sm"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="text-center py-8">
+                                <p className="text-gray-600">No testimonials added yet.</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
+
+            {/* Testimonial Form Modal */}
+            {showTestimonialForm && <TestimonialForm />}
         </div>
     );
 };

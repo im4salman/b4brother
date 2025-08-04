@@ -128,7 +128,7 @@ export const AnalyticsProvider = ({ children }) => {
         });
     }, []);
 
-    const clearAnalytics = () => {
+    const clearAnalytics = useCallback(() => {
         setAnalytics({
             totalClicks: 0,
             uniqueVisitors: new Set(),
@@ -138,19 +138,19 @@ export const AnalyticsProvider = ({ children }) => {
             buttonClicks: []
         });
         localStorage.removeItem('b4-analytics');
-    };
+    }, []);
 
-    const exportAnalytics = () => {
+    const exportAnalytics = useCallback(() => {
         const dataToExport = {
             ...analytics,
             uniqueVisitors: Array.from(analytics.uniqueVisitors),
             exportedAt: new Date().toISOString()
         };
-        
+
         const blob = new Blob([JSON.stringify(dataToExport, null, 2)], {
             type: 'application/json'
         });
-        
+
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -159,7 +159,7 @@ export const AnalyticsProvider = ({ children }) => {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-    };
+    }, [analytics]);
 
     const value = {
         analytics: {

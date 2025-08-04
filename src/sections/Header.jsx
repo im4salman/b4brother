@@ -61,16 +61,16 @@ const Header = () => {
     return (
         <>
             <header
-                className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${
+                className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
                     isScrolled
-                        ? 'bg-white/98 backdrop-blur-xl border-b border-gray-100/30 shadow-lg py-4'
-                        : 'bg-white/95 backdrop-blur-lg border-b border-white/20 shadow-sm py-5'
+                        ? 'bg-white/95 backdrop-blur-lg shadow-lg py-3'
+                        : 'bg-white/90 backdrop-blur-md shadow-sm py-4'
                 }`}
                 role="banner"
             >
-                <div className="container mx-auto px-6 lg:px-12 xl:px-16">
+                <div className="container mx-auto px-6 lg:px-8">
                     <nav
-                        className="flex justify-between items-center h-16"
+                        className="flex justify-between items-center"
                         role="navigation"
                         aria-label="Main navigation"
                     >

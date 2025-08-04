@@ -27,7 +27,7 @@ const Working = () => {
             and timely delivery for every construction project we undertake.
           </p>
           <p className="text-primary-500 text-xl font-bold italic">
-            "Believe in best builds"
+            "Believe in best builds bold"
           </p>
         </motion.div>
 

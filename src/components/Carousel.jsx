@@ -104,7 +104,7 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
                 </h2>
                 <div className="w-[120px] h-[6px] bg-primary-500 mb-4 rounded-full" />
                 <p className="text-primary-400 text-2xl md:text-3xl font-bold mb-6 tracking-wide">
-                  "Believe in best builds"
+                  "Believe in best builds bold"
                 </p>
                 <p className="text-white text-xl md:text-2xl italic mb-6 font-light">
                   Your Trusted Partner in Construction for Over 5+ Years

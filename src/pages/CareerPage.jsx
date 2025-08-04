@@ -203,7 +203,7 @@ const CareerPage = () => {
                     </button>
                     <div className="text-center">
                         <h1 className="text-2xl font-bold">B4 Brothers Infratech PVT LTD</h1>
-                        <p className="text-primary-400 font-bold italic">"Believe in best builds"</p>
+                        <p className="text-primary-400 font-bold italic">"Believe in best builds bold"</p>
                     </div>
                     <div></div>
                 </div>
@@ -229,7 +229,7 @@ const CareerPage = () => {
                             Infratech PVT LTD
                         </h2>
                         <div className="text-2xl md:text-3xl font-bold italic text-primary-600 mb-4">
-                            "Believe in best builds"
+                            "Believe in best builds bold"
                         </div>
                         <p className="text-lg text-secondary-600 max-w-3xl mx-auto leading-relaxed">
                             Join a team that's passionate about creating exceptional structures and lasting relationships. 

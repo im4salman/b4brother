@@ -124,7 +124,7 @@ const Testimonials = () => {
             about their experience working with B4 Brothers Infratech PVT LTD.
           </p>
           <p className="text-primary-400 text-xl font-bold italic mt-4">
-            "Believe in best builds"
+            "Believe in best builds bold"
           </p>
         </motion.div>
 

@@ -71,7 +71,7 @@ const AdminLogin = ({ onLogin }) => {
                         </div>
                         <h1 className="text-2xl font-bold text-white mb-2">Admin Login</h1>
                         <p className="text-gray-300">B4 Brothers Infratech PVT LTD</p>
-                        <p className="text-primary-400 italic font-medium">"Believe in best builds"</p>
+                        <p className="text-primary-400 italic font-medium">"Believe in best builds bold"</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6">

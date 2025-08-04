@@ -51,7 +51,7 @@ const Services = () => {
               ensuring quality, safety, and reliability in every project we undertake.
             </p>
             <p className="text-primary-500 text-xl font-bold italic">
-              "Believe in best builds"
+              "Believe in best builds bold"
             </p>
           </motion.div>
 

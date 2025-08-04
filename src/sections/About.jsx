@@ -39,7 +39,7 @@ const About = () => {
                             variants={slideUpVariants}
                             className='text-2xl md:text-3xl italic text-primary-400 font-bold mb-8'
                         >
-                            "Believe in best builds"
+                            "Believe in best builds bold"
                         </motion.p>
                         <motion.p
                             variants={slideUpVariants}

@@ -147,7 +147,7 @@ const Contact = () => {
             to discuss your project and bring your vision to life with quality and precision.
           </p>
           <p className="text-primary-500 text-xl font-bold italic">
-            "Believe in best builds"
+            "Believe in best builds bold"
           </p>
         </motion.div>
 

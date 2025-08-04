@@ -64,7 +64,7 @@ const Footer = () => {
                 Infratech PVT LTD
               </h4>
               <p className="text-xl font-bold italic text-primary-400 mb-4">
-                "Believe in best builds"
+                "Believe in best builds bold"
               </p>
               <p className="text-gray-300 leading-relaxed mb-6">
                 Building excellence for over 5 years. We are your trusted partner in construction,

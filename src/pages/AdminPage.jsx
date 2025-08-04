@@ -72,6 +72,9 @@ const AdminPage = ({ onLogout }) => {
             case 'forms':
                 data = analytics.formSubmissions || [];
                 break;
+            case 'stored-forms':
+                data = formSubmissions.map(item => ({ ...item, type: 'stored-form' })) || [];
+                break;
             case 'whatsapp':
                 data = analytics.whatsappRedirects || [];
                 break;
@@ -84,6 +87,7 @@ const AdminPage = ({ onLogout }) => {
             default:
                 data = [
                     ...(analytics.formSubmissions || []).map(item => ({ ...item, type: 'form' })),
+                    ...(formSubmissions || []).map(item => ({ ...item, type: 'stored-form' })),
                     ...(analytics.whatsappRedirects || []).map(item => ({ ...item, type: 'whatsapp' })),
                     ...(analytics.buttonClicks || []).map(item => ({ ...item, type: 'click' })),
                     ...(analytics.pageViews || []).map(item => ({ ...item, type: 'pageview' }))

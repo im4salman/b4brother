@@ -35,6 +35,19 @@ const Modal = ({ isOpen, onClose }) => {
 
     const { name, phone, email, query } = formData;
 
+    // Store form data locally
+    const submissionData = {
+      id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+      type: 'Quick Contact Modal',
+      timestamp: new Date().toISOString(),
+      data: formData
+    };
+
+    // Save to localStorage
+    const existingSubmissions = JSON.parse(localStorage.getItem('b4-form-submissions') || '[]');
+    existingSubmissions.push(submissionData);
+    localStorage.setItem('b4-form-submissions', JSON.stringify(existingSubmissions));
+
     // Track form submission
     trackFormSubmission('contact_enquiry', formData);
 

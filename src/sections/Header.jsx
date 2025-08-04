@@ -112,27 +112,25 @@ const Header = () => {
                                         {item.isExternal ? (
                                             <button
                                                 onClick={() => handleNavigation(item.path)}
-                                                className="nav-link relative text-secondary-700 hover:text-primary-600 font-inter font-semibold text-sm transition-all duration-400 cursor-pointer group py-3 px-5 rounded-xl hover:bg-gradient-to-r hover:from-primary-50 hover:to-accent-50 border border-transparent hover:border-primary-100"
+                                                className="text-secondary-700 hover:text-primary-600 font-medium text-sm transition-colors duration-300 py-2 px-3"
                                                 role="menuitem"
                                                 tabIndex={0}
                                             >
-                                                <span className="relative z-10">{item.link}</span>
-                                                <span className="absolute bottom-2 left-5 right-5 h-0.5 bg-gradient-to-r from-primary-500 to-accent-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-400 rounded-full" />
+                                                {item.link}
                                             </button>
                                         ) : (
                                             <Link
                                                 to={item.path}
-                                                className="nav-link relative text-secondary-700 hover:text-primary-600 font-inter font-semibold text-sm transition-all duration-400 cursor-pointer group py-3 px-5 rounded-xl hover:bg-gradient-to-r hover:from-primary-50 hover:to-accent-50 border border-transparent hover:border-primary-100"
+                                                className="text-secondary-700 hover:text-primary-600 font-medium text-sm transition-colors duration-300 py-2 px-3"
                                                 spy={true}
                                                 smooth={true}
                                                 offset={-100}
                                                 duration={500}
-                                                activeClass="text-primary-600 bg-gradient-to-r from-primary-50 to-accent-50 border-primary-200"
+                                                activeClass="text-primary-600"
                                                 role="menuitem"
                                                 tabIndex={0}
                                             >
-                                                <span className="relative z-10">{item.link}</span>
-                                                <span className="absolute bottom-2 left-5 right-5 h-0.5 bg-gradient-to-r from-primary-500 to-accent-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-400 rounded-full" />
+                                                {item.link}
                                             </Link>
                                         )}
                                     </li>

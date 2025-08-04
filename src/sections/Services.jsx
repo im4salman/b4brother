@@ -47,7 +47,7 @@ const Services = () => {
               className="w-24 h-1 bg-primary-500 mx-auto rounded-full mb-6"
             />
             <p className="text-body max-w-3xl mx-auto mb-4">
-              We deliver comprehensive construction solutions with over 5 years of experience,
+              We deliver complete construction solutions with over 5 years of experience,
               ensuring quality, safety, and reliability in every project we undertake.
             </p>
             <p className="text-primary-500 text-xl font-bold italic">

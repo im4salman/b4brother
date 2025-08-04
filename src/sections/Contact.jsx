@@ -153,7 +153,7 @@ Please get in touch with me. Thank you!`;
     {
       icon: FaShield,
       title: 'Licensed & Insured',
-      description: 'Fully licensed contractors with comprehensive insurance coverage'
+      description: 'Fully licensed contractors with complete insurance coverage'
     },
     {
       icon: FaClock,

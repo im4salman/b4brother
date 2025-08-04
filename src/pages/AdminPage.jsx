@@ -290,6 +290,7 @@ const AdminPage = ({ onLogout }) => {
                                 >
                                     <option value="all">All Activities</option>
                                     <option value="forms">Form Submissions</option>
+                                    <option value="stored-forms">Stored Form Data</option>
                                     <option value="whatsapp">WhatsApp Redirects</option>
                                     <option value="clicks">Button Clicks</option>
                                     <option value="pageviews">Page Views</option>

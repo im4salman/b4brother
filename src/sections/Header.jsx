@@ -61,10 +61,10 @@ const Header = () => {
     return (
         <>
             <header
-                className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 bg-white/95 backdrop-blur-lg border-b border-gray-100 ${
+                className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${
                     isScrolled
-                        ? 'shadow-hard py-1.5'
-                        : 'shadow-medium py-2.5'
+                        ? 'bg-white/95 backdrop-blur-xl border-b border-gray-100/20 shadow-lg py-3'
+                        : 'bg-white/90 backdrop-blur-md border-b border-white/10 shadow-sm py-4'
                 }`}
                 role="banner"
             >

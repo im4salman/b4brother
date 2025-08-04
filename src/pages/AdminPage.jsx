@@ -24,6 +24,7 @@ const AdminPage = ({ onLogout }) => {
     const { analytics, clearAnalytics, exportAnalytics } = useAnalytics();
     const [filter, setFilter] = useState('all');
     const [dateFilter, setDateFilter] = useState('all');
+    const [formSubmissions, setFormSubmissions] = useState([]);
 
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleString('en-IN', {

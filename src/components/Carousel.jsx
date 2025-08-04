@@ -95,72 +95,111 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
 
           {/* Hero Content - Only on first slide */}
           {index === current && index === 0 && (
-            <div className="absolute inset-0 flex items-center justify-start px-6 lg:px-32 z-30">
-              <div className="glass bg-black/80 backdrop-blur-md p-8 md:p-12 rounded-3xl w-full max-w-6xl animate-slide-up border border-white/10">
-                {/* Main Heading */}
-                <div className="mb-8">
-                  <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 font-montserrat leading-tight">
-                    <span className="text-primary-400">B4</span>Brothers
-                  </h1>
-                  <div className="w-32 h-1.5 bg-gradient-to-r from-primary-500 to-accent-500 mb-6 rounded-full" />
-                  <p className="text-primary-400 text-xl md:text-2xl font-semibold mb-2 italic">
-                    "Believe in best builds bold"
-                  </p>
+            <div className="absolute inset-0 flex items-center justify-center px-4 md:px-8 z-30">
+              <div className="w-full max-w-7xl mx-auto">
+                {/* Animated Background Elements */}
+                <div className="absolute inset-0 pointer-events-none">
+                  <div className="absolute top-20 left-10 w-2 h-2 bg-primary-400 rounded-full animate-pulse"></div>
+                  <div className="absolute top-32 right-20 w-3 h-3 bg-accent-400 rounded-full animate-bounce" style={{animationDelay: '0.5s'}}></div>
+                  <div className="absolute bottom-40 left-20 w-1.5 h-1.5 bg-primary-300 rounded-full animate-ping" style={{animationDelay: '1s'}}></div>
+                  <div className="absolute bottom-32 right-32 w-2.5 h-2.5 bg-accent-300 rounded-full animate-pulse" style={{animationDelay: '1.5s'}}></div>
                 </div>
 
-                {/* Value Proposition */}
-                <div className="mb-8">
-                  <h2 className="text-white text-2xl md:text-3xl font-semibold mb-4 leading-tight">
-                    Building Excellence Since 2019
-                  </h2>
-                  <p className="text-white/90 text-lg md:text-xl leading-relaxed mb-4">
-                    From residential dreams to commercial landmarks, we deliver construction
-                    projects that stand the test of time.
-                  </p>
-
-                  {/* Key Stats */}
-                  <div className="grid grid-cols-3 gap-6 md:gap-8 mb-8">
-                    <div className="text-center">
-                      <div className="text-primary-400 text-2xl md:text-3xl font-bold">150+</div>
-                      <div className="text-white/80 text-sm md:text-base">Projects Completed</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-primary-400 text-2xl md:text-3xl font-bold">5+</div>
-                      <div className="text-white/80 text-sm md:text-base">Years Experience</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-primary-400 text-2xl md:text-3xl font-bold">4.9★</div>
-                      <div className="text-white/80 text-sm md:text-base">Client Rating</div>
+                {/* Main Hero Content */}
+                <div className="text-center space-y-8">
+                  {/* Dynamic Tagline */}
+                  <div className="space-y-4 animate-fade-in">
+                    <div className="inline-block px-6 py-2 bg-primary-500/20 backdrop-blur-sm rounded-full border border-primary-400/30">
+                      <span className="text-primary-300 text-sm md:text-base font-medium tracking-wider uppercase">
+                        🏗️ Premium Construction Services
+                      </span>
                     </div>
                   </div>
-                </div>
 
-                {/* Call to Action */}
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <a
-                    href="#contact"
-                    className="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 inline-flex items-center justify-center group shadow-lg hover:shadow-xl transform hover:scale-105"
-                    aria-label="Get free quote from B4Brothers"
-                  >
-                    Get Free Quote
-                    <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </a>
-                  <a
-                    href="tel:+919733221114"
-                    className="border-2 border-white/30 hover:border-primary-400 text-white hover:text-primary-400 font-semibold py-4 px-8 rounded-xl transition-all duration-300 inline-flex items-center justify-center backdrop-blur-sm"
-                    aria-label="Call B4Brothers for consultation"
-                  >
-                    📞 +91 97332 21114
-                  </a>
-                  <a
-                    href="#projects"
-                    className="border-2 border-white/30 hover:border-white text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 inline-flex items-center justify-center backdrop-blur-sm"
-                    aria-label="View B4Brothers portfolio"
-                  >
-                    View Portfolio
-                  </a>
+                  {/* Bold Main Heading with Stagger Animation */}
+                  <div className="space-y-6">
+                    <h1 className="font-montserrat font-black text-white leading-none">
+                      <div className="text-6xl md:text-8xl lg:text-9xl mb-2 animate-slide-up">
+                        <span className="inline-block" style={{animationDelay: '0.2s'}}>B</span>
+                        <span className="inline-block text-primary-400" style={{animationDelay: '0.3s'}}>E</span>
+                        <span className="inline-block" style={{animationDelay: '0.4s'}}>L</span>
+                        <span className="inline-block" style={{animationDelay: '0.5s'}}>I</span>
+                        <span className="inline-block" style={{animationDelay: '0.6s'}}>E</span>
+                        <span className="inline-block" style={{animationDelay: '0.7s'}}>V</span>
+                        <span className="inline-block" style={{animationDelay: '0.8s'}}>E</span>
+                      </div>
+                      <div className="text-4xl md:text-6xl lg:text-7xl text-primary-400 mb-2 animate-slide-up" style={{animationDelay: '0.9s'}}>
+                        IN BEST BUILDS
+                      </div>
+                      <div className="text-6xl md:text-8xl lg:text-9xl text-accent-400 font-black animate-slide-up" style={{animationDelay: '1s'}}>
+                        BOLD
+                      </div>
+                    </h1>
+
+                    {/* Dynamic Underline */}
+                    <div className="flex justify-center animate-scale-in" style={{animationDelay: '1.2s'}}>
+                      <div className="w-32 md:w-48 h-2 bg-gradient-to-r from-primary-500 via-accent-500 to-primary-500 rounded-full shadow-glow"></div>
+                    </div>
+                  </div>
+
+                  {/* Company Name & Subtitle */}
+                  <div className="space-y-4 animate-fade-in" style={{animationDelay: '1.4s'}}>
+                    <h2 className="text-3xl md:text-5xl font-bold text-white font-montserrat">
+                      <span className="text-primary-400">B4</span>Brothers
+                    </h2>
+                    <p className="text-xl md:text-2xl text-white/90 font-light max-w-3xl mx-auto leading-relaxed">
+                      Transforming visions into architectural masterpieces with
+                      <span className="text-primary-400 font-semibold"> bold construction excellence</span>
+                    </p>
+                  </div>
+
+                  {/* Impressive Stats Row */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl mx-auto animate-slide-up" style={{animationDelay: '1.6s'}}>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
+                      <div className="text-3xl md:text-4xl font-black text-primary-400 mb-2">150+</div>
+                      <div className="text-white/80 text-sm md:text-base font-medium">Bold Projects</div>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
+                      <div className="text-3xl md:text-4xl font-black text-accent-400 mb-2">5+</div>
+                      <div className="text-white/80 text-sm md:text-base font-medium">Years Strong</div>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
+                      <div className="text-3xl md:text-4xl font-black text-primary-400 mb-2">4.9</div>
+                      <div className="text-white/80 text-sm md:text-base font-medium">⭐ Rating</div>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
+                      <div className="text-3xl md:text-4xl font-black text-accent-400 mb-2">24/7</div>
+                      <div className="text-white/80 text-sm md:text-base font-medium">Support</div>
+                    </div>
+                  </div>
+
+                  {/* Bold Action Buttons */}
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-2xl mx-auto animate-bounce-soft" style={{animationDelay: '1.8s'}}>
+                    <a
+                      href="#contact"
+                      className="bg-gradient-to-r from-primary-500 to-accent-500 hover:from-primary-600 hover:to-accent-600 text-white font-bold py-5 px-10 rounded-2xl transition-all duration-300 inline-flex items-center justify-center group shadow-2xl hover:shadow-glow-strong transform hover:scale-110 text-lg"
+                      aria-label="Get your bold construction quote"
+                    >
+                      🚀 BUILD BOLD NOW
+                      <svg className="w-6 h-6 ml-3 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </a>
+                    <a
+                      href="tel:+919733221114"
+                      className="border-3 border-primary-400 hover:bg-primary-400 text-primary-400 hover:text-black font-bold py-5 px-8 rounded-2xl transition-all duration-300 inline-flex items-center justify-center backdrop-blur-sm hover:shadow-glow transform hover:scale-105 text-lg"
+                      aria-label="Call for bold construction consultation"
+                    >
+                      📞 +91 97332 21114
+                    </a>
+                  </div>
+
+                  {/* Trust Indicator */}
+                  <div className="animate-fade-in" style={{animationDelay: '2s'}}>
+                    <p className="text-white/70 text-sm md:text-base">
+                      💎 Licensed • Insured • Trusted by 150+ clients across India
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

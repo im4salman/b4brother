@@ -120,19 +120,19 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
                   {/* Bold Main Heading with Stagger Animation */}
                   <div className="space-y-6">
                     <h1 className="font-montserrat font-black text-white leading-none">
-                      <div className="text-6xl md:text-8xl lg:text-9xl mb-2 animate-slide-up">
-                        <span className="inline-block" style={{animationDelay: '0.2s'}}>B</span>
-                        <span className="inline-block text-primary-400" style={{animationDelay: '0.3s'}}>E</span>
-                        <span className="inline-block" style={{animationDelay: '0.4s'}}>L</span>
-                        <span className="inline-block" style={{animationDelay: '0.5s'}}>I</span>
-                        <span className="inline-block" style={{animationDelay: '0.6s'}}>E</span>
-                        <span className="inline-block" style={{animationDelay: '0.7s'}}>V</span>
-                        <span className="inline-block" style={{animationDelay: '0.8s'}}>E</span>
+                      <div className="text-6xl md:text-8xl lg:text-9xl mb-2">
+                        <span className="hero-letter">B</span>
+                        <span className="hero-letter text-primary-400">E</span>
+                        <span className="hero-letter">L</span>
+                        <span className="hero-letter">I</span>
+                        <span className="hero-letter">E</span>
+                        <span className="hero-letter">V</span>
+                        <span className="hero-letter">E</span>
                       </div>
-                      <div className="text-4xl md:text-6xl lg:text-7xl text-primary-400 mb-2 animate-slide-up" style={{animationDelay: '0.9s'}}>
+                      <div className="text-4xl md:text-6xl lg:text-7xl gradient-text mb-4 animate-slide-up font-black" style={{animationDelay: '0.9s'}}>
                         IN BEST BUILDS
                       </div>
-                      <div className="text-6xl md:text-8xl lg:text-9xl text-accent-400 font-black animate-slide-up" style={{animationDelay: '1s'}}>
+                      <div className="text-7xl md:text-9xl lg:text-[12rem] text-accent-400 font-black animate-slide-up bold-glow" style={{animationDelay: '1s'}}>
                         BOLD
                       </div>
                     </h1>

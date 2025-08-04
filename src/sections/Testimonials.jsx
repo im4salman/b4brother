@@ -89,7 +89,7 @@ const Testimonials = () => {
   const goTo = (index) => setIdx(index);
   const togglePlayPause = () => setIsPlaying(!isPlaying);
 
-  const client = clients[idx];
+  const client = allTestimonials[idx];
   const stars = client.rating ?? 5;
   const initials = client.name
     .split(' ')

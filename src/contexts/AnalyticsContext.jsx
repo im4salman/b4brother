@@ -91,10 +91,10 @@ export const AnalyticsProvider = ({ children }) => {
         }));
     }, []);
 
-    const trackWhatsAppRedirect = (message, formData = null) => {
+    const trackWhatsAppRedirect = useCallback((message, formData = null) => {
         const visitorId = getVisitorId();
         const timestamp = new Date().toISOString();
-        
+
         setAnalytics(prev => ({
             ...prev,
             whatsappRedirects: [...prev.whatsappRedirects, {
@@ -105,7 +105,7 @@ export const AnalyticsProvider = ({ children }) => {
                 timestamp
             }]
         }));
-    };
+    }, []);
 
     const trackPageView = (page) => {
         const visitorId = getVisitorId();

@@ -251,6 +251,129 @@ const AdminPage = ({ onLogout }) => {
         }
     };
 
+    const saveTestimonial = (testimonialData) => {
+        const newTestimonial = {
+            id: editingTestimonial?.id || Date.now().toString(36) + Math.random().toString(36).substr(2),
+            ...testimonialData,
+            createdAt: editingTestimonial?.createdAt || new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        };
+
+        let updatedTestimonials;
+        if (editingTestimonial) {
+            updatedTestimonials = testimonials.map(t => t.id === editingTestimonial.id ? newTestimonial : t);
+        } else {
+            updatedTestimonials = [...testimonials, newTestimonial];
+        }
+
+        setTestimonials(updatedTestimonials);
+        localStorage.setItem('b4-testimonials', JSON.stringify(updatedTestimonials));
+        setShowTestimonialForm(false);
+        setEditingTestimonial(null);
+    };
+
+    const deleteTestimonial = (id) => {
+        const updatedTestimonials = testimonials.filter(t => t.id !== id);
+        setTestimonials(updatedTestimonials);
+        localStorage.setItem('b4-testimonials', JSON.stringify(updatedTestimonials));
+    };
+
+    const TestimonialForm = () => {
+        const [formData, setFormData] = useState({
+            name: editingTestimonial?.name || '',
+            about: editingTestimonial?.about || '',
+            post: editingTestimonial?.post || '',
+            rating: editingTestimonial?.rating || 5,
+            image: editingTestimonial?.image || ''
+        });
+
+        const handleSubmit = (e) => {
+            e.preventDefault();
+            saveTestimonial(formData);
+        };
+
+        return (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div className="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+                    <h3 className="text-lg font-semibold mb-4">
+                        {editingTestimonial ? 'Edit' : 'Add'} Testimonial
+                    </h3>
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div>
+                            <label className="block text-sm font-medium mb-1">Name</label>
+                            <input
+                                type="text"
+                                value={formData.name}
+                                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                                className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium mb-1">Review</label>
+                            <textarea
+                                value={formData.about}
+                                onChange={(e) => setFormData({...formData, about: e.target.value})}
+                                className="w-full border border-gray-300 rounded-lg px-3 py-2 h-24"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium mb-1">Position/Role</label>
+                            <input
+                                type="text"
+                                value={formData.post}
+                                onChange={(e) => setFormData({...formData, post: e.target.value})}
+                                className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium mb-1">Rating (1-5)</label>
+                            <select
+                                value={formData.rating}
+                                onChange={(e) => setFormData({...formData, rating: parseInt(e.target.value)})}
+                                className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                            >
+                                {[1,2,3,4,5].map(n => (
+                                    <option key={n} value={n}>{n} Star{n > 1 ? 's' : ''}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium mb-1">Image URL (optional)</label>
+                            <input
+                                type="url"
+                                value={formData.image}
+                                onChange={(e) => setFormData({...formData, image: e.target.value})}
+                                className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                                placeholder="https://example.com/image.jpg"
+                            />
+                        </div>
+                        <div className="flex gap-2 pt-4">
+                            <button
+                                type="submit"
+                                className="flex-1 bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded-lg"
+                            >
+                                {editingTestimonial ? 'Update' : 'Add'} Testimonial
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setShowTestimonialForm(false);
+                                    setEditingTestimonial(null);
+                                }}
+                                className="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        );
+    };
+
     const filteredData = getFilteredData();
 
     return (

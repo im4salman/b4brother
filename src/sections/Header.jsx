@@ -184,22 +184,26 @@ const Header = () => {
                             </div>
                         </div>
 
-                        {/* Mobile & Tablet Actions */}
-                        <div className="lg:hidden flex items-center gap-2 sm:gap-3">
-                            {/* Quick Call Button */}
+                        {/* Premium Mobile Actions */}
+                        <div className="lg:hidden flex items-center gap-3">
+                            {/* Premium Mobile Call Button */}
                             <a
                                 href="tel:+919733221114"
                                 onClick={() => trackClick('Phone Call', 'Header Mobile')}
-                                className="w-10 h-10 bg-primary-100 hover:bg-primary-500 rounded-full flex items-center justify-center transition-all duration-300 group"
+                                className="w-12 h-12 bg-gradient-to-br from-primary-100 to-accent-100 hover:from-primary-500 hover:to-accent-500 rounded-2xl flex items-center justify-center transition-all duration-400 group border border-primary-200/50 shadow-sm hover:shadow-lg"
                                 aria-label="Call us"
                             >
-                                <FaPhone className="w-4 h-4 text-primary-500 group-hover:text-white transition-colors duration-300" />
+                                <FaPhone className="w-4 h-4 text-primary-600 group-hover:text-white transition-colors duration-300" />
                             </a>
 
-                            {/* Mobile Menu Button */}
+                            {/* Premium Mobile Menu Button */}
                             <button
                                 onClick={toggleMenu}
-                                className="w-10 h-10 bg-secondary-100 hover:bg-primary-500 text-secondary-800 hover:text-white rounded-lg flex items-center justify-center transition-all duration-300 focus:bg-primary-50"
+                                className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-400 border shadow-sm hover:shadow-lg ${
+                                    isMenuOpen
+                                        ? 'bg-gradient-to-br from-accent-500 to-primary-500 text-white border-accent-400'
+                                        : 'bg-gradient-to-br from-secondary-100 to-gray-100 hover:from-primary-500 hover:to-accent-500 text-secondary-700 hover:text-white border-gray-200'
+                                }`}
                                 aria-label="Toggle navigation menu"
                                 aria-expanded={isMenuOpen}
                                 aria-controls="mobile-menu"

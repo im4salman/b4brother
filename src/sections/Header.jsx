@@ -168,12 +168,13 @@ const Header = () => {
                                         trackClick('Free Quote Button', 'Header Desktop');
                                         openModal();
                                     }}
-                                    className="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 shadow-sm hover:shadow-md text-sm flex items-center gap-2"
-                                    aria-label="Get free quote"
+                                    className="group relative bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-accent-500 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-400 shadow-lg hover:shadow-xl text-sm flex items-center gap-2 transform hover:scale-105 overflow-hidden"
+                                    aria-label="Get premium construction quote"
                                 >
-                                    <FaWhatsapp className="w-4 h-4" />
-                                    <span className="hidden xl:inline">Free Quote</span>
-                                    <span className="xl:hidden">Quote</span>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-accent-500 to-primary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
+                                    <FaWhatsapp className="w-4 h-4 relative z-10" />
+                                    <span className="hidden xl:inline relative z-10">Free Quote</span>
+                                    <span className="xl:hidden relative z-10">Quote</span>
                                 </button>
                             </div>
                         </div>

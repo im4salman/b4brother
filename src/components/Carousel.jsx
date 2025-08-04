@@ -96,44 +96,70 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
           {/* Hero Content - Only on first slide */}
           {index === current && index === 0 && (
             <div className="absolute inset-0 flex items-center justify-start px-6 lg:px-32 z-30">
-              <div className="glass bg-black/70 backdrop-blur-sm p-6 md:p-8 rounded-2xl w-full max-w-5xl animate-slide-up">
-                <h1 className="text-accent mb-2">Welcome to</h1>
-                <h1 className="heading-primary text-white mb-2">B4 Brothers</h1>
-                <h2 className="text-xl md:text-2xl font-semibold text-gray-300 uppercase tracking-wider mb-4">
-                  Infratech PVT LTD
-                </h2>
-                <div className="w-[120px] h-[6px] bg-primary-500 mb-4 rounded-full" />
-                <p className="text-primary-400 text-2xl md:text-3xl font-bold mb-6 tracking-wide">
-                  "Believe in best builds bold"
-                </p>
-                <p className="text-white text-xl md:text-2xl italic mb-6 font-light">
-                  Your Trusted Partner in Construction for Over 5+ Years
-                </p>
-                <p className="text-white/90 mb-4 text-lg leading-relaxed">
-                  With a wealth of experience in the construction industry, we lead the way in delivering 
-                  quality, safety, and reliability with guaranteed results.
-                </p>
-                <p className="text-white/90 mb-8 text-lg leading-relaxed">
-                  Explore our extensive portfolio and discover why we are the go-to builders for 
-                  projects across the region.
-                </p>
+              <div className="glass bg-black/80 backdrop-blur-md p-8 md:p-12 rounded-3xl w-full max-w-6xl animate-slide-up border border-white/10">
+                {/* Main Heading */}
+                <div className="mb-8">
+                  <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 font-montserrat leading-tight">
+                    <span className="text-primary-400">B4</span>Brothers
+                  </h1>
+                  <div className="w-32 h-1.5 bg-gradient-to-r from-primary-500 to-accent-500 mb-6 rounded-full" />
+                  <p className="text-primary-400 text-xl md:text-2xl font-semibold mb-2 italic">
+                    "Believe in best builds bold"
+                  </p>
+                </div>
+
+                {/* Value Proposition */}
+                <div className="mb-8">
+                  <h2 className="text-white text-2xl md:text-3xl font-semibold mb-4 leading-tight">
+                    Building Excellence Since 2019
+                  </h2>
+                  <p className="text-white/90 text-lg md:text-xl leading-relaxed mb-4">
+                    From residential dreams to commercial landmarks, we deliver construction
+                    projects that stand the test of time.
+                  </p>
+
+                  {/* Key Stats */}
+                  <div className="grid grid-cols-3 gap-6 md:gap-8 mb-8">
+                    <div className="text-center">
+                      <div className="text-primary-400 text-2xl md:text-3xl font-bold">150+</div>
+                      <div className="text-white/80 text-sm md:text-base">Projects Completed</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-primary-400 text-2xl md:text-3xl font-bold">5+</div>
+                      <div className="text-white/80 text-sm md:text-base">Years Experience</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-primary-400 text-2xl md:text-3xl font-bold">4.9★</div>
+                      <div className="text-white/80 text-sm md:text-base">Client Rating</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Call to Action */}
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a
-                    href="#about"
-                    className="btn-primary inline-flex items-center justify-center group"
-                    aria-label="Learn more about B4 Brothers Infratech PVT LTD"
+                    href="#contact"
+                    className="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 inline-flex items-center justify-center group shadow-lg hover:shadow-xl transform hover:scale-105"
+                    aria-label="Get free quote from B4Brothers"
                   >
-                    Learn More About Us
+                    Get Free Quote
                     <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </a>
                   <a
                     href="tel:+919733221114"
-                    className="btn-outline inline-flex items-center justify-center"
-                    aria-label="Call us for free consultation"
+                    className="border-2 border-white/30 hover:border-primary-400 text-white hover:text-primary-400 font-semibold py-4 px-8 rounded-xl transition-all duration-300 inline-flex items-center justify-center backdrop-blur-sm"
+                    aria-label="Call B4Brothers for consultation"
                   >
-                    📞 Call Now: +91 97332 21114
+                    📞 +91 97332 21114
+                  </a>
+                  <a
+                    href="#projects"
+                    className="border-2 border-white/30 hover:border-white text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 inline-flex items-center justify-center backdrop-blur-sm"
+                    aria-label="View B4Brothers portfolio"
+                  >
+                    View Portfolio
                   </a>
                 </div>
               </div>

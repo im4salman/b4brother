@@ -74,32 +74,34 @@ const Header = () => {
                         role="navigation"
                         aria-label="Main navigation"
                     >
-                        {/* Premium Logo */}
+                        {/* Premium Logo Section */}
                         <Link
                             to="home"
                             smooth={true}
                             duration={500}
-                            className="cursor-pointer group flex items-center gap-4"
+                            className="cursor-pointer group flex items-center gap-4 hover:opacity-90 transition-all duration-300"
                             aria-label="B4Brothers homepage"
                         >
                             <div className="flex items-center gap-4">
                                 <div className="relative">
-                                    <img
-                                        src={logoIcon}
-                                        alt="B4Brothers Logo"
-                                        className={`transition-all duration-700 flex-shrink-0 filter drop-shadow-md ${
-                                            isScrolled ? 'h-9 w-9' : 'h-11 w-11'
-                                        }`}
-                                    />
-                                </div>
-                                <div className="flex flex-col space-y-0.5">
-                                    <div className={`font-inter font-bold text-secondary-800 transition-all duration-700 tracking-tight ${
-                                        isScrolled ? 'text-lg' : 'text-xl'
-                                    }`}>
-                                        <span className="text-primary-600">B4</span>Brothers
+                                    <div className={`transition-all duration-700 ${isScrolled ? 'p-2' : 'p-2.5'} bg-gradient-to-br from-primary-50 to-accent-50 rounded-2xl border border-primary-100/50`}>
+                                        <img
+                                            src={logoIcon}
+                                            alt="B4Brothers Logo"
+                                            className={`transition-all duration-700 flex-shrink-0 ${
+                                                isScrolled ? 'h-8 w-8' : 'h-9 w-9'
+                                            }`}
+                                        />
                                     </div>
-                                    <div className={`font-inter font-medium text-secondary-600 transition-all duration-700 tracking-wide ${
-                                        isScrolled ? 'text-xs opacity-80' : 'text-sm opacity-90'
+                                </div>
+                                <div className="flex flex-col justify-center">
+                                    <div className={`font-space font-bold text-secondary-900 transition-all duration-700 tracking-tight leading-none ${
+                                        isScrolled ? 'text-xl' : 'text-2xl'
+                                    }`}>
+                                        <span className="text-primary-600">B4</span><span className="text-secondary-800">Brothers</span>
+                                    </div>
+                                    <div className={`font-inter font-medium text-secondary-600 transition-all duration-700 tracking-wide leading-tight mt-0.5 ${
+                                        isScrolled ? 'text-xs' : 'text-sm'
                                     }`}>
                                         Believe in best builds bold
                                     </div>

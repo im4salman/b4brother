@@ -6,7 +6,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'inter': ['Inter', 'system-ui', 'sans-serif'],
+        'inter': ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        'display': ['Playfair Display', 'Georgia', 'serif'],
+        'space': ['Space Grotesk', 'system-ui', 'sans-serif'],
         'montserrat': ['Montserrat', 'system-ui', 'sans-serif'],
         'poppins': ['Poppins', 'system-ui', 'sans-serif'],
       },

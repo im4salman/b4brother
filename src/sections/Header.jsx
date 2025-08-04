@@ -145,38 +145,41 @@ const Header = () => {
                                 ))}
                             </ul>
 
-                            {/* Divider */}
-                            <div className="w-px h-6 bg-gray-200"></div>
+                            {/* Elegant Divider */}
+                            <div className="w-px h-8 bg-gradient-to-b from-transparent via-gray-300 to-transparent"></div>
 
-                            {/* CTA Buttons */}
-                            <div className="flex items-center gap-2 xl:gap-3">
+                            {/* Premium CTA Section */}
+                            <div className="flex items-center gap-4">
+                                {/* Premium Phone Button */}
                                 <a
                                     href="tel:+919733221114"
                                     onClick={() => trackClick('Phone Call', 'Header Desktop')}
-                                    className="flex items-center gap-2 text-secondary-600 hover:text-primary-500 font-medium transition-all duration-300 py-2 px-2 rounded-lg hover:bg-gray-50"
+                                    className="group flex items-center gap-3 text-secondary-700 hover:text-primary-600 font-medium transition-all duration-400 py-3 px-4 rounded-xl hover:bg-gradient-to-r hover:from-gray-50 hover:to-primary-50 border border-transparent hover:border-gray-200"
                                     aria-label="Call us at +91 97332 21114"
                                 >
-                                    <div className="w-7 h-7 bg-primary-100 rounded-full flex items-center justify-center">
-                                        <FaPhone className="w-3 h-3 text-primary-500" />
+                                    <div className="w-10 h-10 bg-gradient-to-br from-primary-100 to-accent-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-primary-200/50">
+                                        <FaPhone className="w-4 h-4 text-primary-600" />
                                     </div>
                                     <div className="hidden xl:block">
-                                        <div className="text-xs text-secondary-500 uppercase tracking-wide">Call</div>
-                                        <div className="text-xs font-semibold">+91 97332 21114</div>
+                                        <div className="text-xs text-secondary-500 uppercase tracking-wider font-medium">Call Now</div>
+                                        <div className="text-sm font-bold text-secondary-800">+91 97332 21114</div>
                                     </div>
                                 </a>
 
+                                {/* Premium Quote Button */}
                                 <button
                                     onClick={() => {
                                         trackClick('Free Quote Button', 'Header Desktop');
                                         openModal();
                                     }}
-                                    className="group relative bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-accent-500 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-400 shadow-lg hover:shadow-xl text-sm flex items-center gap-2 transform hover:scale-105 overflow-hidden"
+                                    className="group relative bg-gradient-to-r from-primary-500 via-primary-600 to-accent-500 hover:from-accent-500 hover:via-primary-600 hover:to-primary-500 text-white font-bold py-4 px-8 rounded-2xl transition-all duration-500 shadow-lg hover:shadow-2xl text-sm flex items-center gap-3 transform hover:scale-105 overflow-hidden border border-primary-400/20"
                                     aria-label="Get premium construction quote"
                                 >
-                                    <div className="absolute inset-0 bg-gradient-to-r from-accent-500 to-primary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
-                                    <FaWhatsapp className="w-4 h-4 relative z-10" />
-                                    <span className="hidden xl:inline relative z-10">Free Quote</span>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-accent-600 to-primary-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                    <FaWhatsapp className="w-5 h-5 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
+                                    <span className="hidden xl:inline relative z-10 tracking-wide">Free Quote</span>
                                     <span className="xl:hidden relative z-10">Quote</span>
+                                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
                                 </button>
                             </div>
                         </div>

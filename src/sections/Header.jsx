@@ -150,26 +150,11 @@ const Header = () => {
                             </button>
                         </div>
 
-                        {/* Premium Mobile Actions */}
-                        <div className="lg:hidden flex items-center gap-3">
-                            {/* Premium Mobile Call Button */}
-                            <a
-                                href="tel:+919733221114"
-                                onClick={() => trackClick('Phone Call', 'Header Mobile')}
-                                className="w-12 h-12 bg-gradient-to-br from-primary-100 to-accent-100 hover:from-primary-500 hover:to-accent-500 rounded-2xl flex items-center justify-center transition-all duration-400 group border border-primary-200/50 shadow-sm hover:shadow-lg"
-                                aria-label="Call us"
-                            >
-                                <FaPhone className="w-4 h-4 text-primary-600 group-hover:text-white transition-colors duration-300" />
-                            </a>
-
-                            {/* Premium Mobile Menu Button */}
+                        {/* Mobile Menu Button */}
+                        <div className="lg:hidden">
                             <button
                                 onClick={toggleMenu}
-                                className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-400 border shadow-sm hover:shadow-lg ${
-                                    isMenuOpen
-                                        ? 'bg-gradient-to-br from-accent-500 to-primary-500 text-white border-accent-400'
-                                        : 'bg-gradient-to-br from-secondary-100 to-gray-100 hover:from-primary-500 hover:to-accent-500 text-secondary-700 hover:text-white border-gray-200'
-                                }`}
+                                className="w-10 h-10 bg-gray-100 hover:bg-gray-200 text-secondary-800 rounded-lg flex items-center justify-center transition-colors duration-300"
                                 aria-label="Toggle navigation menu"
                                 aria-expanded={isMenuOpen}
                                 aria-controls="mobile-menu"

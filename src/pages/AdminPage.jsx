@@ -123,6 +123,12 @@ const AdminPage = ({ onLogout }) => {
             value: filterByDate(analytics.formSubmissions || []).length,
             icon: <FaWpforms className="w-6 h-6" />,
             color: 'bg-orange-500'
+        },
+        {
+            title: 'Stored Form Data',
+            value: filterByDate(formSubmissions || []).length,
+            icon: <FaEnvelope className="w-6 h-6" />,
+            color: 'bg-indigo-500'
         }
     ];
 

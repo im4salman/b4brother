@@ -75,10 +75,10 @@ export const AnalyticsProvider = ({ children }) => {
         });
     }, []);
 
-    const trackFormSubmission = (formType, formData) => {
+    const trackFormSubmission = useCallback((formType, formData) => {
         const visitorId = getVisitorId();
         const timestamp = new Date().toISOString();
-        
+
         setAnalytics(prev => ({
             ...prev,
             formSubmissions: [...prev.formSubmissions, {
@@ -89,7 +89,7 @@ export const AnalyticsProvider = ({ children }) => {
                 timestamp
             }]
         }));
-    };
+    }, []);
 
     const trackWhatsAppRedirect = (message, formData = null) => {
         const visitorId = getVisitorId();

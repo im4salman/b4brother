@@ -165,15 +165,15 @@ const Header = () => {
                     </nav>
                 </div>
 
-                {/* Premium Mobile Menu */}
+                {/* Mobile Menu */}
                 <div
                     id="mobile-menu"
-                    className={`lg:hidden transition-all duration-700 overflow-hidden bg-white/98 backdrop-blur-xl border-t border-gray-100/50 shadow-xl ${
+                    className={`lg:hidden transition-all duration-500 overflow-hidden bg-white border-t border-gray-200 ${
                         isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
                     }`}
                     aria-hidden={!isMenuOpen}
                 >
-                    <div className="container mx-auto px-6 py-8">
+                    <div className="container mx-auto px-6 py-6">
                         <ul className="flex flex-col gap-3 mb-8" role="menu">
                             {navItem.map((item, index) => (
                                 <li key={index} role="none">

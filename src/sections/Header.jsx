@@ -125,19 +125,19 @@ const Header = () => {
                                             </button>
                                         ) : (
                                             <Link
-                                                to={item.path}
-                                                className="nav-link text-secondary-700 hover:text-primary-500 font-inter font-medium uppercase tracking-wide text-sm transition-all duration-300 cursor-pointer relative group py-2 px-3 rounded-lg hover:bg-primary-50"
-                                                spy={true}
-                                                smooth={true}
-                                                offset={-100}
-                                                duration={500}
-                                                activeClass="text-primary-500 bg-primary-50"
-                                                role="menuitem"
-                                                tabIndex={0}
-                                            >
-                                                {item.link}
-                                                <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-primary-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
-                                            </Link>
+                                            to={item.path}
+                                            className="nav-link text-secondary-700 hover:text-primary-600 font-inter font-medium text-sm transition-all duration-400 cursor-pointer relative group py-3 px-4 rounded-xl hover:bg-primary-50/80"
+                                            spy={true}
+                                            smooth={true}
+                                            offset={-100}
+                                            duration={500}
+                                            activeClass="text-primary-600 bg-primary-50"
+                                            role="menuitem"
+                                            tabIndex={0}
+                                        >
+                                            {item.link}
+                                            <span className="absolute bottom-1 left-4 right-4 h-0.5 bg-gradient-to-r from-primary-500 to-accent-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-400 rounded-full" />
+                                        </Link>
                                         )}
                                     </li>
                                 ))}

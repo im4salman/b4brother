@@ -270,23 +270,28 @@ const Header = () => {
                             ))}
                         </ul>
 
-                        {/* Mobile Contact Section */}
-                        <div className="bg-gradient-to-r from-primary-50 to-accent-50 rounded-2xl p-4 space-y-4">
+                        {/* Premium Mobile Contact Section */}
+                        <div className="bg-gradient-to-br from-primary-50 via-accent-50 to-primary-50 rounded-3xl p-6 space-y-6 border border-primary-100/50 shadow-lg">
                             <div className="text-center">
-                                <h3 className="font-semibold text-secondary-800 mb-1">Ready to Build?</h3>
-                                <p className="text-sm text-secondary-600">Get your free quote today</p>
+                                <h3 className="font-bold text-secondary-900 mb-2 text-lg font-space">Ready to Build Bold?</h3>
+                                <p className="text-sm text-secondary-600 leading-relaxed">Transform your vision into reality with our premium construction services</p>
                             </div>
-                            
-                            <div className="grid grid-cols-2 gap-3">
+
+                            <div className="space-y-4">
                                 <a
                                     href="tel:+919733221114"
                                     onClick={() => trackClick('Phone Call', 'Mobile Menu')}
-                                    className="flex flex-col items-center gap-2 bg-white text-secondary-700 hover:text-primary-500 font-medium py-3 px-4 rounded-xl hover:bg-gray-50 transition-all duration-300 border border-gray-200"
+                                    className="flex items-center gap-4 bg-white text-secondary-700 hover:text-primary-600 font-semibold py-4 px-6 rounded-2xl hover:bg-gradient-to-r hover:from-gray-50 hover:to-primary-50 transition-all duration-400 border border-gray-200 hover:border-primary-300 shadow-sm hover:shadow-md w-full"
                                     tabIndex={isMenuOpen ? 0 : -1}
                                     aria-label="Call us at +91 97332 21114"
                                 >
-                                    <FaPhone className="w-5 h-5" />
-                                    <span className="text-sm">Call Now</span>
+                                    <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-accent-100 rounded-xl flex items-center justify-center">
+                                        <FaPhone className="w-5 h-5 text-primary-600" />
+                                    </div>
+                                    <div className="flex-1 text-left">
+                                        <div className="text-sm font-bold">Call Now</div>
+                                        <div className="text-xs text-secondary-500">+91 97332 21114</div>
+                                    </div>
                                 </a>
                                 <button
                                     onClick={() => {
@@ -294,12 +299,17 @@ const Header = () => {
                                         closeMenu();
                                         openModal();
                                     }}
-                                    className="flex flex-col items-center gap-2 bg-primary-500 hover:bg-primary-600 text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 shadow-medium"
+                                    className="flex items-center gap-4 bg-gradient-to-r from-primary-500 to-accent-500 hover:from-accent-500 hover:to-primary-500 text-white font-bold py-4 px-6 rounded-2xl transition-all duration-400 shadow-lg hover:shadow-xl w-full transform hover:scale-105"
                                     tabIndex={isMenuOpen ? 0 : -1}
-                                    aria-label="Get free quote"
+                                    aria-label="Get premium construction quote"
                                 >
-                                    <FaWhatsapp className="w-5 h-5" />
-                                    <span className="text-sm">Get Quote</span>
+                                    <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                                        <FaWhatsapp className="w-5 h-5" />
+                                    </div>
+                                    <div className="flex-1 text-left">
+                                        <div className="text-sm font-bold">Get Free Quote</div>
+                                        <div className="text-xs opacity-90">Premium consultation</div>
+                                    </div>
                                 </button>
                             </div>
                         </div>

@@ -26,6 +26,12 @@ const AdminPage = ({ onLogout }) => {
     const [dateFilter, setDateFilter] = useState('all');
     const [formSubmissions, setFormSubmissions] = useState([]);
 
+    // Load form submissions from localStorage
+    useEffect(() => {
+        const stored = JSON.parse(localStorage.getItem('b4-form-submissions') || '[]');
+        setFormSubmissions(stored);
+    }, []);
+
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleString('en-IN', {
             year: 'numeric',

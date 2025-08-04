@@ -79,18 +79,29 @@ const Header = () => {
                             to="home"
                             smooth={true}
                             duration={500}
-                            className="cursor-pointer group flex items-center"
-                            aria-label="B4 Brothers Infratech PVT LTD homepage"
+                            className="cursor-pointer group flex items-center gap-3"
+                            aria-label="B4Brothers homepage"
                         >
-                            {/* Simplified Single Logo Display */}
-                            <div className="flex items-center">
+                            <div className="flex items-center gap-3">
                                 <img
-                                    src={logoFull}
-                                    alt="B4 Brothers Infratech PVT LTD"
+                                    src={logoIcon}
+                                    alt="B4Brothers Logo"
                                     className={`transition-all duration-500 flex-shrink-0 ${
-                                        isScrolled ? 'h-10' : 'h-12'
+                                        isScrolled ? 'h-10 w-10' : 'h-12 w-12'
                                     }`}
                                 />
+                                <div className="flex flex-col">
+                                    <div className={`font-montserrat font-bold text-secondary-800 transition-all duration-500 ${
+                                        isScrolled ? 'text-lg' : 'text-xl'
+                                    }`}>
+                                        B4Brothers
+                                    </div>
+                                    <div className={`font-inter font-medium text-primary-600 transition-all duration-500 ${
+                                        isScrolled ? 'text-xs' : 'text-sm'
+                                    }`}>
+                                        Believe in best builds bold
+                                    </div>
+                                </div>
                             </div>
                         </Link>
 

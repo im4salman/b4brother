@@ -107,14 +107,14 @@ export const AnalyticsProvider = ({ children }) => {
         }));
     }, []);
 
-    const trackPageView = (page) => {
+    const trackPageView = useCallback((page) => {
         const visitorId = getVisitorId();
         const timestamp = new Date().toISOString();
-        
+
         setAnalytics(prev => {
             const newUniqueVisitors = new Set(prev.uniqueVisitors);
             newUniqueVisitors.add(visitorId);
-            
+
             return {
                 ...prev,
                 uniqueVisitors: newUniqueVisitors,
@@ -126,7 +126,7 @@ export const AnalyticsProvider = ({ children }) => {
                 }]
             };
         });
-    };
+    }, []);
 
     const clearAnalytics = () => {
         setAnalytics({

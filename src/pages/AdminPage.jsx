@@ -25,11 +25,17 @@ const AdminPage = ({ onLogout }) => {
     const [filter, setFilter] = useState('all');
     const [dateFilter, setDateFilter] = useState('all');
     const [formSubmissions, setFormSubmissions] = useState([]);
+    const [testimonials, setTestimonials] = useState([]);
+    const [showTestimonialForm, setShowTestimonialForm] = useState(false);
+    const [editingTestimonial, setEditingTestimonial] = useState(null);
 
     // Load form submissions from localStorage
     useEffect(() => {
         const stored = JSON.parse(localStorage.getItem('b4-form-submissions') || '[]');
         setFormSubmissions(stored);
+
+        const storedTestimonials = JSON.parse(localStorage.getItem('b4-testimonials') || '[]');
+        setTestimonials(storedTestimonials);
     }, []);
 
     const formatDate = (dateString) => {

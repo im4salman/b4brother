@@ -177,23 +177,30 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
                   </div>
 
                   {/* Bold Action Buttons */}
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-2xl mx-auto animate-bounce-soft" style={{animationDelay: '1.8s'}}>
+                  <div className="flex flex-col sm:flex-row gap-6 justify-center items-center max-w-3xl mx-auto animate-bounce-soft" style={{animationDelay: '1.8s'}}>
                     <a
                       href="#contact"
-                      className="bg-gradient-to-r from-primary-500 to-accent-500 hover:from-primary-600 hover:to-accent-600 text-white font-bold py-5 px-10 rounded-2xl transition-all duration-300 inline-flex items-center justify-center group shadow-2xl hover:shadow-glow-strong transform hover:scale-110 text-lg"
+                      className="btn-bold-hover bg-gradient-to-r from-primary-500 via-accent-500 to-primary-500 hover:from-accent-600 hover:via-primary-600 hover:to-accent-600 text-white font-black py-6 px-12 rounded-3xl transition-all duration-500 inline-flex items-center justify-center group shadow-2xl hover:shadow-glow-strong transform hover:scale-110 text-xl tracking-wider border-2 border-white/20"
                       aria-label="Get your bold construction quote"
                     >
-                      🚀 BUILD BOLD NOW
-                      <svg className="w-6 h-6 ml-3 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      ⚡ BUILD BOLD NOW ⚡
+                      <svg className="w-7 h-7 ml-4 transform group-hover:translate-x-3 group-hover:rotate-12 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                       </svg>
                     </a>
                     <a
                       href="tel:+919733221114"
-                      className="border-3 border-primary-400 hover:bg-primary-400 text-primary-400 hover:text-black font-bold py-5 px-8 rounded-2xl transition-all duration-300 inline-flex items-center justify-center backdrop-blur-sm hover:shadow-glow transform hover:scale-105 text-lg"
+                      className="btn-bold-hover border-4 border-primary-400 hover:bg-primary-400 text-primary-400 hover:text-black font-black py-6 px-10 rounded-3xl transition-all duration-500 inline-flex items-center justify-center backdrop-blur-md hover:shadow-2xl transform hover:scale-105 text-lg tracking-wide"
                       aria-label="Call for bold construction consultation"
                     >
-                      📞 +91 97332 21114
+                      📞 CALL NOW
+                    </a>
+                    <a
+                      href="#projects"
+                      className="btn-bold-hover border-4 border-white/40 hover:bg-white/20 text-white font-black py-6 px-8 rounded-3xl transition-all duration-500 inline-flex items-center justify-center backdrop-blur-md hover:shadow-xl transform hover:scale-105 text-lg"
+                      aria-label="View bold construction portfolio"
+                    >
+                      🏗️ PORTFOLIO
                     </a>
                   </div>
 

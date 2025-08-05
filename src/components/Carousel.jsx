@@ -120,13 +120,13 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
                       <div className="space-y-8">
                         <div className="space-y-4 animate-slide-up" style={{animationDelay: '0.2s'}}>
                           <h1 className="font-inter text-white leading-tight">
-                            <div className="text-5xl md:text-7xl lg:text-8xl font-light mb-4">
+                            <div className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-light mb-2 md:mb-4">
                               <span className="font-extralight">Believe in</span>
                             </div>
-                            <div className="text-6xl md:text-8xl lg:text-9xl font-bold mb-4">
+                            <div className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-bold mb-2 md:mb-4">
                               <span className="bg-gradient-to-r from-primary-300 via-primary-400 to-accent-400 bg-clip-text text-transparent">Best Builds</span>
                             </div>
-                            <div className="text-7xl md:text-9xl lg:text-[10rem] font-black tracking-tight">
+                            <div className="text-5xl sm:text-7xl md:text-9xl lg:text-[10rem] font-black tracking-tight">
                               <span className="text-white drop-shadow-2xl">BOLD</span>
                             </div>
                           </h1>

@@ -17,13 +17,7 @@ export default defineConfig({
       }
     },
     // Compress assets
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true, // Remove console.logs in production
-        drop_debugger: true
-      }
-    },
+    minify: 'esbuild',
     // Reduce chunk size warning limit
     chunkSizeWarningLimit: 1600
   },

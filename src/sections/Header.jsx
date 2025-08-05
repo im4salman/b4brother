@@ -189,7 +189,7 @@ const Header = () => {
                                     ) : (
                                         <Link
                                             to={item.path}
-                                            className="block text-secondary-700 hover:text-primary-600 hover:bg-gray-50 font-medium text-lg py-3 px-4 rounded-lg transition-colors duration-300"
+                                            className="block text-secondary-700 hover:text-primary-600 hover:bg-gray-50 font-medium text-lg py-4 px-4 rounded-lg transition-colors duration-300 touch-manipulation min-h-[44px]"
                                             spy={true}
                                             smooth={true}
                                             offset={-100}

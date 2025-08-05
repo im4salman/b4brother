@@ -180,7 +180,7 @@ const Header = () => {
                                     {item.isExternal ? (
                                         <button
                                             onClick={() => handleNavigation(item.path)}
-                                            className="block w-full text-left text-secondary-700 hover:text-primary-600 hover:bg-gray-50 font-medium text-lg py-3 px-4 rounded-lg transition-colors duration-300"
+                                            className="block w-full text-left text-secondary-700 hover:text-primary-600 hover:bg-gray-50 font-medium text-lg py-4 px-4 rounded-lg transition-colors duration-300 touch-manipulation min-h-[44px]"
                                             role="menuitem"
                                             tabIndex={isMenuOpen ? 0 : -1}
                                         >

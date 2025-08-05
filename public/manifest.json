@@ -1,0 +1,25 @@
+{
+  "name": "B4Brothers - Premier Construction Services",
+  "short_name": "B4Brothers",
+  "description": "Professional construction, renovation, and design services. Believe in best builds bold.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#F59E0B",
+  "orientation": "portrait-primary",
+  "categories": ["construction", "building", "business"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/src/assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/src/assets/b4-logo-bold.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml"
+    }
+  ]
+}

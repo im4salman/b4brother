@@ -60,7 +60,8 @@ const media = [
 
 function App() {
   return (
-    <HelmetProvider>
+    <ErrorBoundary>
+      <HelmetProvider>
       <div className="min-h-screen">
         <Helmet>
           <title>B4 Brothers Infratech PVT LTD - Premier Building Services | 5+ Years Experience</title>
@@ -152,7 +153,8 @@ function App() {
         
         <Footer/>
       </div>
-    </HelmetProvider>
+      </HelmetProvider>
+    </ErrorBoundary>
   )
 }
 

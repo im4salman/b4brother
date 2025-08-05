@@ -140,10 +140,10 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
                         {/* Company Identity */}
                         <div className="space-y-6 animate-fade-in" style={{animationDelay: '0.8s'}}>
                           <div className="space-y-2">
-                            <h2 className="text-4xl md:text-5xl font-bold text-white font-montserrat">
+                            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white font-montserrat">
                               <span className="text-primary-400">B4</span><span className="font-light">Brothers</span>
                             </h2>
-                            <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed max-w-2xl">
+                            <p className="text-lg sm:text-xl md:text-2xl text-white/80 font-light leading-relaxed max-w-2xl">
                               Crafting architectural excellence through innovative design and
                               <span className="text-primary-300 font-medium"> meticulous craftsmanship</span>
                             </p>

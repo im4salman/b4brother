@@ -80,6 +80,7 @@ module.exports = {
         'pulse-slow': 'pulse 3s infinite',
         'bounce-soft': 'bounceSoft 2s ease-in-out infinite',
         'glow-pulse': 'glowPulse 2s ease-in-out infinite',
+        'spin': 'spin 1s linear infinite',
       },
       keyframes: {
         type: {

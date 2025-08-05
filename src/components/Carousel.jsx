@@ -48,7 +48,7 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
 
   if (mediaItems.length === 0) {
     return (
-      <div className="w-full h-[calc(100vh-72px)] mt-[72px] bg-gray-200 flex items-center justify-center">
+      <div className="w-full h-screen pt-20 md:pt-24 bg-gray-200 flex items-center justify-center">
         <p className="text-gray-500">No media items to display</p>
       </div>
     );

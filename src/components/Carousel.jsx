@@ -55,8 +55,8 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
   }
 
   return (
-    <div 
-      className="relative w-full h-[calc(100vh-72px)] overflow-hidden mt-[72px]"
+    <div
+      className="relative w-full h-screen overflow-hidden pt-20 md:pt-24"
       role="region"
       aria-label="Featured projects carousel"
     >

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAnalytics } from '../contexts/AnalyticsContext';
 
-const whatsappNumber = '9733221114'; 
+const whatsappNumber = '919733221114'; 
 // e.g. '919876543210' for +91 9876543210
 
 const Modal = ({ isOpen, onClose }) => {
@@ -34,6 +34,19 @@ const Modal = ({ isOpen, onClose }) => {
     e.preventDefault();
 
     const { name, phone, email, query } = formData;
+
+    // Store form data locally
+    const submissionData = {
+      id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+      type: 'Quick Contact Modal',
+      timestamp: new Date().toISOString(),
+      data: formData
+    };
+
+    // Save to localStorage
+    const existingSubmissions = JSON.parse(localStorage.getItem('b4-form-submissions') || '[]');
+    existingSubmissions.push(submissionData);
+    localStorage.setItem('b4-form-submissions', JSON.stringify(existingSubmissions));
 
     // Track form submission
     trackFormSubmission('contact_enquiry', formData);

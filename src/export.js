@@ -23,12 +23,12 @@ export const allservices = [
     title: "Building Renovation",
     about:
       "Expert renovation services to upgrade and modernize existing structures, enhancing functionality and aesthetic appeal.",
-    details: `Our Building Renovation service offers:
-• Comprehensive structural assessments
-• Modern material upgrades and finishes
-• Energy efficiency & sustainability improvements
-• Complete interior remodeling and restoration
-• Customized project timeline & budget planning`,
+    details: `Our Building Renovation service includes:
+• Detailed structural assessment and planning
+• Quality material upgrades and modern finishes
+• Energy-efficient improvements
+• Interior remodeling and space optimization
+• Clear timeline and transparent pricing`,
     insights: [
       "⭐️ Over 120 renovation projects completed successfully",
       "⭐️ Average project delivery 10% ahead of schedule",
@@ -45,7 +45,7 @@ export const allservices = [
     icon: construction,
     title: "Construction Services",
     about:
-      "Comprehensive construction solutions, from project planning to execution, ensuring high-quality and timely completion.",
+      "Complete construction services from planning to completion, with focus on quality workmanship and on-time delivery.",
     details: `Our Construction Services include:
 • End-to-end project planning & scheduling
 • Resource allocation & on-site management
@@ -68,7 +68,7 @@ export const allservices = [
     icon: design,
     title: "Design & Planning",
     about:
-      "Professional design and planning services to create efficient and innovative spaces tailored to client needs.",
+      "Professional design and planning services to create functional, beautiful spaces that meet your specific requirements.",
     details: `Design & Planning covers:
 • Conceptual sketches & feasibility studies
 • 3D modeling & photorealistic renderings

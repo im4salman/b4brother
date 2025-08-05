@@ -6,7 +6,7 @@ export const slideUpVariants = {
     y: 0, // Final position
     opacity: 1, // Fully visible
     transition: {
-      staggerChildern: 2,
+      staggerChildren: 0.2,
       duration: 1.5, // Duration of the slide-up animation
       ease: "easeOut",
     },
@@ -19,7 +19,7 @@ export const zoomInVariants = {
     scale: 1, // Full size
     opacity: 1, // Fully visible
     transition: {
-      staggerChildern: 2,
+      staggerChildren: 0.2,
       duration: 1.2, // Duration of the zoom-in animation
       ease: "easeOut",
     },

@@ -25,7 +25,16 @@ const Testimonials = () => {
   const [isPlaying, setIsPlaying] = useState(true);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
-  const len = clients.length;
+  const [allTestimonials, setAllTestimonials] = useState(clients);
+  const len = allTestimonials.length;
+
+  // Load stored testimonials
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem('b4-testimonials') || '[]');
+    if (stored.length > 0) {
+      setAllTestimonials([...clients, ...stored]);
+    }
+  }, []);
 
   const next = useCallback(() => setIdx((i) => (i + 1) % len), [len]);
   const prev = useCallback(() => setIdx((i) => (i - 1 + len) % len), [len]);
@@ -80,7 +89,7 @@ const Testimonials = () => {
   const goTo = (index) => setIdx(index);
   const togglePlayPause = () => setIsPlaying(!isPlaying);
 
-  const client = clients[idx];
+  const client = allTestimonials[idx];
   const stars = client.rating ?? 5;
   const initials = client.name
     .split(' ')
@@ -124,7 +133,7 @@ const Testimonials = () => {
             about their experience working with B4 Brothers Infratech PVT LTD.
           </p>
           <p className="text-primary-400 text-xl font-bold italic mt-4">
-            "Believe in best builds"
+            "Believe in best builds bold"
           </p>
         </motion.div>
 

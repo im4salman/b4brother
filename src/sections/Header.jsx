@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaBars, FaXmark, FaPhone, FaWhatsapp } from 'react-icons/fa6';
 import { Link } from 'react-scroll';
 import Modal from './Modal';
-import logoFull from '../assets/b4-brothers-logo-improved.svg';
+import logoIcon from '../assets/b4-logo-bold.svg';
 import '../components/LogoStyles.css';
 import { useAnalytics } from '../contexts/AnalyticsContext';
 
@@ -61,126 +61,100 @@ const Header = () => {
     return (
         <>
             <header
-                className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 bg-white/95 backdrop-blur-lg border-b border-gray-100 ${
+                className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
                     isScrolled
-                        ? 'shadow-hard py-1.5'
-                        : 'shadow-medium py-2.5'
+                        ? 'bg-white/95 backdrop-blur-lg shadow-lg py-3'
+                        : 'bg-white/90 backdrop-blur-md shadow-sm py-4'
                 }`}
                 role="banner"
             >
-                <div className="container mx-auto px-4 lg:px-8">
-                    <nav 
+                <div className="container mx-auto px-6 lg:px-8">
+                    <nav
                         className="flex justify-between items-center"
                         role="navigation"
                         aria-label="Main navigation"
                     >
-                        {/* Logo */}
+                        {/* Clean Logo */}
                         <Link
                             to="home"
                             smooth={true}
                             duration={500}
-                            className="cursor-pointer group flex items-center"
-                            aria-label="B4 Brothers Infratech PVT LTD homepage"
+                            className="cursor-pointer group flex items-center gap-4"
+                            aria-label="B4Brothers homepage"
                         >
-                            {/* Simplified Single Logo Display */}
-                            <div className="flex items-center">
-                                <img
-                                    src={logoFull}
-                                    alt="B4 Brothers Infratech PVT LTD"
-                                    className={`transition-all duration-500 flex-shrink-0 ${
-                                        isScrolled ? 'h-10' : 'h-12'
-                                    }`}
-                                />
+                            <img
+                                src={logoIcon}
+                                alt="B4Brothers Logo"
+                                className={`transition-all duration-500 ${
+                                    isScrolled ? 'h-12 w-12' : 'h-14 w-14'
+                                }`}
+                            />
+                            <div className="flex flex-col">
+                                <div className={`font-bold text-secondary-900 transition-all duration-500 ${
+                                    isScrolled ? 'text-xl' : 'text-2xl'
+                                }`}>
+                                    <span className="text-primary-600">B4</span>Brothers
+                                </div>
+                                <div className={`font-medium text-secondary-600 transition-all duration-500 ${
+                                    isScrolled ? 'text-xs' : 'text-sm'
+                                }`}>
+                                    Believe in best builds bold
+                                </div>
                             </div>
                         </Link>
 
-                        {/* Desktop Navigation & CTA Buttons - Right Side */}
-                        <div className="hidden lg:flex items-center gap-4 xl:gap-6">
+                        {/* Desktop Navigation */}
+                        <div className="hidden lg:flex items-center gap-8">
                             {/* Navigation Menu */}
-                            <ul className="flex gap-6 xl:gap-8 items-center" role="menubar">
+                            <ul className="flex items-center gap-8" role="menubar">
                                 {navItem.map((item, index) => (
                                     <li key={index} role="none">
                                         {item.isExternal ? (
                                             <button
                                                 onClick={() => handleNavigation(item.path)}
-                                                className="nav-link text-secondary-700 hover:text-primary-500 font-inter font-medium uppercase tracking-wide text-sm transition-all duration-300 cursor-pointer relative group py-2 px-3 rounded-lg hover:bg-primary-50"
+                                                className="text-secondary-700 hover:text-primary-600 font-medium text-sm transition-colors duration-300 py-2 px-3"
                                                 role="menuitem"
                                                 tabIndex={0}
                                             >
                                                 {item.link}
-                                                <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-primary-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
                                             </button>
                                         ) : (
                                             <Link
                                                 to={item.path}
-                                                className="nav-link text-secondary-700 hover:text-primary-500 font-inter font-medium uppercase tracking-wide text-sm transition-all duration-300 cursor-pointer relative group py-2 px-3 rounded-lg hover:bg-primary-50"
+                                                className="text-secondary-700 hover:text-primary-600 font-medium text-sm transition-colors duration-300 py-2 px-3"
                                                 spy={true}
                                                 smooth={true}
                                                 offset={-100}
                                                 duration={500}
-                                                activeClass="text-primary-500 bg-primary-50"
+                                                activeClass="text-primary-600"
                                                 role="menuitem"
                                                 tabIndex={0}
                                             >
                                                 {item.link}
-                                                <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-primary-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
                                             </Link>
                                         )}
                                     </li>
                                 ))}
                             </ul>
 
-                            {/* Divider */}
-                            <div className="w-px h-6 bg-gray-200"></div>
-
-                            {/* CTA Buttons */}
-                            <div className="flex items-center gap-2 xl:gap-3">
-                                <a
-                                    href="tel:+919733221114"
-                                    onClick={() => trackClick('Phone Call', 'Header Desktop')}
-                                    className="flex items-center gap-2 text-secondary-600 hover:text-primary-500 font-medium transition-all duration-300 py-2 px-2 rounded-lg hover:bg-gray-50"
-                                    aria-label="Call us at +91 97332 21114"
-                                >
-                                    <div className="w-7 h-7 bg-primary-100 rounded-full flex items-center justify-center">
-                                        <FaPhone className="w-3 h-3 text-primary-500" />
-                                    </div>
-                                    <div className="hidden xl:block">
-                                        <div className="text-xs text-secondary-500 uppercase tracking-wide">Call</div>
-                                        <div className="text-xs font-semibold">+91 97332 21114</div>
-                                    </div>
-                                </a>
-
-                                <button
-                                    onClick={() => {
-                                        trackClick('Free Quote Button', 'Header Desktop');
-                                        openModal();
-                                    }}
-                                    className="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 shadow-sm hover:shadow-md text-sm flex items-center gap-2"
-                                    aria-label="Get free quote"
-                                >
-                                    <FaWhatsapp className="w-4 h-4" />
-                                    <span className="hidden xl:inline">Free Quote</span>
-                                    <span className="xl:hidden">Quote</span>
-                                </button>
-                            </div>
+                            {/* Simple Quote Button */}
+                            <button
+                                onClick={() => {
+                                    trackClick('Free Quote Button', 'Header Desktop');
+                                    openModal();
+                                }}
+                                className="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 text-sm"
+                                aria-label="Get free quote"
+                            >
+                                Free Quote
+                            </button>
                         </div>
 
-                        {/* Mobile & Tablet Actions */}
-                        <div className="lg:hidden flex items-center gap-2 sm:gap-3">
-                            {/* Quick Call Button */}
-                            <a
-                                href="tel:+919733221114"
-                                onClick={() => trackClick('Phone Call', 'Header Mobile')}
-                                className="w-10 h-10 bg-primary-100 hover:bg-primary-500 rounded-full flex items-center justify-center transition-all duration-300 group"
-                                aria-label="Call us"
-                            >
-                                <FaPhone className="w-4 h-4 text-primary-500 group-hover:text-white transition-colors duration-300" />
-                            </a>
-
-                            {/* Mobile Menu Button */}
+                        {/* Mobile Menu Button */}
+                        <div className="lg:hidden">
                             <button
                                 onClick={toggleMenu}
-                                className="w-10 h-10 bg-secondary-100 hover:bg-primary-500 text-secondary-800 hover:text-white rounded-lg flex items-center justify-center transition-all duration-300 focus:bg-primary-50"
+                                className="w-12 h-12 bg-gray-100 hover:bg-gray-200 text-secondary-800 rounded-lg flex items-center justify-center transition-colors duration-300 touch-manipulation"
                                 aria-label="Toggle navigation menu"
                                 aria-expanded={isMenuOpen}
                                 aria-controls="mobile-menu"
@@ -194,33 +168,28 @@ const Header = () => {
                 {/* Mobile Menu */}
                 <div
                     id="mobile-menu"
-                    className={`lg:hidden transition-all duration-500 overflow-hidden bg-white/95 backdrop-blur-lg border-t border-gray-200 ${
+                    className={`lg:hidden transition-all duration-500 overflow-hidden bg-white border-t border-gray-200 ${
                         isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
                     }`}
                     aria-hidden={!isMenuOpen}
                 >
-                    <div className="container mx-auto px-4 py-6">
+                    <div className="container mx-auto px-6 py-6">
                         <ul className="flex flex-col gap-2 mb-6" role="menu">
                             {navItem.map((item, index) => (
                                 <li key={index} role="none">
                                     {item.isExternal ? (
                                         <button
                                             onClick={() => handleNavigation(item.path)}
-                                            className="block w-full text-left text-secondary-700 hover:text-primary-500 hover:bg-primary-50 font-medium text-lg py-4 px-4 rounded-xl transition-all duration-300 border-l-4 border-transparent hover:border-primary-500"
+                                            className="block w-full text-left text-secondary-700 hover:text-primary-600 hover:bg-gray-50 font-medium text-lg py-4 px-4 rounded-lg transition-colors duration-300 touch-manipulation min-h-[44px]"
                                             role="menuitem"
                                             tabIndex={isMenuOpen ? 0 : -1}
                                         >
-                                            <div className="flex items-center justify-between">
-                                                <span>{item.link}</span>
-                                                <svg className="w-5 h-5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                                </svg>
-                                            </div>
+                                            {item.link}
                                         </button>
                                     ) : (
                                         <Link
                                             to={item.path}
-                                            className="block text-secondary-700 hover:text-primary-500 hover:bg-primary-50 font-medium text-lg py-4 px-4 rounded-xl transition-all duration-300 border-l-4 border-transparent hover:border-primary-500"
+                                            className="block text-secondary-700 hover:text-primary-600 hover:bg-gray-50 font-medium text-lg py-4 px-4 rounded-lg transition-colors duration-300 touch-manipulation min-h-[44px]"
                                             spy={true}
                                             smooth={true}
                                             offset={-100}
@@ -229,50 +198,27 @@ const Header = () => {
                                             role="menuitem"
                                             tabIndex={isMenuOpen ? 0 : -1}
                                         >
-                                            <div className="flex items-center justify-between">
-                                                <span>{item.link}</span>
-                                                <svg className="w-5 h-5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                                </svg>
-                                            </div>
+                                            {item.link}
                                         </Link>
                                     )}
                                 </li>
                             ))}
                         </ul>
 
-                        {/* Mobile Contact Section */}
-                        <div className="bg-gradient-to-r from-primary-50 to-accent-50 rounded-2xl p-4 space-y-4">
-                            <div className="text-center">
-                                <h3 className="font-semibold text-secondary-800 mb-1">Ready to Build?</h3>
-                                <p className="text-sm text-secondary-600">Get your free quote today</p>
-                            </div>
-                            
-                            <div className="grid grid-cols-2 gap-3">
-                                <a
-                                    href="tel:+919733221114"
-                                    onClick={() => trackClick('Phone Call', 'Mobile Menu')}
-                                    className="flex flex-col items-center gap-2 bg-white text-secondary-700 hover:text-primary-500 font-medium py-3 px-4 rounded-xl hover:bg-gray-50 transition-all duration-300 border border-gray-200"
-                                    tabIndex={isMenuOpen ? 0 : -1}
-                                    aria-label="Call us at +91 97332 21114"
-                                >
-                                    <FaPhone className="w-5 h-5" />
-                                    <span className="text-sm">Call Now</span>
-                                </a>
-                                <button
-                                    onClick={() => {
-                                        trackClick('Free Quote Button', 'Mobile Menu');
-                                        closeMenu();
-                                        openModal();
-                                    }}
-                                    className="flex flex-col items-center gap-2 bg-primary-500 hover:bg-primary-600 text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 shadow-medium"
-                                    tabIndex={isMenuOpen ? 0 : -1}
-                                    aria-label="Get free quote"
-                                >
-                                    <FaWhatsapp className="w-5 h-5" />
-                                    <span className="text-sm">Get Quote</span>
-                                </button>
-                            </div>
+                        {/* Mobile CTA */}
+                        <div className="bg-gray-50 rounded-lg p-4">
+                            <button
+                                onClick={() => {
+                                    trackClick('Free Quote Button', 'Mobile Menu');
+                                    closeMenu();
+                                    openModal();
+                                }}
+                                className="w-full bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-300"
+                                tabIndex={isMenuOpen ? 0 : -1}
+                                aria-label="Get free quote"
+                            >
+                                Get Free Quote
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import LazyImage from "./LazyImage";
+import './HeroAnimations.css';
 
 const Carousel = ({ mediaItems = [], autoPlay = true }) => {
   const [current, setCurrent] = useState(0);
@@ -47,15 +48,15 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
 
   if (mediaItems.length === 0) {
     return (
-      <div className="w-full h-[calc(100vh-72px)] mt-[72px] bg-gray-200 flex items-center justify-center">
+      <div className="w-full h-screen pt-20 md:pt-24 bg-gray-200 flex items-center justify-center">
         <p className="text-gray-500">No media items to display</p>
       </div>
     );
   }
 
   return (
-    <div 
-      className="relative w-full h-[calc(100vh-72px)] overflow-hidden mt-[72px]"
+    <div
+      className="relative w-full h-screen overflow-hidden pt-20 md:pt-24"
       role="region"
       aria-label="Featured projects carousel"
     >
@@ -93,48 +94,149 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
             </>
           )}
 
-          {/* Hero Content - Only on first slide */}
+          {/* Award-Winning Hero Content - Only on first slide */}
           {index === current && index === 0 && (
-            <div className="absolute inset-0 flex items-center justify-start px-6 lg:px-32 z-30">
-              <div className="glass bg-black/70 backdrop-blur-sm p-6 md:p-8 rounded-2xl w-full max-w-5xl animate-slide-up">
-                <h1 className="text-accent mb-2">Welcome to</h1>
-                <h1 className="heading-primary text-white mb-2">B4 Brothers</h1>
-                <h2 className="text-xl md:text-2xl font-semibold text-gray-300 uppercase tracking-wider mb-4">
-                  Infratech PVT LTD
-                </h2>
-                <div className="w-[120px] h-[6px] bg-primary-500 mb-4 rounded-full" />
-                <p className="text-primary-400 text-2xl md:text-3xl font-bold mb-6 tracking-wide">
-                  "Believe in best builds"
-                </p>
-                <p className="text-white text-xl md:text-2xl italic mb-6 font-light">
-                  Your Trusted Partner in Construction for Over 5+ Years
-                </p>
-                <p className="text-white/90 mb-4 text-lg leading-relaxed">
-                  With a wealth of experience in the construction industry, we lead the way in delivering 
-                  quality, safety, and reliability with guaranteed results.
-                </p>
-                <p className="text-white/90 mb-8 text-lg leading-relaxed">
-                  Explore our extensive portfolio and discover why we are the go-to builders for 
-                  projects across the region.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <a
-                    href="#about"
-                    className="btn-primary inline-flex items-center justify-center group"
-                    aria-label="Learn more about B4 Brothers Infratech PVT LTD"
-                  >
-                    Learn More About Us
-                    <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </a>
-                  <a
-                    href="tel:+919733221114"
-                    className="btn-outline inline-flex items-center justify-center"
-                    aria-label="Call us for free consultation"
-                  >
-                    📞 Call Now: +91 97332 21114
-                  </a>
+            <div className="absolute inset-0 z-30">
+              {/* Sophisticated Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black/70"></div>
+
+              {/* Premium Hero Layout */}
+              <div className="relative h-full flex items-center">
+                <div className="container mx-auto px-6 lg:px-8">
+                  <div className="grid lg:grid-cols-12 gap-8 items-center min-h-[80vh]">
+
+                    {/* Left Column - Main Content */}
+                    <div className="lg:col-span-7 space-y-12">
+
+                      {/* Premium Badge */}
+                      <div className="animate-fade-in">
+                        <div className="inline-flex items-center space-x-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl px-6 py-3">
+                          <div className="w-2 h-2 bg-primary-400 rounded-full animate-pulse"></div>
+                          <span className="text-white/90 text-sm font-medium tracking-wide">Premier Construction Excellence</span>
+                        </div>
+                      </div>
+
+                      {/* Sophisticated Typography */}
+                      <div className="space-y-8">
+                        <div className="space-y-4 animate-slide-up" style={{animationDelay: '0.2s'}}>
+                          <h1 className="font-inter text-white leading-tight">
+                            <div className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-light mb-2 md:mb-4">
+                              <span className="font-extralight">Believe in</span>
+                            </div>
+                            <div className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-bold mb-2 md:mb-4">
+                              <span className="bg-gradient-to-r from-primary-300 via-primary-400 to-accent-400 bg-clip-text text-transparent">Best Builds</span>
+                            </div>
+                            <div className="text-5xl sm:text-7xl md:text-9xl lg:text-[10rem] font-black tracking-tight">
+                              <span className="text-white drop-shadow-2xl">BOLD</span>
+                            </div>
+                          </h1>
+                        </div>
+
+                        {/* Elegant Separator */}
+                        <div className="animate-scale-in" style={{animationDelay: '0.6s'}}>
+                          <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-400 to-transparent"></div>
+                        </div>
+
+                        {/* Company Identity */}
+                        <div className="space-y-6 animate-fade-in" style={{animationDelay: '0.8s'}}>
+                          <div className="space-y-2">
+                            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white font-montserrat">
+                              <span className="text-primary-400">B4</span><span className="font-light">Brothers</span>
+                            </h2>
+                            <p className="text-lg sm:text-xl md:text-2xl text-white/80 font-light leading-relaxed max-w-2xl">
+                              Crafting architectural excellence through innovative design and
+                              <span className="text-primary-300 font-medium"> meticulous craftsmanship</span>
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Premium CTA Section */}
+                        <div className="space-y-6 animate-slide-up" style={{animationDelay: '1.2s'}}>
+                          <div className="flex flex-col sm:flex-row gap-4">
+                            <a
+                              href="#contact"
+                              className="group relative bg-primary-500 hover:bg-primary-600 text-white font-semibold py-4 px-8 rounded-xl overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                              aria-label="Start your construction journey"
+                            >
+                              <span className="relative z-10 flex items-center">
+                                Start Your Journey
+                                <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                              </span>
+                              <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-accent-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </a>
+                            <a
+                              href="tel:+919733221114"
+                              className="border-2 border-white/30 hover:border-white text-white hover:bg-white/10 font-semibold py-4 px-8 rounded-xl transition-all duration-300 backdrop-blur-sm"
+                              aria-label="Call for consultation"
+                            >
+                              📞 +91 97332 21114
+                            </a>
+                          </div>
+
+                          {/* Trust Elements */}
+                          <div className="flex items-center space-x-6 text-white/70 text-sm">
+                            <div className="flex items-center space-x-2">
+                              <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+                              <span>Licensed & Insured</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+                              <span>5+ Years Excellence</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+                              <span>150+ Projects</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right Column - Elegant Stats */}
+                    <div className="lg:col-span-5 space-y-8">
+                      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 animate-fade-in" style={{animationDelay: '1.0s'}}>
+                        <div className="grid grid-cols-2 gap-8">
+                          <div className="text-center space-y-2">
+                            <div className="text-4xl font-bold text-primary-400">150+</div>
+                            <div className="text-white/80 text-sm uppercase tracking-wide">Projects</div>
+                          </div>
+                          <div className="text-center space-y-2">
+                            <div className="text-4xl font-bold text-accent-400">4.9★</div>
+                            <div className="text-white/80 text-sm uppercase tracking-wide">Rating</div>
+                          </div>
+                          <div className="text-center space-y-2">
+                            <div className="text-4xl font-bold text-primary-400">5+</div>
+                            <div className="text-white/80 text-sm uppercase tracking-wide">Years</div>
+                          </div>
+                          <div className="text-center space-y-2">
+                            <div className="text-4xl font-bold text-accent-400">24/7</div>
+                            <div className="text-white/80 text-sm uppercase tracking-wide">Support</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Services Preview */}
+                      <div className="space-y-4 animate-slide-up" style={{animationDelay: '1.4s'}}>
+                        <div className="text-white/90 text-lg font-medium">Our Expertise</div>
+                        <div className="space-y-3">
+                          {['Residential Construction', 'Commercial Projects', 'Interior Design', 'Renovation Services'].map((service, idx) => (
+                            <div key={idx} className="flex items-center space-x-3 text-white/70 hover:text-white transition-colors">
+                              <div className="w-1 h-1 bg-primary-400 rounded-full"></div>
+                              <span className="text-sm">{service}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <a href="#services" className="inline-flex items-center text-primary-400 hover:text-primary-300 text-sm font-medium transition-colors">
+                          View All Services
+                          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

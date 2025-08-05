@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 const AnalyticsContext = createContext();
 
@@ -30,13 +30,51 @@ export const AnalyticsProvider = ({ children }) => {
         };
     });
 
-    // Convert Set to Array for storage and back
+    // Convert Set to Array for storage and back with size management
     useEffect(() => {
         const dataToSave = {
             ...analytics,
             uniqueVisitors: Array.from(analytics.uniqueVisitors)
         };
-        localStorage.setItem('b4-analytics', JSON.stringify(dataToSave));
+
+        // Implement data rotation to prevent quota exceeded
+        const maxEntries = 1000; // Limit entries per array
+        if (dataToSave.pageViews.length > maxEntries) {
+            dataToSave.pageViews = dataToSave.pageViews.slice(-maxEntries);
+        }
+        if (dataToSave.buttonClicks.length > maxEntries) {
+            dataToSave.buttonClicks = dataToSave.buttonClicks.slice(-maxEntries);
+        }
+        if (dataToSave.formSubmissions.length > maxEntries) {
+            dataToSave.formSubmissions = dataToSave.formSubmissions.slice(-maxEntries);
+        }
+        if (dataToSave.whatsappRedirects.length > maxEntries) {
+            dataToSave.whatsappRedirects = dataToSave.whatsappRedirects.slice(-maxEntries);
+        }
+
+        try {
+            localStorage.setItem('b4-analytics', JSON.stringify(dataToSave));
+        } catch (e) {
+            if (e.name === 'QuotaExceededError') {
+                console.warn('localStorage quota exceeded, clearing old analytics data');
+                // Clear oldest data and try again
+                const reducedData = {
+                    ...dataToSave,
+                    pageViews: dataToSave.pageViews.slice(-500),
+                    buttonClicks: dataToSave.buttonClicks.slice(-500),
+                    formSubmissions: dataToSave.formSubmissions.slice(-500),
+                    whatsappRedirects: dataToSave.whatsappRedirects.slice(-500)
+                };
+                try {
+                    localStorage.setItem('b4-analytics', JSON.stringify(reducedData));
+                } catch (secondError) {
+                    console.error('Failed to save analytics data even after reduction:', secondError);
+                    localStorage.removeItem('b4-analytics');
+                }
+            } else {
+                console.error('Error saving analytics data:', e);
+            }
+        }
     }, [analytics]);
 
     const generateSessionId = () => {
@@ -52,14 +90,14 @@ export const AnalyticsProvider = ({ children }) => {
         return visitorId;
     };
 
-    const trackClick = (element, location = 'unknown') => {
+    const trackClick = useCallback((element, location = 'unknown') => {
         const visitorId = getVisitorId();
         const timestamp = new Date().toISOString();
-        
+
         setAnalytics(prev => {
             const newUniqueVisitors = new Set(prev.uniqueVisitors);
             newUniqueVisitors.add(visitorId);
-            
+
             return {
                 ...prev,
                 totalClicks: prev.totalClicks + 1,
@@ -73,12 +111,12 @@ export const AnalyticsProvider = ({ children }) => {
                 }]
             };
         });
-    };
+    }, []);
 
-    const trackFormSubmission = (formType, formData) => {
+    const trackFormSubmission = useCallback((formType, formData) => {
         const visitorId = getVisitorId();
         const timestamp = new Date().toISOString();
-        
+
         setAnalytics(prev => ({
             ...prev,
             formSubmissions: [...prev.formSubmissions, {
@@ -89,12 +127,12 @@ export const AnalyticsProvider = ({ children }) => {
                 timestamp
             }]
         }));
-    };
+    }, []);
 
-    const trackWhatsAppRedirect = (message, formData = null) => {
+    const trackWhatsAppRedirect = useCallback((message, formData = null) => {
         const visitorId = getVisitorId();
         const timestamp = new Date().toISOString();
-        
+
         setAnalytics(prev => ({
             ...prev,
             whatsappRedirects: [...prev.whatsappRedirects, {
@@ -105,16 +143,16 @@ export const AnalyticsProvider = ({ children }) => {
                 timestamp
             }]
         }));
-    };
+    }, []);
 
-    const trackPageView = (page) => {
+    const trackPageView = useCallback((page) => {
         const visitorId = getVisitorId();
         const timestamp = new Date().toISOString();
-        
+
         setAnalytics(prev => {
             const newUniqueVisitors = new Set(prev.uniqueVisitors);
             newUniqueVisitors.add(visitorId);
-            
+
             return {
                 ...prev,
                 uniqueVisitors: newUniqueVisitors,
@@ -126,9 +164,9 @@ export const AnalyticsProvider = ({ children }) => {
                 }]
             };
         });
-    };
+    }, []);
 
-    const clearAnalytics = () => {
+    const clearAnalytics = useCallback(() => {
         setAnalytics({
             totalClicks: 0,
             uniqueVisitors: new Set(),
@@ -138,19 +176,19 @@ export const AnalyticsProvider = ({ children }) => {
             buttonClicks: []
         });
         localStorage.removeItem('b4-analytics');
-    };
+    }, []);
 
-    const exportAnalytics = () => {
+    const exportAnalytics = useCallback(() => {
         const dataToExport = {
             ...analytics,
             uniqueVisitors: Array.from(analytics.uniqueVisitors),
             exportedAt: new Date().toISOString()
         };
-        
+
         const blob = new Blob([JSON.stringify(dataToExport, null, 2)], {
             type: 'application/json'
         });
-        
+
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -159,7 +197,7 @@ export const AnalyticsProvider = ({ children }) => {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-    };
+    }, [analytics]);
 
     const value = {
         analytics: {

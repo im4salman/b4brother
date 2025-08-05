@@ -24,17 +24,17 @@ const Footer = () => {
   ];
 
   const legalLinks = [
-    { name: 'Privacy Policy', href: '#' },
-    { name: 'Terms of Service', href: '#' },
-    { name: 'Cookie Policy', href: '#' },
-    { name: 'Sitemap', href: '#' },
+    { name: 'Privacy Policy', href: '/privacy-policy' },
+    { name: 'Terms of Service', href: '/terms-of-service' },
+    { name: 'Cookie Policy', href: '/cookie-policy' },
+    { name: 'Sitemap', href: '/sitemap.xml' },
   ];
 
   const socialLinks = [
-    { icon: FaFacebook, href: '#', label: 'Facebook', color: 'hover:text-blue-500' },
-    { icon: FaInstagram, href: '#', label: 'Instagram', color: 'hover:text-pink-500' },
-    { icon: FaLinkedin, href: '#', label: 'LinkedIn', color: 'hover:text-blue-600' },
-    { icon: FaTwitter, href: '#', label: 'Twitter', color: 'hover:text-blue-400' },
+    { icon: FaFacebook, href: 'https://facebook.com/b4brothers', label: 'Facebook', color: 'hover:text-blue-500' },
+    { icon: FaInstagram, href: 'https://instagram.com/b4brothers', label: 'Instagram', color: 'hover:text-pink-500' },
+    { icon: FaLinkedin, href: 'https://linkedin.com/company/b4brothers', label: 'LinkedIn', color: 'hover:text-blue-600' },
+    { icon: FaTwitter, href: 'https://twitter.com/b4brothers', label: 'Twitter', color: 'hover:text-blue-400' },
   ];
 
   const certifications = [
@@ -64,7 +64,7 @@ const Footer = () => {
                 Infratech PVT LTD
               </h4>
               <p className="text-xl font-bold italic text-primary-400 mb-4">
-                "Believe in best builds"
+                "Believe in best builds bold"
               </p>
               <p className="text-gray-300 leading-relaxed mb-6">
                 Building excellence for over 5 years. We are your trusted partner in construction,

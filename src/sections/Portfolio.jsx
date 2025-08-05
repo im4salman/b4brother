@@ -53,7 +53,7 @@ const Portfolio = () => {
               to commercial buildings, each showcasing our commitment to quality and innovation.
             </p>
             <p className="text-primary-500 text-xl font-bold italic">
-              "Believe in best builds"
+              "Believe in best builds bold"
             </p>
           </motion.div>
         </motion.div>

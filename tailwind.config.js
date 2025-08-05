@@ -6,46 +6,51 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'inter': ['Inter', 'system-ui', 'sans-serif'],
+        'inter': ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        'display': ['Playfair Display', 'Georgia', 'serif'],
+        'space': ['Space Grotesk', 'system-ui', 'sans-serif'],
         'montserrat': ['Montserrat', 'system-ui', 'sans-serif'],
         'poppins': ['Poppins', 'system-ui', 'sans-serif'],
       },
       colors: {
         primary: {
-          50: '#fefbe8',
-          100: '#fef3c7',
-          200: '#fde68a',
-          300: '#fcd34d',
-          400: '#fbbf24',
-          500: '#F59E0B', // Main yellow
+          50: '#fefaf0',
+          100: '#fdf4e1',
+          200: '#fbe8c2',
+          300: '#f8d89e',
+          400: '#f4c374',
+          500: '#F59E0B', // Main sophisticated gold
           600: '#d97706',
           700: '#b45309',
           800: '#92400e',
           900: '#78350f',
+          950: '#451a03',
         },
         secondary: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b', // Main navy
-          900: '#0f172a',
+          50: '#f9fafb',
+          100: '#f3f4f6',
+          200: '#e5e7eb',
+          300: '#d1d5db',
+          400: '#9ca3af',
+          500: '#6b7280',
+          600: '#4b5563',
+          700: '#374151',
+          800: '#1f2937', // Sophisticated charcoal
+          900: '#111827',
+          950: '#030712',
         },
         accent: {
-          50: '#fff7ed',
-          100: '#ffedd5',
-          200: '#fed7aa',
-          300: '#fdba74',
-          400: '#fb923c',
-          500: '#F97316', // Orange
+          50: '#fff8f1',
+          100: '#ffefe2',
+          200: '#ffdcc4',
+          300: '#ffc397',
+          400: '#ff9f5a',
+          500: '#F97316', // Refined orange
           600: '#ea580c',
           700: '#c2410c',
           800: '#9a3412',
           900: '#7c2d12',
+          950: '#431407',
         },
         success: {
           500: '#10b981',
@@ -68,12 +73,14 @@ module.exports = {
       animation: {
         'type': 'type 3s steps(30, end), blink .75s step-end infinite',
         'blink': 'blink .75s step-end infinite',
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-up': 'slideUp 0.5s ease-out',
+        'fade-in': 'fadeIn 0.8s ease-out forwards',
+        'slide-up': 'slideUp 0.8s ease-out forwards',
         'slide-down': 'slideDown 0.5s ease-out',
-        'scale-in': 'scaleIn 0.3s ease-out',
+        'scale-in': 'scaleIn 0.6s ease-out forwards',
         'pulse-slow': 'pulse 3s infinite',
-        'bounce-soft': 'bounceSoft 1s ease-in-out',
+        'bounce-soft': 'bounceSoft 2s ease-in-out infinite',
+        'glow-pulse': 'glowPulse 2s ease-in-out infinite',
+        'spin': 'spin 1s linear infinite',
       },
       keyframes: {
         type: {
@@ -84,11 +91,11 @@ module.exports = {
           '50%': { borderColor: 'transparent' },
         },
         fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         slideUp: {
-          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '0%': { transform: 'translateY(30px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
         slideDown: {
@@ -96,12 +103,16 @@ module.exports = {
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
         scaleIn: {
-          '0%': { transform: 'scale(0.9)', opacity: '0' },
+          '0%': { transform: 'scale(0.8)', opacity: '0' },
           '100%': { transform: 'scale(1)', opacity: '1' },
         },
         bounceSoft: {
           '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-10px)' },
+          '50%': { transform: 'translateY(-8px)' },
+        },
+        glowPulse: {
+          '0%, 100%': { boxShadow: '0 0 20px rgba(245, 158, 11, 0.4)' },
+          '50%': { boxShadow: '0 0 40px rgba(245, 158, 11, 0.8)' },
         },
       },
       boxShadow: {

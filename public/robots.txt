@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /privacy-policy.html
+Disallow: /terms-of-service.html
+
+Sitemap: https://www.b4brothers.com/sitemap.xml

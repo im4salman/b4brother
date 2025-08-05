@@ -1,6 +1,7 @@
 import './App.css'
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { useAnalytics } from './contexts/AnalyticsContext';
+import ErrorBoundary from './components/ErrorBoundary';
 import Header from './sections/Header';
 import About from './sections/About';
 import Services from './sections/Services';
@@ -59,7 +60,8 @@ const media = [
 
 function App() {
   return (
-    <HelmetProvider>
+    <ErrorBoundary>
+      <HelmetProvider>
       <div className="min-h-screen">
         <Helmet>
           <title>B4 Brothers Infratech PVT LTD - Premier Building Services | 5+ Years Experience</title>
@@ -151,7 +153,8 @@ function App() {
         
         <Footer/>
       </div>
-    </HelmetProvider>
+      </HelmetProvider>
+    </ErrorBoundary>
   )
 }
 

@@ -154,7 +154,7 @@ const Header = () => {
                         <div className="lg:hidden">
                             <button
                                 onClick={toggleMenu}
-                                className="w-10 h-10 bg-gray-100 hover:bg-gray-200 text-secondary-800 rounded-lg flex items-center justify-center transition-colors duration-300"
+                                className="w-12 h-12 bg-gray-100 hover:bg-gray-200 text-secondary-800 rounded-lg flex items-center justify-center transition-colors duration-300 touch-manipulation"
                                 aria-label="Toggle navigation menu"
                                 aria-expanded={isMenuOpen}
                                 aria-controls="mobile-menu"

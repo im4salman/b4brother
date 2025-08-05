@@ -18,14 +18,13 @@ const AdminLogin = ({ onLogin }) => {
 
         // Simulate loading
         setTimeout(() => {
-            // Simple credential check (in production, this should be more secure)
-            const validCredentials = {
-                username: 'admin',
-                password: 'b4brothers2024'
-            };
+            // Simple credential check (Note: In production, use proper backend authentication)
+            const inputHash = btoa(credentials.username + ':' + credentials.password);
+            const validHash = 'YWRtaW46YjRicm90aGVyczIwMjQ='; // Base64 encoded admin:b4brothers2024
 
-            if (credentials.username === validCredentials.username && 
-                credentials.password === validCredentials.password) {
+            if (inputHash === validHash) {
+                // Store auth token in sessionStorage (expires when browser closes)
+                sessionStorage.setItem('b4-admin-token', inputHash);
                 onLogin(true);
             } else {
                 setError('Invalid username or password');

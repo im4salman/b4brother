@@ -41,10 +41,12 @@ pool.connect((err, client, release) => {
 // Middleware
 app.use(helmet());
 app.use(cors({
-    origin: process.env.NODE_ENV === 'production' 
-        ? process.env.CORS_ORIGIN?.split(',') || ['https://b4brothersinfratech.com']
-        : ['http://localhost:3000', 'http://localhost:5173'],
-    credentials: true
+    origin: process.env.NODE_ENV === 'production'
+        ? process.env.CORS_ORIGIN?.split(',') || ['https://b4brothersinfratech.com', 'https://be2d9640cc184c4897e251252c04da26-e86bbe1269d04bfb81a894c4c.fly.dev']
+        : ['http://localhost:3000', 'http://localhost:5173', 'https://be2d9640cc184c4897e251252c04da26-e86bbe1269d04bfb81a894c4c.fly.dev'],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));

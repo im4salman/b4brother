@@ -129,7 +129,10 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
               <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black/70"></div>
 
               {/* Premium Hero Layout */}
-              <div className="relative h-full flex items-center">
+              <div
+                className="relative h-full flex items-center"
+                style={{ paddingTop: `${headerHeight}px` }}
+              >
                 <div className="container mx-auto px-6 lg:px-8">
                   <div className="grid lg:grid-cols-12 gap-8 items-center min-h-full">
 

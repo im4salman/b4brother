@@ -89,9 +89,13 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
       {mediaItems.map((item, index) => (
         <div
           key={index}
-          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-700 ${
+          className={`absolute left-0 w-full transition-opacity duration-700 ${
             index === current ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
+          style={{
+            top: `${headerHeight}px`,
+            height: `calc(100% - ${headerHeight}px)`
+          }}
           aria-hidden={index !== current}
         >
           {item.type === "image" ? (

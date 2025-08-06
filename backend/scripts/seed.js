@@ -1,59 +1,71 @@
-// Dummy Data Seed Script for B4 Brothers Backend
-const mongoose = require('mongoose');
+// PostgreSQL Dummy Data Seed Script for B4 Brothers Backend
+const { Pool } = require('pg');
 require('dotenv').config();
 
-// Import all models (assuming they're in a models directory)
-const Project = require('../models/Project');
-const Testimonial = require('../models/Testimonial');
-const FormSubmission = require('../models/FormSubmission');
-const Analytics = require('../models/Analytics');
-const News = require('../models/News');
+// PostgreSQL connection
+const pool = new Pool({
+    user: process.env.DB_USER || 'postgres',
+    host: process.env.DB_HOST || 'localhost',
+    database: process.env.DB_NAME || 'b4brothers',
+    password: process.env.DB_PASSWORD || 'password',
+    port: process.env.DB_PORT || 5432,
+});
+
+// Generate unique ID
+const generateId = () => {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+};
 
 async function seedDatabase() {
+    let client;
     try {
-        // Connect to MongoDB
-        await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/b4brothers', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        console.log('🔗 Connecting to PostgreSQL...');
+        client = await pool.connect();
         
-        console.log('📁 Connected to MongoDB for seeding');
+        console.log('📁 Connected to PostgreSQL for seeding');
 
         // Seed projects
-        await seedProjects();
+        await seedProjects(client);
         
         // Seed testimonials
-        await seedTestimonials();
+        await seedTestimonials(client);
         
         // Seed form submissions
-        await seedFormSubmissions();
+        await seedFormSubmissions(client);
         
         // Seed analytics data
-        await seedAnalytics();
+        await seedAnalytics(client);
         
         // Seed news/blog posts
-        await seedNews();
+        await seedNews(client);
         
         console.log('✅ Database seeding completed successfully!');
         
     } catch (error) {
         console.error('❌ Seeding failed:', error);
+        process.exit(1);
     } finally {
-        await mongoose.disconnect();
+        if (client) {
+            client.release();
+        }
+        await pool.end();
         console.log('📁 Database connection closed');
     }
 }
 
-async function seedProjects() {
+async function seedProjects(client) {
     try {
-        const existingProjects = await Project.countDocuments();
-        if (existingProjects > 0) {
+        const existingProjects = await client.query('SELECT COUNT(*) FROM projects');
+        if (parseInt(existingProjects.rows[0].count) > 0) {
             console.log('🏗️ Projects already exist, skipping...');
             return;
         }
 
+        console.log('🏗️ Seeding projects...');
+
         const projects = [
             {
+                id: generateId(),
                 title: 'Modern Residential Villa',
                 description: 'A luxurious 5,000 sq ft villa featuring contemporary architecture, open-plan living spaces, green roof terraces, and a comprehensive smart-home automation system.',
                 category: 'Residential',
@@ -87,6 +99,7 @@ async function seedProjects() {
                 seoDescription: 'Luxury residential villa construction with smart home features and eco-friendly design in Kolkata.'
             },
             {
+                id: generateId(),
                 title: 'Downtown Office Tower',
                 description: 'A 20-storey Class A office building featuring modern double-glass façade, LEED Gold certification, and an elegant concierge lobby with premium finishes.',
                 category: 'Commercial',
@@ -120,6 +133,7 @@ async function seedProjects() {
                 seoDescription: 'LEED Gold certified office tower construction with modern amenities in Salt Lake, Kolkata.'
             },
             {
+                id: generateId(),
                 title: 'Historic Building Renovation',
                 description: 'Complete restoration of a 1920s heritage landmark building, including comprehensive seismic retrofitting and period-correct interior restoration.',
                 category: 'Renovation',
@@ -153,6 +167,7 @@ async function seedProjects() {
                 seoDescription: 'Expert heritage building renovation and restoration services preserving historical authenticity.'
             },
             {
+                id: generateId(),
                 title: 'Luxury Apartment Complex',
                 description: 'A premium 50-unit residential complex featuring rooftop amenities, fitness center, and secure underground parking with modern lifestyle facilities.',
                 category: 'Residential',
@@ -186,6 +201,7 @@ async function seedProjects() {
                 seoDescription: 'Premium residential apartment complex with modern amenities and luxury facilities in New Town, Kolkata.'
             },
             {
+                id: generateId(),
                 title: 'Industrial Warehouse Complex',
                 description: 'Large-scale LEED Silver-certified distribution center featuring automated storage and retrieval systems with climate-controlled environments.',
                 category: 'Industrial',
@@ -220,23 +236,44 @@ async function seedProjects() {
             }
         ];
 
-        await Project.insertMany(projects);
-        console.log('🏗️ Sample projects seeded successfully');
+        for (const project of projects) {
+            await client.query(
+                `INSERT INTO projects (
+                    id, title, description, category, location, area, duration, budget, year, status,
+                    features, highlights, client_name, is_active, is_featured, display_order,
+                    tags, technologies, seo_title, seo_description, created_at
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, CURRENT_TIMESTAMP)`,
+                [
+                    project.id, project.title, project.description, project.category,
+                    project.location, project.area, project.duration, project.budget,
+                    project.year, project.status, JSON.stringify(project.features),
+                    JSON.stringify(project.highlights), project.clientName, project.isActive,
+                    project.isFeatured, project.order, JSON.stringify(project.tags),
+                    JSON.stringify(project.technologies), project.seoTitle, project.seoDescription
+                ]
+            );
+        }
+
+        console.log('✅ Sample projects seeded successfully');
     } catch (error) {
         console.error('❌ Error seeding projects:', error);
+        throw error;
     }
 }
 
-async function seedTestimonials() {
+async function seedTestimonials(client) {
     try {
-        const existingTestimonials = await Testimonial.countDocuments();
-        if (existingTestimonials > 0) {
+        const existingTestimonials = await client.query('SELECT COUNT(*) FROM testimonials');
+        if (parseInt(existingTestimonials.rows[0].count) > 0) {
             console.log('💬 Testimonials already exist, skipping...');
             return;
         }
 
+        console.log('💬 Seeding testimonials...');
+
         const testimonials = [
             {
+                id: generateId(),
                 name: 'Rajesh Kumar',
                 about: 'B4 Brothers exceeded our expectations in every way. Their attention to detail and commitment to quality is unmatched. Our villa was completed on time and within budget, with exceptional craftsmanship throughout.',
                 post: 'Villa Owner',
@@ -249,6 +286,7 @@ async function seedTestimonials() {
                 order: 1
             },
             {
+                id: generateId(),
                 name: 'Priya Sharma',
                 about: 'The renovation of our heritage building was handled with utmost care and professionalism. B4 Brothers maintained the historical integrity while adding modern amenities. Highly recommended!',
                 post: 'Heritage Trust Director',
@@ -261,6 +299,7 @@ async function seedTestimonials() {
                 order: 2
             },
             {
+                id: generateId(),
                 name: 'Amit Bhattacharya',
                 about: 'Outstanding work on our office tower project. The team was professional, efficient, and delivered a world-class building. The LEED certification was achieved without any hassles.',
                 post: 'TechCorp CEO',
@@ -273,6 +312,7 @@ async function seedTestimonials() {
                 order: 3
             },
             {
+                id: generateId(),
                 name: 'Sunita Das',
                 about: 'We are extremely satisfied with our apartment complex project. The quality of construction, timely delivery, and after-sales service has been excellent. B4 Brothers is our go-to contractor.',
                 post: 'Real Estate Developer',
@@ -285,6 +325,7 @@ async function seedTestimonials() {
                 order: 4
             },
             {
+                id: generateId(),
                 name: 'Ravi Agarwal',
                 about: 'The industrial warehouse project was completed with precision and efficiency. The automated systems integration was seamless. B4 Brothers understands industrial requirements perfectly.',
                 post: 'LogiCorp Operations Manager',
@@ -297,6 +338,7 @@ async function seedTestimonials() {
                 order: 5
             },
             {
+                id: generateId(),
                 name: 'Meera Ghosh',
                 about: 'Excellent interior design work! They transformed our office space into a modern, functional workplace. The attention to detail and creative solutions impressed our entire team.',
                 post: 'Office Manager',
@@ -310,23 +352,41 @@ async function seedTestimonials() {
             }
         ];
 
-        await Testimonial.insertMany(testimonials);
-        console.log('💬 Sample testimonials seeded successfully');
+        for (const testimonial of testimonials) {
+            await client.query(
+                `INSERT INTO testimonials (
+                    id, name, about, post, rating, location, project_type,
+                    is_active, is_featured, verification_status, display_order, created_at
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, CURRENT_TIMESTAMP)`,
+                [
+                    testimonial.id, testimonial.name, testimonial.about, testimonial.post,
+                    testimonial.rating, testimonial.location, testimonial.projectType,
+                    testimonial.isActive, testimonial.isFeatured, testimonial.verificationStatus,
+                    testimonial.order
+                ]
+            );
+        }
+
+        console.log('✅ Sample testimonials seeded successfully');
     } catch (error) {
         console.error('❌ Error seeding testimonials:', error);
+        throw error;
     }
 }
 
-async function seedFormSubmissions() {
+async function seedFormSubmissions(client) {
     try {
-        const existingSubmissions = await FormSubmission.countDocuments();
-        if (existingSubmissions > 0) {
+        const existingSubmissions = await client.query('SELECT COUNT(*) FROM form_submissions');
+        if (parseInt(existingSubmissions.rows[0].count) > 0) {
             console.log('📋 Form submissions already exist, skipping...');
             return;
         }
 
+        console.log('📋 Seeding form submissions...');
+
         const formSubmissions = [
             {
+                id: generateId(),
                 type: 'contact',
                 formData: {
                     name: 'Ankit Sharma',
@@ -343,6 +403,7 @@ async function seedFormSubmissions() {
                 visitorId: 'visitor_' + Date.now() + '_1'
             },
             {
+                id: generateId(),
                 type: 'contact',
                 formData: {
                     name: 'Deepika Patel',
@@ -359,6 +420,7 @@ async function seedFormSubmissions() {
                 visitorId: 'visitor_' + Date.now() + '_2'
             },
             {
+                id: generateId(),
                 type: 'contact',
                 formData: {
                     name: 'Rohit Mukherjee',
@@ -375,6 +437,7 @@ async function seedFormSubmissions() {
                 visitorId: 'visitor_' + Date.now() + '_3'
             },
             {
+                id: generateId(),
                 type: 'career',
                 formData: {
                     name: 'Sanjay Kumar',
@@ -390,6 +453,7 @@ async function seedFormSubmissions() {
                 visitorId: 'visitor_' + Date.now() + '_4'
             },
             {
+                id: generateId(),
                 type: 'quote',
                 formData: {
                     name: 'Kavya Singh',
@@ -407,22 +471,35 @@ async function seedFormSubmissions() {
             }
         ];
 
-        await FormSubmission.insertMany(formSubmissions);
-        console.log('📋 Sample form submissions seeded successfully');
+        for (const submission of formSubmissions) {
+            await client.query(
+                `INSERT INTO form_submissions (
+                    id, type, form_data, status, priority, source, visitor_id, created_at
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, CURRENT_TIMESTAMP)`,
+                [
+                    submission.id, submission.type, JSON.stringify(submission.formData),
+                    submission.status, submission.priority, submission.source, submission.visitorId
+                ]
+            );
+        }
+
+        console.log('✅ Sample form submissions seeded successfully');
     } catch (error) {
         console.error('❌ Error seeding form submissions:', error);
+        throw error;
     }
 }
 
-async function seedAnalytics() {
+async function seedAnalytics(client) {
     try {
-        const existingAnalytics = await Analytics.countDocuments();
-        if (existingAnalytics > 0) {
+        const existingAnalytics = await client.query('SELECT COUNT(*) FROM analytics');
+        if (parseInt(existingAnalytics.rows[0].count) > 0) {
             console.log('📊 Analytics data already exists, skipping...');
             return;
         }
 
-        const analyticsData = [];
+        console.log('📊 Seeding analytics data...');
+
         const pages = ['/', '/projects', '/about', '/contact', '/career'];
         const elements = ['Contact Button', 'WhatsApp Button', 'Quote Form', 'Call Button'];
         
@@ -444,68 +521,83 @@ async function seedAnalytics() {
                 const sessionId = `session_${i}_${j}_${Math.random().toString(36).substr(2, 9)}`;
                 
                 // Page view
-                analyticsData.push({
-                    visitorId,
-                    sessionId,
-                    eventType: 'pageview',
-                    eventData: {
-                        page: pages[Math.floor(Math.random() * pages.length)]
-                    },
-                    timestamp: eventTime,
-                    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-                    ipAddress: `192.168.1.${Math.floor(Math.random() * 255)}`
-                });
+                await client.query(
+                    `INSERT INTO analytics (visitor_id, session_id, event_type, event_data, user_agent, ip_address, timestamp)
+                     VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+                    [
+                        visitorId,
+                        sessionId,
+                        'pageview',
+                        JSON.stringify({ page: pages[Math.floor(Math.random() * pages.length)] }),
+                        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                        `192.168.1.${Math.floor(Math.random() * 255)}`,
+                        eventTime
+                    ]
+                );
                 
                 // Random chance for other events
                 if (Math.random() > 0.7) {
-                    analyticsData.push({
-                        visitorId,
-                        sessionId,
-                        eventType: 'click',
-                        eventData: {
-                            element: elements[Math.floor(Math.random() * elements.length)],
-                            location: pages[Math.floor(Math.random() * pages.length)]
-                        },
-                        timestamp: new Date(eventTime.getTime() + Math.random() * 600000), // Within 10 minutes
-                        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-                        ipAddress: `192.168.1.${Math.floor(Math.random() * 255)}`
-                    });
+                    const clickTime = new Date(eventTime.getTime() + Math.random() * 600000); // Within 10 minutes
+                    await client.query(
+                        `INSERT INTO analytics (visitor_id, session_id, event_type, event_data, user_agent, ip_address, timestamp)
+                         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+                        [
+                            visitorId,
+                            sessionId,
+                            'click',
+                            JSON.stringify({
+                                element: elements[Math.floor(Math.random() * elements.length)],
+                                location: pages[Math.floor(Math.random() * pages.length)]
+                            }),
+                            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                            `192.168.1.${Math.floor(Math.random() * 255)}`,
+                            clickTime
+                        ]
+                    );
                 }
                 
                 if (Math.random() > 0.9) {
-                    analyticsData.push({
-                        visitorId,
-                        sessionId,
-                        eventType: 'whatsapp_redirect',
-                        eventData: {
-                            message: 'Hi B4Brothers! I\'m interested in your services.',
-                            formData: null
-                        },
-                        timestamp: new Date(eventTime.getTime() + Math.random() * 1200000), // Within 20 minutes
-                        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-                        ipAddress: `192.168.1.${Math.floor(Math.random() * 255)}`
-                    });
+                    const whatsappTime = new Date(eventTime.getTime() + Math.random() * 1200000); // Within 20 minutes
+                    await client.query(
+                        `INSERT INTO analytics (visitor_id, session_id, event_type, event_data, user_agent, ip_address, timestamp)
+                         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+                        [
+                            visitorId,
+                            sessionId,
+                            'whatsapp_redirect',
+                            JSON.stringify({
+                                message: 'Hi B4Brothers! I\'m interested in your services.',
+                                formData: null
+                            }),
+                            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                            `192.168.1.${Math.floor(Math.random() * 255)}`,
+                            whatsappTime
+                        ]
+                    );
                 }
             }
         }
 
-        await Analytics.insertMany(analyticsData);
-        console.log('📊 Sample analytics data seeded successfully');
+        console.log('✅ Sample analytics data seeded successfully');
     } catch (error) {
         console.error('❌ Error seeding analytics:', error);
+        throw error;
     }
 }
 
-async function seedNews() {
+async function seedNews(client) {
     try {
-        const existingNews = await News.countDocuments();
-        if (existingNews > 0) {
+        const existingNews = await client.query('SELECT COUNT(*) FROM news');
+        if (parseInt(existingNews.rows[0].count) > 0) {
             console.log('📰 News articles already exist, skipping...');
             return;
         }
 
+        console.log('📰 Seeding news articles...');
+
         const newsArticles = [
             {
+                id: generateId(),
                 title: 'B4 Brothers Completes Largest Commercial Project in Salt Lake',
                 content: 'We are proud to announce the successful completion of our largest commercial project to date - a 20-storey office tower in Salt Lake, Kolkata. The project, spanning 50,000 sq ft, features modern amenities and has achieved LEED Gold certification.\n\nThe building incorporates cutting-edge sustainable technologies and has been pre-leased to 95% capacity even before completion. This achievement marks a significant milestone in our commitment to delivering world-class commercial infrastructure.',
                 excerpt: 'B4 Brothers successfully completes 20-storey LEED Gold certified office tower in Salt Lake, marking our largest commercial project.',
@@ -517,6 +609,7 @@ async function seedNews() {
                 views: 1250
             },
             {
+                id: generateId(),
                 title: 'New Sustainable Construction Practices Adopted',
                 content: 'B4 Brothers is leading the way in sustainable construction practices across West Bengal. We have recently adopted new eco-friendly technologies and materials that reduce our carbon footprint by 40%.\n\nOur latest projects now feature rainwater harvesting systems, solar panels, and energy-efficient building materials. These initiatives not only help the environment but also provide long-term cost savings for our clients.',
                 excerpt: 'B4 Brothers adopts new sustainable construction practices, reducing carbon footprint by 40% in latest projects.',
@@ -528,6 +621,7 @@ async function seedNews() {
                 views: 890
             },
             {
+                id: generateId(),
                 title: 'Heritage Building Restoration Wins Conservation Award',
                 content: 'Our recent heritage building restoration project in Central Kolkata has been recognized with the Regional Heritage Conservation Award. The 1920s landmark building was restored to its original glory while incorporating modern safety features.\n\nThe project involved meticulous research, period-correct materials, and specialized craftsmen to ensure historical authenticity. The building now serves as a cultural heritage center and stands as a testament to our expertise in heritage conservation.',
                 excerpt: 'B4 Brothers heritage restoration project wins Regional Heritage Conservation Award for maintaining historical authenticity.',
@@ -537,35 +631,27 @@ async function seedNews() {
                 tags: ['heritage', 'conservation', 'award', 'restoration'],
                 readTime: 5,
                 views: 2100
-            },
-            {
-                title: '5 Tips for Planning Your Dream Home Construction',
-                content: 'Building your dream home is an exciting journey, but proper planning is crucial for success. Here are our top 5 tips:\n\n1. Set a realistic budget with 10-15% contingency\n2. Choose the right location considering future development\n3. Hire experienced architects and contractors\n4. Focus on functionality along with aesthetics\n5. Plan for future needs and expansion\n\nAt B4 Brothers, we guide our clients through every step of the construction process, ensuring their dream home becomes a reality within budget and timeline.',
-                excerpt: 'Expert tips from B4 Brothers on planning your dream home construction project for best results.',
-                category: 'tips',
-                isPublished: true,
-                publishDate: new Date('2024-01-05'),
-                tags: ['home-construction', 'planning', 'tips', 'advice'],
-                readTime: 6,
-                views: 1680
-            },
-            {
-                title: 'Construction Industry Trends 2024',
-                content: 'The construction industry is evolving rapidly with new technologies and sustainable practices. Key trends for 2024 include:\n\n- Smart home automation becoming standard\n- Increased focus on energy efficiency\n- Use of eco-friendly building materials\n- Integration of IoT in construction management\n- Modular and prefabricated construction methods\n\nB4 Brothers stays ahead of these trends to provide cutting-edge solutions to our clients.',
-                excerpt: 'Explore the latest construction industry trends for 2024 and how B4 Brothers is adapting to deliver modern solutions.',
-                category: 'industry_news',
-                isPublished: true,
-                publishDate: new Date('2024-01-01'),
-                tags: ['trends', 'technology', 'industry', '2024'],
-                readTime: 4,
-                views: 945
             }
         ];
 
-        await News.insertMany(newsArticles);
-        console.log('📰 Sample news articles seeded successfully');
+        for (const article of newsArticles) {
+            await client.query(
+                `INSERT INTO news (
+                    id, title, content, excerpt, category, is_published, publish_date,
+                    tags, read_time, views, created_at
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, CURRENT_TIMESTAMP)`,
+                [
+                    article.id, article.title, article.content, article.excerpt,
+                    article.category, article.isPublished, article.publishDate,
+                    JSON.stringify(article.tags), article.readTime, article.views
+                ]
+            );
+        }
+
+        console.log('✅ Sample news articles seeded successfully');
     } catch (error) {
         console.error('❌ Error seeding news:', error);
+        throw error;
     }
 }
 

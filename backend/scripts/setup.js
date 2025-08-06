@@ -1,105 +1,148 @@
-// Database Setup Script for B4 Brothers Backend
-const mongoose = require('mongoose');
+// PostgreSQL Database Setup Script for B4 Brothers Backend
+const { Pool } = require('pg');
 const bcrypt = require('bcryptjs');
+const fs = require('fs');
+const path = require('path');
 require('dotenv').config();
 
-// Import models
-const User = require('../models/User');
-const Config = require('../models/Config');
-const ContactInfo = require('../models/ContactInfo');
-const Service = require('../models/Service');
+// PostgreSQL connection
+const pool = new Pool({
+    user: process.env.DB_USER || 'postgres',
+    host: process.env.DB_HOST || 'localhost',
+    database: process.env.DB_NAME || 'b4brothers',
+    password: process.env.DB_PASSWORD || 'password',
+    port: process.env.DB_PORT || 5432,
+});
 
 async function setupDatabase() {
+    let client;
     try {
-        // Connect to MongoDB
-        await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/b4brothers', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        console.log('🔗 Connecting to PostgreSQL...');
+        client = await pool.connect();
         
-        console.log('📁 Connected to MongoDB');
+        console.log('✅ Connected to PostgreSQL database');
 
+        // Run schema creation
+        await createDatabaseSchema(client);
+        
         // Create admin user
-        await createAdminUser();
+        await createAdminUser(client);
         
         // Setup default configurations
-        await setupDefaultConfigs();
+        await setupDefaultConfigs(client);
         
         // Setup contact information
-        await setupContactInfo();
+        await setupContactInfo(client);
         
         // Setup default services
-        await setupDefaultServices();
-        
-        // Create indexes for performance
-        await createIndexes();
+        await setupDefaultServices(client);
         
         console.log('✅ Database setup completed successfully!');
         
     } catch (error) {
         console.error('❌ Setup failed:', error);
+        process.exit(1);
     } finally {
-        await mongoose.disconnect();
+        if (client) {
+            client.release();
+        }
+        await pool.end();
         console.log('📁 Database connection closed');
     }
 }
 
-async function createAdminUser() {
+async function createDatabaseSchema(client) {
     try {
-        const existingAdmin = await User.findOne({ username: 'admin' });
+        console.log('📊 Creating database schema...');
         
-        if (!existingAdmin) {
+        // Read and execute schema file
+        const schemaPath = path.join(__dirname, '../database/schema.sql');
+        const schemaSQL = fs.readFileSync(schemaPath, 'utf8');
+        
+        await client.query(schemaSQL);
+        
+        console.log('✅ Database schema created successfully');
+    } catch (error) {
+        console.error('❌ Error creating schema:', error);
+        throw error;
+    }
+}
+
+async function createAdminUser(client) {
+    try {
+        console.log('👤 Creating admin user...');
+        
+        // Check if admin user exists
+        const existingAdmin = await client.query(
+            'SELECT id FROM users WHERE username = $1',
+            ['admin']
+        );
+        
+        if (existingAdmin.rows.length === 0) {
             const hashedPassword = await bcrypt.hash(
                 process.env.ADMIN_PASSWORD || 'b4brothers2024', 
                 10
             );
             
-            const adminUser = new User({
-                username: process.env.ADMIN_USERNAME || 'admin',
-                email: process.env.ADMIN_EMAIL || 'admin@b4brothersinfratech.com',
-                password: hashedPassword,
-                role: 'admin',
-                isActive: true,
-                permissions: [
-                    {
-                        resource: 'analytics',
-                        actions: ['create', 'read', 'update', 'delete']
-                    },
-                    {
-                        resource: 'forms',
-                        actions: ['create', 'read', 'update', 'delete']
-                    },
-                    {
-                        resource: 'testimonials',
-                        actions: ['create', 'read', 'update', 'delete']
-                    },
-                    {
-                        resource: 'projects',
-                        actions: ['create', 'read', 'update', 'delete']
-                    },
-                    {
-                        resource: 'users',
-                        actions: ['create', 'read', 'update', 'delete']
-                    },
-                    {
-                        resource: 'config',
-                        actions: ['create', 'read', 'update', 'delete']
-                    }
-                ]
-            });
+            const adminId = Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
             
-            await adminUser.save();
-            console.log('👤 Admin user created successfully');
+            const permissions = [
+                {
+                    resource: 'analytics',
+                    actions: ['create', 'read', 'update', 'delete']
+                },
+                {
+                    resource: 'forms',
+                    actions: ['create', 'read', 'update', 'delete']
+                },
+                {
+                    resource: 'testimonials',
+                    actions: ['create', 'read', 'update', 'delete']
+                },
+                {
+                    resource: 'projects',
+                    actions: ['create', 'read', 'update', 'delete']
+                },
+                {
+                    resource: 'users',
+                    actions: ['create', 'read', 'update', 'delete']
+                },
+                {
+                    resource: 'config',
+                    actions: ['create', 'read', 'update', 'delete']
+                }
+            ];
+            
+            await client.query(
+                `INSERT INTO users (id, username, email, password, role, is_active, permissions, created_at)
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, CURRENT_TIMESTAMP)`,
+                [
+                    adminId,
+                    process.env.ADMIN_USERNAME || 'admin',
+                    process.env.ADMIN_EMAIL || 'admin@b4brothersinfratech.com',
+                    hashedPassword,
+                    'admin',
+                    true,
+                    JSON.stringify(permissions)
+                ]
+            );
+            
+            console.log('✅ Admin user created successfully');
+            console.log(`   Username: ${process.env.ADMIN_USERNAME || 'admin'}`);
+            console.log(`   Email: ${process.env.ADMIN_EMAIL || 'admin@b4brothersinfratech.com'}`);
         } else {
             console.log('👤 Admin user already exists');
         }
     } catch (error) {
         console.error('❌ Error creating admin user:', error);
+        throw error;
     }
 }
 
-async function setupDefaultConfigs() {
+async function setupDefaultConfigs(client) {
     try {
+        console.log('⚙️ Setting up default configurations...');
+        
         const defaultConfigs = [
             {
                 key: 'site_title',
@@ -195,21 +238,29 @@ async function setupDefaultConfigs() {
         ];
 
         for (const config of defaultConfigs) {
-            await Config.findOneAndUpdate(
-                { key: config.key },
-                config,
-                { upsert: true, new: true }
+            await client.query(
+                `INSERT INTO configs (key, value, description, category, created_at)
+                 VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP)
+                 ON CONFLICT (key) DO UPDATE SET
+                 value = EXCLUDED.value,
+                 description = EXCLUDED.description,
+                 category = EXCLUDED.category,
+                 updated_at = CURRENT_TIMESTAMP`,
+                [config.key, JSON.stringify(config.value), config.description, config.category]
             );
         }
         
-        console.log('⚙️ Default configurations setup completed');
+        console.log('✅ Default configurations setup completed');
     } catch (error) {
         console.error('❌ Error setting up configurations:', error);
+        throw error;
     }
 }
 
-async function setupContactInfo() {
+async function setupContactInfo(client) {
     try {
+        console.log('📞 Setting up contact information...');
+        
         const contactData = [
             {
                 type: 'phone',
@@ -246,23 +297,28 @@ async function setupContactInfo() {
         ];
 
         for (const contact of contactData) {
-            await ContactInfo.findOneAndUpdate(
-                { type: contact.type, label: contact.label },
-                contact,
-                { upsert: true, new: true }
+            await client.query(
+                `INSERT INTO contact_info (type, label, value, is_primary, is_active, display_order, created_at)
+                 VALUES ($1, $2, $3, $4, $5, $6, CURRENT_TIMESTAMP)
+                 ON CONFLICT DO NOTHING`,
+                [contact.type, contact.label, contact.value, contact.isPrimary, contact.isActive, contact.order]
             );
         }
         
-        console.log('📞 Contact information setup completed');
+        console.log('✅ Contact information setup completed');
     } catch (error) {
         console.error('❌ Error setting up contact info:', error);
+        throw error;
     }
 }
 
-async function setupDefaultServices() {
+async function setupDefaultServices(client) {
     try {
+        console.log('🔧 Setting up default services...');
+        
         const services = [
             {
+                id: 'service_' + Date.now() + '_1',
                 name: 'Building Construction',
                 description: 'Complete building construction services from foundation to finishing',
                 shortDescription: 'End-to-end construction solutions',
@@ -284,6 +340,7 @@ async function setupDefaultServices() {
                 order: 1
             },
             {
+                id: 'service_' + Date.now() + '_2',
                 name: 'Renovation Services',
                 description: 'Professional renovation and remodeling services for homes and offices',
                 shortDescription: 'Transform your space with expert renovation',
@@ -305,6 +362,7 @@ async function setupDefaultServices() {
                 order: 2
             },
             {
+                id: 'service_' + Date.now() + '_3',
                 name: 'Design & Planning',
                 description: 'Comprehensive architectural design and project planning services',
                 shortDescription: 'Professional design and planning solutions',
@@ -324,90 +382,33 @@ async function setupDefaultServices() {
                 isActive: true,
                 isFeatured: true,
                 order: 3
-            },
-            {
-                name: 'Interior Design',
-                description: 'Creative interior design solutions for residential and commercial spaces',
-                shortDescription: 'Beautiful and functional interior spaces',
-                category: 'interior',
-                features: [
-                    'Space planning and layout',
-                    'Material selection and sourcing',
-                    'Custom furniture design',
-                    'Lighting and electrical planning'
-                ],
-                benefits: [
-                    'Enhanced aesthetics',
-                    'Improved functionality',
-                    'Personalized solutions',
-                    'Professional execution'
-                ],
-                isActive: true,
-                isFeatured: false,
-                order: 4
-            },
-            {
-                name: 'Commercial Construction',
-                description: 'Large-scale commercial construction projects for businesses and institutions',
-                shortDescription: 'Professional commercial construction',
-                category: 'commercial',
-                features: [
-                    'Office buildings and complexes',
-                    'Retail and hospitality spaces',
-                    'Industrial facilities',
-                    'Institutional buildings'
-                ],
-                benefits: [
-                    'Scalable solutions',
-                    'Business-focused design',
-                    'Compliance with regulations',
-                    'Fast-track construction'
-                ],
-                isActive: true,
-                isFeatured: false,
-                order: 5
             }
         ];
 
         for (const service of services) {
-            await Service.findOneAndUpdate(
-                { name: service.name },
-                service,
-                { upsert: true, new: true }
+            await client.query(
+                `INSERT INTO services (id, name, description, short_description, category, features, benefits, is_active, is_featured, display_order, created_at)
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, CURRENT_TIMESTAMP)
+                 ON CONFLICT (id) DO NOTHING`,
+                [
+                    service.id,
+                    service.name,
+                    service.description,
+                    service.shortDescription,
+                    service.category,
+                    JSON.stringify(service.features),
+                    JSON.stringify(service.benefits),
+                    service.isActive,
+                    service.isFeatured,
+                    service.order
+                ]
             );
         }
         
-        console.log('🔧 Default services setup completed');
+        console.log('✅ Default services setup completed');
     } catch (error) {
         console.error('❌ Error setting up services:', error);
-    }
-}
-
-async function createIndexes() {
-    try {
-        // Analytics indexes
-        await mongoose.connection.db.collection('analytics').createIndex({ visitorId: 1 });
-        await mongoose.connection.db.collection('analytics').createIndex({ timestamp: -1 });
-        await mongoose.connection.db.collection('analytics').createIndex({ eventType: 1 });
-        
-        // Form submissions indexes
-        await mongoose.connection.db.collection('formsubmissions').createIndex({ type: 1 });
-        await mongoose.connection.db.collection('formsubmissions').createIndex({ status: 1 });
-        await mongoose.connection.db.collection('formsubmissions').createIndex({ createdAt: -1 });
-        await mongoose.connection.db.collection('formsubmissions').createIndex({ 'formData.email': 1 });
-        
-        // Projects indexes
-        await mongoose.connection.db.collection('projects').createIndex({ category: 1 });
-        await mongoose.connection.db.collection('projects').createIndex({ isActive: 1 });
-        await mongoose.connection.db.collection('projects').createIndex({ year: -1 });
-        
-        // Testimonials indexes
-        await mongoose.connection.db.collection('testimonials').createIndex({ isActive: 1 });
-        await mongoose.connection.db.collection('testimonials').createIndex({ isFeatured: 1 });
-        
-        console.log('📊 Database indexes created successfully');
-    } catch (error) {
-        console.error('❌ Error creating indexes:', error);
+        throw error;
     }
 }
 

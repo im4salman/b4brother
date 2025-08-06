@@ -5,6 +5,7 @@ import './HeroAnimations.css';
 const Carousel = ({ mediaItems = [], autoPlay = true }) => {
   const [current, setCurrent] = useState(0);
   const [isPlaying, setIsPlaying] = useState(autoPlay);
+  const [headerHeight, setHeaderHeight] = useState(80); // Default fallback
   const total = mediaItems.length;
 
   const goTo = useCallback((index) => {

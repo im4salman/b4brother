@@ -69,7 +69,10 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
 
   if (mediaItems.length === 0) {
     return (
-      <div className="w-full h-screen pt-40 md:pt-36 bg-gray-200 flex items-center justify-center">
+      <div
+        className="w-full h-screen bg-gray-200 flex items-center justify-center"
+        style={{ paddingTop: `${headerHeight}px` }}
+      >
         <p className="text-gray-500">No media items to display</p>
       </div>
     );

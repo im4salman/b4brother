@@ -700,74 +700,42 @@ app.delete('/api/testimonials/:id', authenticateToken, async (req, res) => {
 
 app.get('/api/projects', async (req, res) => {
     try {
-        const { 
-            category, 
-            isActive = 'true', 
-            isFeatured, 
-            limit, 
-            page = 1,
-            search,
-            year,
-            status
-        } = req.query;
-        
-        let whereClause = '1=1';
-        let params = [];
-        let paramCount = 0;
+        const result = await executeQuery(`
+            SELECT
+                id,
+                title,
+                category,
+                year,
+                location,
+                area,
+                duration,
+                budget,
+                description,
+                features,
+                highlights,
+                image_url
+            FROM projects
+            WHERE is_active = true
+            ORDER BY year DESC, id ASC
+        `);
 
-        if (isActive !== undefined) {
-            whereClause += ` AND is_active = $${++paramCount}`;
-            params.push(isActive === 'true');
-        }
-        if (isFeatured !== undefined) {
-            whereClause += ` AND is_featured = $${++paramCount}`;
-            params.push(isFeatured === 'true');
-        }
-        if (category && category !== 'All') {
-            whereClause += ` AND category = $${++paramCount}`;
-            params.push(category);
-        }
-        if (year) {
-            whereClause += ` AND year = $${++paramCount}`;
-            params.push(parseInt(year));
-        }
-        if (status) {
-            whereClause += ` AND status = $${++paramCount}`;
-            params.push(status);
-        }
-        if (search) {
-            whereClause += ` AND (title ILIKE $${++paramCount} OR description ILIKE $${++paramCount} OR location ILIKE $${++paramCount})`;
-            params.push(`%${search}%`, `%${search}%`, `%${search}%`);
-        }
+        // Transform data to match frontend projects.js structure
+        const projects = result.rows.map(project => ({
+            id: project.id,
+            title: project.title,
+            category: project.category,
+            year: project.year,
+            location: project.location,
+            area: project.area,
+            duration: project.duration,
+            budget: project.budget,
+            description: project.description,
+            features: Array.isArray(project.features) ? project.features : JSON.parse(project.features || '[]'),
+            highlights: Array.isArray(project.highlights) ? project.highlights : JSON.parse(project.highlights || '[]'),
+            image: project.image_url || `/assets/project${project.id}.jpg`
+        }));
 
-        let orderAndLimit = ' ORDER BY display_order ASC, year DESC, created_at DESC';
-        if (limit) {
-            const offset = (parseInt(page) - 1) * parseInt(limit);
-            orderAndLimit += ` LIMIT $${++paramCount} OFFSET $${++paramCount}`;
-            params.push(parseInt(limit), offset);
-        }
-
-        const projectsResult = await executeQuery(
-            `SELECT * FROM projects WHERE ${whereClause}${orderAndLimit}`,
-            params
-        );
-
-        const totalResult = await executeQuery(
-            `SELECT COUNT(*) as total FROM projects WHERE ${whereClause}`,
-            params.slice(0, limit ? -2 : params.length)
-        );
-
-        const categoriesResult = await executeQuery(
-            'SELECT DISTINCT category FROM projects WHERE is_active = true ORDER BY category'
-        );
-
-        res.json({
-            projects: projectsResult.rows,
-            total: parseInt(totalResult.rows[0].total),
-            page: parseInt(page),
-            totalPages: limit ? Math.ceil(parseInt(totalResult.rows[0].total) / parseInt(limit)) : 1,
-            categories: ['All', ...categoriesResult.rows.map(r => r.category)]
-        });
+        res.json(projects);
     } catch (error) {
         console.error('Get projects error:', error);
         res.status(500).json({ error: 'Internal server error' });

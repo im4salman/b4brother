@@ -54,16 +54,35 @@ async function setupDatabase() {
 async function createDatabaseSchema(client) {
     try {
         console.log('📊 Creating database schema...');
-        
+
         // Read and execute schema file
         const schemaPath = path.join(__dirname, '../database/schema.sql');
-        const schemaSQL = fs.readFileSync(schemaPath, 'utf8');
-        
-        await client.query(schemaSQL);
-        
+
+        // Check if schema file exists
+        if (!fs.existsSync(schemaPath)) {
+            console.error('❌ Schema file not found at:', schemaPath);
+            console.log('📁 Current directory:', __dirname);
+            console.log('📁 Looking for file at:', schemaPath);
+
+            // Try alternative path
+            const altPath = path.join(process.cwd(), 'database/schema.sql');
+            if (fs.existsSync(altPath)) {
+                console.log('✅ Found schema file at alternative path:', altPath);
+                const schemaSQL = fs.readFileSync(altPath, 'utf8');
+                await client.query(schemaSQL);
+            } else {
+                throw new Error('Schema file not found at any expected location');
+            }
+        } else {
+            const schemaSQL = fs.readFileSync(schemaPath, 'utf8');
+            await client.query(schemaSQL);
+        }
+
         console.log('✅ Database schema created successfully');
     } catch (error) {
         console.error('❌ Error creating schema:', error);
+        console.log('💡 You can manually run the schema by executing:');
+        console.log('   psql -d b4brothers -f database/schema.sql');
         throw error;
     }
 }

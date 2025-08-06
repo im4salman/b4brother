@@ -56,7 +56,7 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
 
   return (
     <div
-      className="relative w-full h-screen overflow-hidden pt-24 md:pt-28"
+      className="relative w-full h-screen overflow-hidden pt-32 md:pt-36"
       role="region"
       aria-label="Featured projects carousel"
     >

@@ -5,7 +5,28 @@ import './HeroAnimations.css';
 const Carousel = ({ mediaItems = [], autoPlay = true }) => {
   const [current, setCurrent] = useState(0);
   const [isPlaying, setIsPlaying] = useState(autoPlay);
+  const [headerHeight, setHeaderHeight] = useState(80); // Default fallback
   const total = mediaItems.length;
+
+  // Calculate header height dynamically
+  useEffect(() => {
+    const calculateHeaderHeight = () => {
+      const header = document.querySelector('header');
+      if (header) {
+        const height = header.offsetHeight;
+        setHeaderHeight(height + 20); // Add 20px buffer
+      }
+    };
+
+    calculateHeaderHeight();
+    window.addEventListener('resize', calculateHeaderHeight);
+    window.addEventListener('scroll', calculateHeaderHeight);
+
+    return () => {
+      window.removeEventListener('resize', calculateHeaderHeight);
+      window.removeEventListener('scroll', calculateHeaderHeight);
+    };
+  }, []);
 
   const goTo = useCallback((index) => {
     setCurrent((index + total) % total);
@@ -48,7 +69,10 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
 
   if (mediaItems.length === 0) {
     return (
-      <div className="w-full h-screen pt-20 md:pt-24 bg-gray-200 flex items-center justify-center">
+      <div
+        className="w-full h-screen bg-gray-200 flex items-center justify-center"
+        style={{ paddingTop: `${headerHeight}px` }}
+      >
         <p className="text-gray-500">No media items to display</p>
       </div>
     );
@@ -56,7 +80,7 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
 
   return (
     <div
-      className="relative w-full h-screen overflow-hidden pt-20 md:pt-24"
+      className="relative w-full h-screen overflow-hidden"
       role="region"
       aria-label="Featured projects carousel"
     >
@@ -64,9 +88,13 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
       {mediaItems.map((item, index) => (
         <div
           key={index}
-          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-700 ${
+          className={`absolute left-0 w-full transition-opacity duration-700 ${
             index === current ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
+          style={{
+            top: `${headerHeight}px`,
+            height: `calc(100% - ${headerHeight}px)`
+          }}
           aria-hidden={index !== current}
         >
           {item.type === "image" ? (
@@ -101,9 +129,12 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
               <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black/70"></div>
 
               {/* Premium Hero Layout */}
-              <div className="relative h-full flex items-center">
+              <div
+                className="relative h-full flex items-center"
+                style={{ paddingTop: `${headerHeight}px` }}
+              >
                 <div className="container mx-auto px-6 lg:px-8">
-                  <div className="grid lg:grid-cols-12 gap-8 items-center min-h-[80vh]">
+                  <div className="grid lg:grid-cols-12 gap-8 items-center min-h-full">
 
                     {/* Left Column - Main Content */}
                     <div className="lg:col-span-7 space-y-12">

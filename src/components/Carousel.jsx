@@ -96,7 +96,7 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
 
           {/* Award-Winning Hero Content - Only on first slide */}
           {index === current && index === 0 && (
-            <div className="absolute inset-0 z-30">
+            <div className="absolute inset-0 z-30 pt-32 md:pt-36">
               {/* Sophisticated Overlay */}
               <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black/70"></div>
 

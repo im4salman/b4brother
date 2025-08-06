@@ -3,6 +3,7 @@ import App from './App.jsx';
 import CareerPage from './pages/CareerPage.jsx';
 import AdminPage from './pages/AdminPage.jsx';
 import AdminLogin from './components/AdminLogin.jsx';
+import ApiTester from './pages/ApiTester.jsx';
 import { AnalyticsProvider, useAnalytics } from './contexts/AnalyticsContext.jsx';
 
 const RouterContent = () => {

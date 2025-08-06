@@ -7,10 +7,8 @@ import {
     FaTimesCircle, 
     FaDatabase, 
     FaUsers, 
-    FaChartLine,
     FaCode,
-    FaCopy,
-    FaExternalLinkAlt
+    FaCopy
 } from 'react-icons/fa';
 
 const ApiTester = () => {
@@ -120,7 +118,7 @@ const ApiTester = () => {
 
     const ApiTest = ({ title, endpoint, method = 'GET', description, onTest, response, isLoading, requiresAuth = false }) => (
         <motion.div 
-            className="bg-white rounded-xl shadow-soft p-6 border border-gray-200"
+            className="bg-white rounded-xl shadow-soft p-6 border border-gray-200 mb-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
@@ -235,7 +233,7 @@ const ApiTester = () => {
                         <FaServer className="mr-2" />
                         Server Status: {serverStatus === 'checking' ? 'Checking...' : serverStatus.toUpperCase()}
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Configuration */}
                 <motion.div 
@@ -287,7 +285,7 @@ const ApiTester = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Database Schema */}
                 <motion.div 
@@ -321,7 +319,7 @@ const ApiTester = () => {
                             Public API Endpoints
                         </h2>
                         
-                        <div className="space-y-4">
+                        <div>
                             <ApiTest
                                 title="Health Check"
                                 endpoint="/health"
@@ -350,16 +348,6 @@ const ApiTester = () => {
                                 onTest={() => testEndpoint('testimonials', '/testimonials?limit=5')}
                                 response={responses.testimonials}
                                 isLoading={loading.testimonials}
-                            />
-
-                            <ApiTest
-                                title="Get Services"
-                                endpoint="/services"
-                                method="GET"
-                                description="Retrieve service offerings"
-                                onTest={() => testEndpoint('services', '/services')}
-                                response={responses.services}
-                                isLoading={loading.services}
                             />
 
                             <ApiTest
@@ -407,7 +395,7 @@ const ApiTester = () => {
                             Admin API Endpoints
                         </h2>
                         
-                        <div className="space-y-4">
+                        <div>
                             <ApiTest
                                 title="Admin Login"
                                 endpoint="/auth/login"
@@ -485,16 +473,6 @@ const ApiTester = () => {
                         🏗️ B4 Brothers Infratech Backend API Testing Center
                     </p>
                     <div className="flex justify-center gap-4">
-                        <a 
-                            href={`${baseUrl.replace('/api', '')}/test-api.html`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-primary-500 hover:text-primary-600 flex items-center"
-                        >
-                            <FaExternalLinkAlt className="mr-1" />
-                            Open HTML Version
-                        </a>
-                        <span className="text-gray-300">|</span>
                         <button
                             onClick={checkServerHealth}
                             className="text-primary-500 hover:text-primary-600"

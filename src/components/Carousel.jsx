@@ -131,7 +131,10 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
               {/* Premium Hero Layout */}
               <div className="relative h-full flex items-center">
                 <div className="container mx-auto px-6 lg:px-8">
-                  <div className="grid lg:grid-cols-12 gap-8 items-center min-h-[80vh] mt-12 md:mt-16">
+                  <div
+                    className="grid lg:grid-cols-12 gap-8 items-center"
+                    style={{ minHeight: `calc(100vh - ${headerHeight + 40}px)` }}
+                  >
 
                     {/* Left Column - Main Content */}
                     <div className="lg:col-span-7 space-y-12">

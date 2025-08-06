@@ -8,6 +8,26 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
   const [headerHeight, setHeaderHeight] = useState(80); // Default fallback
   const total = mediaItems.length;
 
+  // Calculate header height dynamically
+  useEffect(() => {
+    const calculateHeaderHeight = () => {
+      const header = document.querySelector('header');
+      if (header) {
+        const height = header.offsetHeight;
+        setHeaderHeight(height + 20); // Add 20px buffer
+      }
+    };
+
+    calculateHeaderHeight();
+    window.addEventListener('resize', calculateHeaderHeight);
+    window.addEventListener('scroll', calculateHeaderHeight);
+
+    return () => {
+      window.removeEventListener('resize', calculateHeaderHeight);
+      window.removeEventListener('scroll', calculateHeaderHeight);
+    };
+  }, []);
+
   const goTo = useCallback((index) => {
     setCurrent((index + total) % total);
   }, [total]);

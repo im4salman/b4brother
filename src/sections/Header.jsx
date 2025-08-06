@@ -66,7 +66,6 @@ const Header = () => {
                         ? 'bg-white/95 backdrop-blur-lg shadow-lg py-3'
                         : 'bg-white/90 backdrop-blur-md shadow-sm py-4'
                 }`}
-                style={{ display: 'none' }}
                 role="banner"
             >
                 <div className="container mx-auto px-6 lg:px-8">

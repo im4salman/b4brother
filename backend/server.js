@@ -194,6 +194,29 @@ app.get('/api/health', async (req, res) => {
     }
 });
 
+// API Testing Info Route
+app.get('/api-test', (req, res) => {
+    res.json({
+        message: 'API Testing Interface is available through the React frontend',
+        backend_info: {
+            status: 'running',
+            port: PORT,
+            available_endpoints: [
+                'GET /api/health',
+                'POST /api/auth/login',
+                'GET /api/projects',
+                'GET /api/testimonials',
+                'GET /api/analytics',
+                'POST /api/forms/submit',
+                'POST /api/contact',
+                'GET /api/services',
+                'GET /api/news'
+            ]
+        },
+        frontend_testing: 'Visit your React app at /api-test route for full testing interface'
+    });
+});
+
 // =========================
 // AUTHENTICATION ROUTES
 // =========================

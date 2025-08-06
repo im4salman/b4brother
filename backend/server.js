@@ -726,8 +726,73 @@ app.get('/api/projects', async (req, res) => {
     }
 });
 
-// Continue with remaining routes...
-// (Projects POST, PUT, DELETE, Services, Config, Contact Info routes follow the same pattern)
+// =========================
+// SERVICES ROUTES
+// =========================
+
+app.get('/api/services', async (req, res) => {
+    try {
+        const result = await executeQuery(`
+            SELECT
+                id,
+                title,
+                description as about,
+                details,
+                insights,
+                stats,
+                icon_name
+            FROM services
+            WHERE is_active = true
+            ORDER BY id ASC
+        `);
+
+        // Transform data to match frontend allservices structure
+        const services = result.rows.map(service => ({
+            id: service.id,
+            title: service.title,
+            about: service.about,
+            details: service.details,
+            insights: Array.isArray(service.insights) ? service.insights : JSON.parse(service.insights || '[]'),
+            stats: Array.isArray(service.stats) ? service.stats : JSON.parse(service.stats || '[]'),
+            icon: service.icon_name || 'building.svg'
+        }));
+
+        res.json(services);
+    } catch (error) {
+        console.error('Get services error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// =========================
+// NEWS ROUTES
+// =========================
+
+app.get('/api/news', async (req, res) => {
+    try {
+        const result = await executeQuery(`
+            SELECT
+                id,
+                title,
+                content,
+                excerpt,
+                author,
+                published_date,
+                category,
+                tags,
+                featured_image,
+                is_featured
+            FROM news
+            WHERE is_active = true
+            ORDER BY published_date DESC, created_at DESC
+        `);
+
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Get news error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 // =========================
 // ERROR HANDLING

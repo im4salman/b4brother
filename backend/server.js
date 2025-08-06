@@ -554,47 +554,31 @@ app.put('/api/forms/submissions/:id', authenticateToken, async (req, res) => {
 
 app.get('/api/testimonials', async (req, res) => {
     try {
-        const { isActive = 'true', isFeatured, limit, page = 1 } = req.query;
-        
-        let whereClause = '1=1';
-        let params = [];
-        let paramCount = 0;
+        const result = await executeQuery(`
+            SELECT
+                id,
+                name,
+                message as about,
+                position as post,
+                rating,
+                image_url,
+                created_at
+            FROM testimonials
+            WHERE is_active = true
+            ORDER BY display_order ASC, created_at DESC
+        `);
 
-        if (isActive !== undefined) {
-            whereClause += ` AND is_active = $${++paramCount}`;
-            params.push(isActive === 'true');
-        }
-        if (isFeatured !== undefined) {
-            whereClause += ` AND is_featured = $${++paramCount}`;
-            params.push(isFeatured === 'true');
-        }
+        // Transform data to match frontend clients structure
+        const testimonials = result.rows.map(testimonial => ({
+            id: testimonial.id,
+            name: testimonial.name,
+            about: testimonial.about,
+            post: testimonial.post || 'Client',
+            rating: testimonial.rating || 5,
+            image: testimonial.image_url || `/assets/client${testimonial.id}.png`
+        }));
 
-        let orderAndLimit = ' ORDER BY display_order ASC, created_at DESC';
-        if (limit) {
-            const offset = (parseInt(page) - 1) * parseInt(limit);
-            orderAndLimit += ` LIMIT $${++paramCount} OFFSET $${++paramCount}`;
-            params.push(parseInt(limit), offset);
-        }
-
-        const testimonialsResult = await executeQuery(
-            `SELECT t.*, p.title as project_title, p.category as project_category
-             FROM testimonials t
-             LEFT JOIN projects p ON t.project_id = p.id
-             WHERE ${whereClause}${orderAndLimit}`,
-            params
-        );
-
-        const totalResult = await executeQuery(
-            `SELECT COUNT(*) as total FROM testimonials WHERE ${whereClause}`,
-            params.slice(0, limit ? -2 : params.length)
-        );
-
-        res.json({
-            testimonials: testimonialsResult.rows,
-            total: parseInt(totalResult.rows[0].total),
-            page: parseInt(page),
-            totalPages: limit ? Math.ceil(parseInt(totalResult.rows[0].total) / parseInt(limit)) : 1
-        });
+        res.json(testimonials);
     } catch (error) {
         console.error('Get testimonials error:', error);
         res.status(500).json({ error: 'Internal server error' });

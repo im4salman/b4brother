@@ -3,6 +3,7 @@ import App from './App.jsx';
 import CareerPage from './pages/CareerPage.jsx';
 import AdminPage from './pages/AdminPage.jsx';
 import AdminLogin from './components/AdminLogin.jsx';
+import ApiTester from './pages/ApiTester.jsx';
 import { AnalyticsProvider, useAnalytics } from './contexts/AnalyticsContext.jsx';
 
 const RouterContent = () => {
@@ -26,6 +27,8 @@ const RouterContent = () => {
       pageName = 'Career';
     } else if (currentPath === '/admin' || currentPath === '/admin/') {
       pageName = 'Admin';
+    } else if (currentPath === '/api-test' || currentPath === '/api-test/') {
+      pageName = 'API Test';
     }
     trackPageView(pageName);
   }, [currentPath, trackPageView]);
@@ -36,6 +39,11 @@ const RouterContent = () => {
       return <AdminLogin onLogin={setIsLoggedIn} />;
     }
     return <AdminPage onLogout={() => setIsLoggedIn(false)} />;
+  }
+
+  // Handle API tester page
+  if (currentPath === '/api-test' || currentPath === '/api-test/') {
+    return <ApiTester />;
   }
 
   // Handle career page

@@ -83,24 +83,16 @@ const Header = () => {
                             aria-label="B4Brothers homepage"
                         >
                             <img
-                                src={logoIcon}
-                                alt="B4Brothers Logo"
-                                className={`transition-all duration-500 ${
-                                    isScrolled ? 'h-12 w-12' : 'h-14 w-14'
+                                src="https://cdn.builder.io/api/v1/image/assets%2Fef9a0ffcb7c3488eab51bfcf9f12f277%2F6240645af751481fa55364763c6bbbb7?format=webp&width=800"
+                                alt="B4 Brothers Infratech Logo"
+                                className={`transition-all duration-500 object-contain ${
+                                    isScrolled ? 'h-8' : 'h-10'
                                 }`}
+                                style={{
+                                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
+                                    width: 'auto'
+                                }}
                             />
-                            <div className="flex flex-col">
-                                <div className={`font-bold text-secondary-900 transition-all duration-500 ${
-                                    isScrolled ? 'text-xl' : 'text-2xl'
-                                }`}>
-                                    <span className="text-primary-600">B4</span>Brothers
-                                </div>
-                                <div className={`font-medium text-secondary-600 transition-all duration-500 ${
-                                    isScrolled ? 'text-xs' : 'text-sm'
-                                }`}>
-                                    Believe in best builds bold
-                                </div>
-                            </div>
                         </Link>
 
                         {/* Desktop Navigation */}

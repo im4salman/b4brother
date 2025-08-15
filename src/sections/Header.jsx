@@ -89,8 +89,7 @@ const Header = () => {
                                     isScrolled ? 'h-16 w-auto' : 'h-20 w-auto'
                                 }`}
                                 style={{
-                                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
-                                    mixBlendMode: 'multiply'
+                                    filter: 'brightness(0) saturate(100%) invert(28%) sepia(15%) saturate(588%) hue-rotate(169deg) brightness(93%) contrast(87%) drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
                                 }}
                             />
                         </Link>

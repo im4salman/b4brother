@@ -14,7 +14,7 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
       const header = document.querySelector('header');
       if (header) {
         const height = header.offsetHeight;
-        setHeaderHeight(height + 20); // Add 20px buffer
+        setHeaderHeight(height); // No buffer needed
       }
     };
 

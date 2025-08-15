@@ -82,16 +82,20 @@ const Header = () => {
                             className="cursor-pointer group flex items-center gap-4"
                             aria-label="B4Brothers homepage"
                         >
-                            <img
-                                src="https://cdn.builder.io/api/v1/image/assets%2Fef9a0ffcb7c3488eab51bfcf9f12f277%2Fcffcda959e8140e38de8493eb3f93373?format=webp&width=800"
-                                alt="B4 Brothers Infratech Logo"
-                                className={`transition-all duration-500 object-contain ${
-                                    isScrolled ? 'h-16 w-auto' : 'h-20 w-auto'
-                                }`}
-                                style={{
-                                    filter: 'brightness(0) saturate(100%) invert(28%) sepia(15%) saturate(588%) hue-rotate(169deg) brightness(93%) contrast(87%) drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
-                                }}
-                            />
+                            <div className={`transition-all duration-500 ${
+                                    isScrolled ? 'h-16 w-20' : 'h-20 w-24'
+                                }`} style={{ position: 'relative' }}>
+                                <img
+                                    src="https://cdn.builder.io/api/v1/image/assets%2Fef9a0ffcb7c3488eab51bfcf9f12f277%2Fcffcda959e8140e38de8493eb3f93373?format=webp&width=800"
+                                    alt="B4 Brothers Infratech Logo"
+                                    className="w-full h-full object-contain"
+                                    style={{
+                                        background: 'radial-gradient(circle, transparent 60%, white 60%)',
+                                        borderRadius: '50%',
+                                        filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+                                    }}
+                                />
+                            </div>
                         </Link>
 
                         {/* Desktop Navigation */}

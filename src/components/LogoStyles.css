@@ -164,12 +164,26 @@
   }
 }
 
+/* Logo Background Removal */
+.logo-no-bg {
+  mix-blend-mode: multiply;
+  background: transparent;
+}
+
+/* Alternative approach for logo transparency */
+.logo-no-bg[src*="builder.io"] {
+  filter: contrast(1.2) brightness(1.1) drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  background: radial-gradient(circle at center, transparent 70%, rgba(255,255,255,0.8) 100%);
+  border-radius: 50%;
+  padding: 2px;
+}
+
 /* Responsive Enhancements */
 @media (max-width: 768px) {
   .logo-container {
     transform: scale(0.9);
   }
-  
+
   .nav-link {
     font-size: 0.95rem;
   }

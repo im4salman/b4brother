@@ -83,13 +83,14 @@ const Header = () => {
                             aria-label="B4Brothers homepage"
                         >
                             <img
-                                src="https://cdn.builder.io/api/v1/image/assets%2Fef9a0ffcb7c3488eab51bfcf9f12f277%2Fcffcda959e8140e38de8493eb3f93373?format=webp&width=800"
+                                src="https://cdn.builder.io/api/v1/image/assets%2Fef9a0ffcb7c3488eab51bfcf9f12f277%2F6240645af751481fa55364763c6bbbb7?format=webp&width=800"
                                 alt="B4 Brothers Infratech Logo"
-                                className={`transition-all duration-500 object-contain logo-no-bg ${
-                                    isScrolled ? 'h-16 w-auto' : 'h-20 w-auto'
+                                className={`transition-all duration-500 object-contain ${
+                                    isScrolled ? 'h-8' : 'h-10'
                                 }`}
                                 style={{
                                     filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
+                                    width: 'auto'
                                 }}
                             />
                         </Link>

@@ -7,7 +7,7 @@ import { slideUpVariants , zoomInVariants } from './animation';
 
 const Hero = () => { 
     return (
-        <div id='hero' className='bg-black w-full lg:h-[700px] h-fit m-auto pt-[120px] lg:pt-[100px] lg:px-[150px] px-[20px] flex justify-between items-center lg:flex-row flex-col lg:gap-5 gap-[50px] bg-cover bg-center'
+        <div id='hero' className='bg-black w-full lg:h-[700px] h-fit m-auto pt-[80px] lg:pt-[80px] lg:px-[150px] px-[20px] flex justify-between items-center lg:flex-row flex-col lg:gap-5 gap-[50px] bg-cover bg-center'
         style={{backgroundImage: `url(${backgroundImg})` }}>
            <motion.div 
            initial ="hidden"

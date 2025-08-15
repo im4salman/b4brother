@@ -82,21 +82,16 @@ const Header = () => {
                             className="cursor-pointer group flex items-center gap-4"
                             aria-label="B4Brothers homepage"
                         >
-                            <div
-                                className={`transition-all duration-500 ${
+                            <img
+                                src="https://cdn.builder.io/api/v1/image/assets%2Fef9a0ffcb7c3488eab51bfcf9f12f277%2Fcffcda959e8140e38de8493eb3f93373?format=webp&width=800"
+                                alt="B4 Brothers Infratech Logo"
+                                className={`transition-all duration-500 object-contain ${
                                     isScrolled ? 'h-16 w-auto' : 'h-20 w-auto'
                                 }`}
                                 style={{
-                                    backgroundImage: `url(https://cdn.builder.io/api/v1/image/assets%2Fef9a0ffcb7c3488eab51bfcf9f12f277%2Fcffcda959e8140e38de8493eb3f93373?format=webp&width=800)`,
-                                    backgroundSize: 'contain',
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundPosition: 'center',
                                     filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
-                                    mixBlendMode: 'multiply',
-                                    aspectRatio: '1'
+                                    mixBlendMode: 'multiply'
                                 }}
-                                role="img"
-                                aria-label="B4 Brothers Infratech Logo"
                             />
                         </Link>
 

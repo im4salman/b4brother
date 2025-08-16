@@ -17,7 +17,7 @@ const Hero = () => {
            >
             <motion.h1
                 variants={slideUpVariants}
-                className='text-yellow-500 text-2xl'
+                className='text-yellow-500 text-lg sm:text-xl md:text-2xl'
             >WE ARE BUILDERS 
             </motion.h1>
             <motion.h1

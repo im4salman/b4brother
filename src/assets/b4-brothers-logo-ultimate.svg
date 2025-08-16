@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="160" viewBox="0 0 400 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Dynamic gradients for maximum impact -->
+    <linearGradient id="primaryGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FBBF24"/>
+      <stop offset="30%" style="stop-color:#F59E0B"/>
+      <stop offset="70%" style="stop-color:#F97316"/>
+      <stop offset="100%" style="stop-color:#EA580C"/>
+    </linearGradient>
+    
+    <radialGradient id="buildingGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#1E293B"/>
+      <stop offset="50%" style="stop-color:#334155"/>
+      <stop offset="100%" style="stop-color:#0F172A"/>
+    </radialGradient>
+    
+    <linearGradient id="textShine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FDE047"/>
+      <stop offset="25%" style="stop-color:#FBBF24"/>
+      <stop offset="50%" style="stop-color:#F59E0B"/>
+      <stop offset="75%" style="stop-color:#F97316"/>
+      <stop offset="100%" style="stop-color:#EA580C"/>
+    </linearGradient>
+    
+    <linearGradient id="accentBurst" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FEF3C7"/>
+      <stop offset="50%" style="stop-color:#FBBF24"/>
+      <stop offset="100%" style="stop-color:#D97706"/>
+    </linearGradient>
+
+    <!-- Dramatic shadow effects -->
+    <filter id="megaShadow" x="-100%" y="-100%" width="300%" height="300%">
+      <feDropShadow dx="4" dy="8" stdDeviation="8" flood-color="rgba(0,0,0,0.3)"/>
+      <feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="rgba(245,158,11,0.4)"/>
+    </filter>
+    
+    <filter id="ultraGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="rgba(251,191,36,0.6)"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="rgba(245,158,11,0.8)"/>
+    </filter>
+    
+    <filter id="textGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="rgba(251,191,36,0.7)"/>
+    </filter>
+
+    <!-- Animated shine effect -->
+    <linearGradient id="shine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:rgba(255,255,255,0)"/>
+      <stop offset="50%" style="stop-color:rgba(255,255,255,0.3)"/>
+      <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="-100 0;400 0;-100 0" dur="3s" repeatCount="indefinite"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Dynamic background -->
+  <rect x="8" y="8" width="384" height="144" rx="24" fill="rgba(245,158,11,0.05)" stroke="url(#primaryGlow)" stroke-width="2" opacity="0.9"/>
+  
+  <!-- Energy burst background -->
+  <g opacity="0.4">
+    <circle cx="50" cy="80" r="40" fill="url(#accentBurst)" opacity="0.2"/>
+    <circle cx="350" cy="80" r="35" fill="url(#primaryGlow)" opacity="0.15"/>
+  </g>
+
+  <!-- MEGA Logo Icon Section -->
+  <g transform="translate(20, 20)" filter="url(#ultraGlow)">
+    <!-- Heroic building structure -->
+    <g filter="url(#megaShadow)">
+      <!-- Main tower -->
+      <rect x="0" y="35" width="80" height="60" fill="url(#buildingGlow)" rx="8"/>
+      
+      <!-- Dynamic building details -->
+      <g fill="url(#primaryGlow)">
+        <!-- Glowing windows - Top floor -->
+        <rect x="8" y="42" width="12" height="12" rx="3"/>
+        <rect x="24" y="42" width="12" height="12" rx="3"/>
+        <rect x="40" y="42" width="12" height="12" rx="3"/>
+        <rect x="56" y="42" width="12" height="12" rx="3"/>
+        
+        <!-- Glowing windows - Second floor -->
+        <rect x="8" y="58" width="12" height="12" rx="3"/>
+        <rect x="24" y="58" width="12" height="12" rx="3"/>
+        <rect x="40" y="58" width="12" height="12" rx="3"/>
+        <rect x="56" y="58" width="12" height="12" rx="3"/>
+        
+        <!-- Glowing windows - Third floor -->
+        <rect x="8" y="74" width="12" height="12" rx="3"/>
+        <rect x="24" y="74" width="12" height="12" rx="3"/>
+        <rect x="40" y="74" width="12" height="12" rx="3"/>
+        <rect x="56" y="74" width="12" height="12" rx="3"/>
+        
+        <!-- Grand entrance -->
+        <rect x="28" y="88" width="24" height="20" rx="4" fill="#0F172A"/>
+        <rect x="32" y="92" width="16" height="12" rx="2" fill="url(#accentBurst)"/>
+      </g>
+      
+      <!-- Powerful crane -->
+      <g stroke="#1E293B" stroke-width="6" stroke-linecap="round" fill="none">
+        <!-- Crane tower -->
+        <line x1="85" y1="15" x2="85" y2="75"/>
+        <!-- Crane arms -->
+        <line x1="85" y1="25" x2="115" y2="25"/>
+        <line x1="55" y1="25" x2="85" y2="25"/>
+        <!-- Crane hook -->
+        <line x1="105" y1="25" x2="105" y2="40"/>
+      </g>
+      
+      <!-- Crane accent -->
+      <circle cx="115" cy="25" r="5" fill="url(#primaryGlow)"/>
+      <rect x="80" y="73" width="10" height="12" fill="#64748B" rx="3"/>
+      
+      <!-- Solid foundation -->
+      <rect x="-8" y="95" width="96" height="10" fill="#94A3B8" rx="5"/>
+      
+      <!-- Dynamic ground elements -->
+      <circle cx="90" cy="102" r="3" fill="#CBD5E1"/>
+      <circle cx="98" cy="105" r="2.5" fill="#CBD5E1"/>
+      <circle cx="85" cy="107" r="2" fill="#CBD5E1"/>
+    </g>
+  </g>
+
+  <!-- MASSIVE Company Branding -->
+  <g transform="translate(140, 25)">
+    <!-- B4 with mega impact -->
+    <text x="0" y="55" font-family="Montserrat, Arial, sans-serif" font-size="64" font-weight="900" fill="url(#textShine)" letter-spacing="-3px" filter="url(#textGlow)">
+      B4
+    </text>
+    
+    <!-- Brothers with elegance -->
+    <text x="0" y="95" font-family="Montserrat, Arial, sans-serif" font-size="42" font-weight="700" fill="url(#textShine)" letter-spacing="-2px" filter="url(#textGlow)">
+      Brothers
+    </text>
+    
+    <!-- Infratech subtitle with power -->
+    <text x="0" y="115" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800" fill="#64748B" letter-spacing="4px">
+      INFRATECH
+    </text>
+    
+    <!-- Company status -->
+    <text x="0" y="135" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="600" fill="#94A3B8" letter-spacing="3px">
+      PVT LTD
+    </text>
+  </g>
+
+  <!-- BOLD Tagline Section -->
+  <g transform="translate(20, 145)">
+    <text x="0" y="0" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" fill="url(#textShine)" letter-spacing="1px" filter="url(#textGlow)">
+      "Believe in Best Builds Bold"
+    </text>
+  </g>
+
+  <!-- Spectacular decorative elements -->
+  <g opacity="0.8">
+    <!-- Dynamic burst pattern -->
+    <circle cx="350" cy="35" r="5" fill="url(#primaryGlow)"/>
+    <circle cx="365" cy="45" r="4" fill="#FBBF24"/>
+    <circle cx="370" cy="60" r="6" fill="url(#accentBurst)"/>
+    <circle cx="360" cy="75" r="4.5" fill="#F97316"/>
+    <circle cx="345" cy="90" r="3.5" fill="url(#primaryGlow)"/>
+    <circle cx="375" cy="105" r="5.5" fill="#FBBF24"/>
+    
+    <!-- Energy connections -->
+    <line x1="350" y1="35" x2="365" y2="45" stroke="url(#primaryGlow)" stroke-width="2" opacity="0.6"/>
+    <line x1="365" y1="45" x2="370" y2="60" stroke="url(#primaryGlow)" stroke-width="2" opacity="0.6"/>
+    <line x1="370" y1="60" x2="360" y2="75" stroke="url(#primaryGlow)" stroke-width="2" opacity="0.6"/>
+    <line x1="360" y1="75" x2="375" y2="105" stroke="url(#primaryGlow)" stroke-width="2" opacity="0.6"/>
+    
+    <!-- Power rays -->
+    <g stroke="url(#primaryGlow)" stroke-width="1.5" opacity="0.4">
+      <line x1="335" y1="20" x2="345" y2="30"/>
+      <line x1="340" y1="15" x2="350" y2="25"/>
+      <line x1="345" y1="10" x2="355" y2="20"/>
+      <line x1="380" y1="120" x2="375" y2="110"/>
+      <line x1="385" y1="115" x2="380" y2="105"/>
+      <line x1="390" y1="110" x2="385" y2="100"/>
+    </g>
+  </g>
+
+  <!-- Premium multi-layer border -->
+  <rect x="4" y="4" width="392" height="152" rx="24" fill="none" stroke="url(#primaryGlow)" stroke-width="2" opacity="1"/>
+  <rect x="6" y="6" width="388" height="148" rx="22" fill="none" stroke="rgba(251,191,36,0.4)" stroke-width="1"/>
+  <rect x="10" y="10" width="380" height="140" rx="20" fill="none" stroke="rgba(245,158,11,0.2)" stroke-width="0.5"/>
+  
+  <!-- Animated shine overlay -->
+  <rect x="8" y="8" width="384" height="144" rx="24" fill="url(#shine)" opacity="0.3"/>
+</svg>

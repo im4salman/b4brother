@@ -55,7 +55,7 @@ const Hero = () => {
             variants={zoomInVariants}
                 src={heroimg}
                 alt='hero image'
-                className='lg:h-[600px] h-[300px] lg:mb-[-100px]'
+                className='w-full max-w-sm sm:max-w-md lg:max-w-none lg:h-[600px] h-[250px] sm:h-[300px] lg:mb-[-100px] object-contain'
                 />
            </div>
         </div>

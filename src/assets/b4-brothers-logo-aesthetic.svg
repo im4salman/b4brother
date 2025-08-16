@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="320" height="100" viewBox="0 0 320 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Clean modern gradients -->
+    <linearGradient id="modernGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F59E0B"/>
+      <stop offset="100%" style="stop-color:#D97706"/>
+    </linearGradient>
+    
+    <linearGradient id="aestheticGray" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1F2937"/>
+      <stop offset="100%" style="stop-color:#374151"/>
+    </linearGradient>
+    
+    <linearGradient id="subtleAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FBBF24"/>
+      <stop offset="100%" style="stop-color:#F59E0B"/>
+    </linearGradient>
+
+    <!-- Elegant shadow -->
+    <filter id="cleanShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.1)"/>
+    </filter>
+    
+    <filter id="textShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="rgba(245,158,11,0.2)"/>
+    </filter>
+  </defs>
+
+  <!-- Clean background -->
+  <rect x="4" y="4" width="312" height="92" rx="16" fill="rgba(255,255,255,0.02)" stroke="rgba(245,158,11,0.2)" stroke-width="0.5"/>
+
+  <!-- Aesthetic icon design -->
+  <g transform="translate(20, 20)" filter="url(#cleanShadow)">
+    <!-- Modern building silhouette -->
+    <g fill="url(#aestheticGray)">
+      <!-- Main building with clean lines -->
+      <rect x="0" y="20" width="45" height="40" rx="2"/>
+      
+      <!-- Minimalist windows -->
+      <g fill="url(#modernGold)" opacity="0.8">
+        <!-- Simple window grid -->
+        <rect x="6" y="26" width="4" height="4" rx="0.5"/>
+        <rect x="12" y="26" width="4" height="4" rx="0.5"/>
+        <rect x="18" y="26" width="4" height="4" rx="0.5"/>
+        <rect x="24" y="26" width="4" height="4" rx="0.5"/>
+        <rect x="30" y="26" width="4" height="4" rx="0.5"/>
+        <rect x="36" y="26" width="4" height="4" rx="0.5"/>
+        
+        <rect x="6" y="34" width="4" height="4" rx="0.5"/>
+        <rect x="12" y="34" width="4" height="4" rx="0.5"/>
+        <rect x="18" y="34" width="4" height="4" rx="0.5"/>
+        <rect x="24" y="34" width="4" height="4" rx="0.5"/>
+        <rect x="30" y="34" width="4" height="4" rx="0.5"/>
+        <rect x="36" y="34" width="4" height="4" rx="0.5"/>
+        
+        <rect x="6" y="42" width="4" height="4" rx="0.5"/>
+        <rect x="12" y="42" width="4" height="4" rx="0.5"/>
+        <rect x="18" y="42" width="4" height="4" rx="0.5"/>
+        <rect x="24" y="42" width="4" height="4" rx="0.5"/>
+        <rect x="30" y="42" width="4" height="4" rx="0.5"/>
+        <rect x="36" y="42" width="4" height="4" rx="0.5"/>
+        
+        <!-- Elegant entrance -->
+        <rect x="19" y="50" width="8" height="10" rx="1" fill="url(#modernGold)"/>
+      </g>
+    </g>
+    
+    <!-- Clean crane design -->
+    <g stroke="url(#aestheticGray)" stroke-width="2" stroke-linecap="round" fill="none">
+      <line x1="50" y1="10" x2="50" y2="50"/>
+      <line x1="50" y1="15" x2="65" y2="15"/>
+      <line x1="40" y1="15" x2="50" y2="15"/>
+    </g>
+    <circle cx="65" cy="15" r="1.5" fill="url(#modernGold)"/>
+    
+    <!-- Minimalist base -->
+    <rect x="0" y="60" width="50" height="2" fill="url(#aestheticGray)" rx="1"/>
+  </g>
+
+  <!-- Elegant Typography -->
+  <g transform="translate(85, 25)">
+    <!-- B4 with modern styling -->
+    <text x="0" y="28" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="800" fill="url(#modernGold)" letter-spacing="-1px" filter="url(#textShadow)">
+      B4
+    </text>
+    
+    <!-- Brothers with sophistication -->
+    <text x="50" y="28" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="300" fill="#1F2937" letter-spacing="0.5px">
+      Brothers
+    </text>
+    
+    <!-- Clean subtitle -->
+    <text x="0" y="45" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="600" fill="#6B7280" letter-spacing="2px">
+      INFRATECH
+    </text>
+    
+    <!-- Minimal tagline -->
+    <text x="0" y="60" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="400" fill="url(#subtleAccent)" letter-spacing="0.5px" opacity="0.8">
+      Believe in Best Builds Bold
+    </text>
+  </g>
+
+  <!-- Aesthetic decorative elements -->
+  <g opacity="0.6">
+    <!-- Minimalist accent dots -->
+    <circle cx="280" cy="25" r="2" fill="url(#modernGold)"/>
+    <circle cx="290" cy="30" r="1.5" fill="url(#subtleAccent)"/>
+    <circle cx="285" cy="40" r="2.5" fill="url(#modernGold)"/>
+    <circle cx="295" cy="50" r="1.8" fill="url(#subtleAccent)"/>
+    
+    <!-- Clean connecting lines -->
+    <line x1="280" y1="25" x2="285" y2="40" stroke="url(#modernGold)" stroke-width="0.5" opacity="0.4"/>
+    <line x1="290" y1="30" x2="295" y2="50" stroke="url(#subtleAccent)" stroke-width="0.5" opacity="0.4"/>
+  </g>
+
+  <!-- Subtle border -->
+  <rect x="2" y="2" width="316" height="96" rx="16" fill="none" stroke="url(#modernGold)" stroke-width="0.5" opacity="0.6"/>
+</svg>

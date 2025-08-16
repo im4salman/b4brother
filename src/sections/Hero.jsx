@@ -25,7 +25,7 @@ const Hero = () => {
                 className='text-white uppercase text-3xl sm:text-4xl md:text-5xl lg:text-[50px] font-bold leading-tight'
             >we will build your dream </motion.h1>
             <div className='w-[120px] h-[6px] bg-yellow-500'></div>
-            <p className='text-white text-[20px]'>Whether you’re dreaming of a new structure or enhancing an existing space, Sumon Structures is here to make it happen. With unmatched expertise and dedication, we ensure a smooth building experience from start to finish.</p>
+            <p className='text-white text-[20px]'>Whether you’re dreaming of a new structure or enhancing an existing space, B4 Brothers is here to make it happen. With unmatched expertise and dedication, we ensure a smooth building experience from start to finish.</p>
 
             <motion.div
                 initial="hidden"

@@ -42,7 +42,7 @@ const Hero = () => {
                     </motion.button>
                     <motion.button
                     variants={zoomInVariants}
-                    className='border-white hover:border-yellow-500 hover:text-yellow-500 border-2 px-10 py-3 rounded-lg text-white font-bold'>
+                    className='border-white hover:border-yellow-500 hover:text-yellow-500 border-2 px-6 sm:px-8 lg:px-10 py-3 rounded-lg text-white font-bold text-sm sm:text-base w-full sm:w-auto text-center transition-all duration-300'>
                         REACH US
                     </motion.button>
 

@@ -35,7 +35,7 @@ const Hero = () => {
                 >
                     <motion.button
                     variants={zoomInVariants}
-                    className='bg-yellow-500 hover:bg-white hover:text-black px-10 py-3 rounded-lg text-black font-bold'
+                    className='bg-yellow-500 hover:bg-white hover:text-black px-6 sm:px-8 lg:px-10 py-3 rounded-lg text-black font-bold text-sm sm:text-base w-full sm:w-auto text-center transition-all duration-300'
                     >
                         READ MORE
 

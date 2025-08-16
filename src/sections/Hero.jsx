@@ -13,7 +13,7 @@ const Hero = () => {
            initial ="hidden"
            whileInView="visible"
            variants={slideUpVariants}
-           className='lg:w-[60%] w-full flex flex-col justify-center items-start lg:gap-8 gap-4'
+           className='lg:w-[60%] w-full flex flex-col justify-center items-start lg:gap-8 gap-4 sm:gap-6'
            >
             <motion.h1
                 variants={slideUpVariants}

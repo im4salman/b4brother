@@ -31,7 +31,7 @@ const Hero = () => {
                 initial="hidden"
                 whileInView="visible"
                 variants={zoomInVariants}
-                className='flex justify-normal items-center gap-5'
+                className='flex flex-col sm:flex-row justify-normal items-center gap-4 sm:gap-5 w-full'
                 >
                     <motion.button
                     variants={zoomInVariants}

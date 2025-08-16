@@ -48,7 +48,7 @@ const Hero = () => {
 
             </motion.div>
            </motion.div>
-           <div className='w-[40%] flex flex-col justify-end items-end'>
+           <div className='lg:w-[40%] w-full flex flex-col justify-center lg:justify-end items-center lg:items-end mt-8 lg:mt-0'>
             <motion.img
             initial='hidden'
             whileInView='visible'

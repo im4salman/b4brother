@@ -54,6 +54,11 @@ const RouterContent = () => {
     return <CareerPage />;
   }
 
+  // Handle buy/sell page
+  if (currentPath === '/buy-sell' || currentPath === '/buy-sell/') {
+    return <BuySellPage />;
+  }
+
   // Default to main app for all other routes
   return <App />;
 };

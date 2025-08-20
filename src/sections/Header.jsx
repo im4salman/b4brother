@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { FaBars, FaXmark, FaPhone, FaWhatsapp } from 'react-icons/fa6';
 import { Link } from 'react-scroll';
 import Modal from './Modal';
-import logoIcon from '../assets/b4-brothers-logo-aesthetic.svg';
+import logoIcon from '../assets/b4-brothers-logo-big-unique.svg';
+import logoMobile from '../assets/b4-brothers-logo-mobile.svg';
 import '../components/LogoStyles.css';
 import { useAnalytics } from '../contexts/AnalyticsContext';
 
@@ -48,6 +49,7 @@ const Header = () => {
         { link: 'About', path: 'about', isExternal: false },
         { link: 'Services', path: 'services', isExternal: false },
         { link: 'Projects', path: 'projects', isExternal: false },
+        { link: 'Buy/Sell', path: '/buy-sell', isExternal: true },
         { link: 'Careers', path: '/career', isExternal: true },
         { link: 'Contact', path: 'contact', isExternal: false },
     ];
@@ -82,17 +84,32 @@ const Header = () => {
                             className="cursor-pointer group flex items-center gap-4"
                             aria-label="B4Brothers homepage"
                         >
-                            <img
-                                src={logoIcon}
-                                alt="B4 Brothers Infratech - Believe in Best Builds Bold"
-                                className={`transition-all duration-500 object-contain ${
-                                    isScrolled ? 'h-12 w-auto' : 'h-16 w-auto'
-                                }`}
-                                style={{
-                                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
-                                    width: 'auto'
-                                }}
-                            />
+                            <>
+                                {/* Desktop Logo */}
+                                <img
+                                    src={logoIcon}
+                                    alt="B4 Brothers Infratech - Believe in Best Builds Bold"
+                                    className={`hidden md:block transition-all duration-500 object-contain ${
+                                        isScrolled ? 'h-14 w-auto max-w-[200px]' : 'h-18 w-auto max-w-[240px]'
+                                    }`}
+                                    style={{
+                                        filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
+                                        width: 'auto'
+                                    }}
+                                />
+                                {/* Mobile Logo */}
+                                <img
+                                    src={logoMobile}
+                                    alt="B4 Brothers Infratech"
+                                    className={`block md:hidden transition-all duration-500 object-contain ${
+                                        isScrolled ? 'h-10 w-auto max-w-[120px]' : 'h-12 w-auto max-w-[140px]'
+                                    }`}
+                                    style={{
+                                        filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
+                                        width: 'auto'
+                                    }}
+                                />
+                            </>
                         </Link>
 
                         {/* Desktop Navigation */}

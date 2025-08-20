@@ -172,12 +172,116 @@ img {
   }
 }
 
+/* Mobile-first responsive improvements */
+@media (max-width: 640px) {
+  /* Better touch targets */
+  button, a, input, select {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Improved spacing for mobile */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Responsive typography */
+  .heading-primary {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .heading-secondary {
+    font-size: 1.75rem;
+    line-height: 1.3;
+  }
+
+  .heading-tertiary {
+    font-size: 1.5rem;
+    line-height: 1.4;
+  }
+
+  /* Improved form spacing */
+  input, textarea, select {
+    padding: 0.875rem;
+    font-size: 1rem;
+  }
+
+  /* Better modal sizing */
+  .modal-content {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
+}
+
+/* Tablet improvements */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .heading-primary {
+    font-size: 2.5rem;
+  }
+
+  .heading-secondary {
+    font-size: 2rem;
+  }
+}
+
+/* Mobile landscape considerations */
+@media (max-height: 500px) and (orientation: landscape) {
+  .carousel-content {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .hero-section {
+    min-height: auto;
+    padding: 2rem 0;
+  }
+}
+
+/* iOS specific fixes */
+@supports (-webkit-touch-callout: none) {
+  /* Fix for iOS viewport height issues */
+  .full-height-mobile {
+    min-height: -webkit-fill-available;
+  }
+
+  /* Better touch handling */
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .crisp-edges {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Safe area insets for modern mobile devices */
+@supports (padding: max(0px)) {
+  .safe-area-inset {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .safe-area-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+
+  .safe-area-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
 /* Print styles */
 @media print {
   .no-print {
     display: none !important;
   }
-  
+
   body {
     background: white !important;
     color: black !important;

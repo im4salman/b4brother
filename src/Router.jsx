@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import App from './App.jsx';
 import CareerPage from './pages/CareerPage.jsx';
+import BuySellPage from './pages/BuySellPage.jsx';
 import AdminPage from './pages/AdminPage.jsx';
 import AdminLogin from './components/AdminLogin.jsx';
 import ApiTester from './pages/ApiTester.jsx';
@@ -25,6 +26,8 @@ const RouterContent = () => {
     let pageName = 'Home';
     if (currentPath === '/career' || currentPath === '/career/') {
       pageName = 'Career';
+    } else if (currentPath === '/buy-sell' || currentPath === '/buy-sell/') {
+      pageName = 'Buy/Sell';
     } else if (currentPath === '/admin' || currentPath === '/admin/') {
       pageName = 'Admin';
     } else if (currentPath === '/api-test' || currentPath === '/api-test/') {
@@ -49,6 +52,11 @@ const RouterContent = () => {
   // Handle career page
   if (currentPath === '/career' || currentPath === '/career/') {
     return <CareerPage />;
+  }
+
+  // Handle buy/sell page
+  if (currentPath === '/buy-sell' || currentPath === '/buy-sell/') {
+    return <BuySellPage />;
   }
 
   // Default to main app for all other routes

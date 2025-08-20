@@ -149,7 +149,7 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
                       </div>
 
                       {/* Sophisticated Typography */}
-                      <div className="space-y-8">
+                      <div className="space-y-4 sm:space-y-6 lg:space-y-8">
                         <div className="space-y-4 animate-slide-up" style={{animationDelay: '0.2s'}}>
                           <h1 className="font-inter text-white leading-tight">
                             <div className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-light mb-2 md:mb-4">

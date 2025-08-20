@@ -96,8 +96,8 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
             index === current ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
           style={{
-            top: `${headerHeight}px`,
-            height: `calc(100% - ${headerHeight}px)`
+            top: 0,
+            height: '100%'
           }}
           aria-hidden={index !== current}
         >

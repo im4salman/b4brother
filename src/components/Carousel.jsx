@@ -152,13 +152,13 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
                       <div className="space-y-4 sm:space-y-6 lg:space-y-8">
                         <div className="space-y-4 animate-slide-up" style={{animationDelay: '0.2s'}}>
                           <h1 className="font-inter text-white leading-tight">
-                            <div className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-light mb-2 md:mb-4">
+                            <div className="text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-light mb-1 sm:mb-2 md:mb-4">
                               <span className="font-extralight">Believe in</span>
                             </div>
-                            <div className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-2 md:mb-4">
+                            <div className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-1 sm:mb-2 md:mb-4">
                               <span className="bg-gradient-to-r from-primary-300 via-primary-400 to-accent-400 bg-clip-text text-transparent">Best Builds</span>
                             </div>
-                            <div className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tight">
+                            <div className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight">
                               <span className="text-white drop-shadow-2xl">BOLD</span>
                             </div>
                           </h1>
@@ -172,10 +172,10 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
                         {/* Company Identity */}
                         <div className="space-y-6 animate-fade-in" style={{animationDelay: '0.8s'}}>
                           <div className="space-y-2">
-                            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white font-montserrat">
+                            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white font-montserrat">
                               <span className="text-primary-400">B4</span><span className="font-light">Brothers</span>
                             </h2>
-                            <p className="text-lg sm:text-xl md:text-2xl text-white/80 font-light leading-relaxed max-w-2xl">
+                            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 font-light leading-relaxed max-w-2xl">
                               Crafting architectural excellence through innovative design and
                               <span className="text-primary-300 font-medium"> meticulous craftsmanship</span>
                             </p>

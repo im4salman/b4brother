@@ -17,7 +17,7 @@ const About = () => {
                         <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
                         <span className="text-primary-700 text-sm font-medium tracking-wide">About Excellence</span>
                     </div>
-                    <h2 className='text-4xl md:text-5xl lg:text-6xl font-display font-bold text-secondary-900 mb-6 leading-tight'>
+                    <h2 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display font-bold text-secondary-900 mb-6 leading-tight'>
                         Crafting <span className="text-primary-600">Architectural</span> Excellence
                     </h2>
                     <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-500 to-transparent mx-auto mb-8"></div>

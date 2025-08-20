@@ -138,7 +138,7 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
                   <div className="grid lg:grid-cols-12 gap-8 items-center min-h-full">
 
                     {/* Left Column - Main Content */}
-                    <div className="lg:col-span-7 space-y-12">
+                    <div className="lg:col-span-7 space-y-6 sm:space-y-8 lg:space-y-12">
 
                       {/* Premium Badge */}
                       <div className="animate-fade-in">

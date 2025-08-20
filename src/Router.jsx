@@ -26,6 +26,8 @@ const RouterContent = () => {
     let pageName = 'Home';
     if (currentPath === '/career' || currentPath === '/career/') {
       pageName = 'Career';
+    } else if (currentPath === '/buy-sell' || currentPath === '/buy-sell/') {
+      pageName = 'Buy/Sell';
     } else if (currentPath === '/admin' || currentPath === '/admin/') {
       pageName = 'Admin';
     } else if (currentPath === '/api-test' || currentPath === '/api-test/') {

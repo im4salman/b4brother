@@ -48,6 +48,7 @@ const Header = () => {
         { link: 'About', path: 'about', isExternal: false },
         { link: 'Services', path: 'services', isExternal: false },
         { link: 'Projects', path: 'projects', isExternal: false },
+        { link: 'Buy/Sell', path: '/buy-sell', isExternal: true },
         { link: 'Careers', path: '/career', isExternal: true },
         { link: 'Contact', path: 'contact', isExternal: false },
     ];

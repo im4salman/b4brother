@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="160" height="60" viewBox="0 0 160 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mobileGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FBBF24"/>
+      <stop offset="50%" style="stop-color:#F59E0B"/>
+      <stop offset="100%" style="stop-color:#D97706"/>
+    </linearGradient>
+    
+    <linearGradient id="mobileDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1F2937"/>
+      <stop offset="100%" style="stop-color:#374151"/>
+    </linearGradient>
+    
+    <linearGradient id="mobileAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F97316"/>
+      <stop offset="100%" style="stop-color:#EA580C"/>
+    </linearGradient>
+
+    <filter id="mobileShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="rgba(0,0,0,0.1)"/>
+    </filter>
+  </defs>
+
+  <!-- Compact building icon -->
+  <g transform="translate(8, 8)" filter="url(#mobileShadow)">
+    <!-- Simple building structure -->
+    <rect x="0" y="15" width="16" height="25" rx="1" fill="url(#mobileDark)"/>
+    <rect x="18" y="10" width="18" height="30" rx="1" fill="url(#mobileDark)"/>
+    
+    <!-- Minimalist windows -->
+    <g fill="url(#mobileGold)" opacity="0.9">
+      <rect x="2" y="18" width="2" height="2" rx="0.2"/>
+      <rect x="6" y="18" width="2" height="2" rx="0.2"/>
+      <rect x="10" y="18" width="2" height="2" rx="0.2"/>
+      <rect x="2" y="23" width="2" height="2" rx="0.2"/>
+      <rect x="6" y="23" width="2" height="2" rx="0.2"/>
+      <rect x="10" y="23" width="2" height="2" rx="0.2"/>
+      <rect x="2" y="28" width="2" height="2" rx="0.2"/>
+      <rect x="6" y="28" width="2" height="2" rx="0.2"/>
+      <rect x="10" y="28" width="2" height="2" rx="0.2"/>
+      <rect x="2" y="33" width="2" height="2" rx="0.2"/>
+      <rect x="6" y="33" width="2" height="2" rx="0.2"/>
+      <rect x="10" y="33" width="2" height="2" rx="0.2"/>
+      
+      <rect x="20" y="13" width="2" height="2" rx="0.2"/>
+      <rect x="24" y="13" width="2" height="2" rx="0.2"/>
+      <rect x="28" y="13" width="2" height="2" rx="0.2"/>
+      <rect x="32" y="13" width="2" height="2" rx="0.2"/>
+      <rect x="20" y="18" width="2" height="2" rx="0.2"/>
+      <rect x="24" y="18" width="2" height="2" rx="0.2"/>
+      <rect x="28" y="18" width="2" height="2" rx="0.2"/>
+      <rect x="32" y="18" width="2" height="2" rx="0.2"/>
+      <rect x="20" y="23" width="2" height="2" rx="0.2"/>
+      <rect x="24" y="23" width="2" height="2" rx="0.2"/>
+      <rect x="28" y="23" width="2" height="2" rx="0.2"/>
+      <rect x="32" y="23" width="2" height="2" rx="0.2"/>
+      <rect x="20" y="28" width="2" height="2" rx="0.2"/>
+      <rect x="24" y="28" width="2" height="2" rx="0.2"/>
+      <rect x="28" y="28" width="2" height="2" rx="0.2"/>
+      <rect x="32" y="28" width="2" height="2" rx="0.2"/>
+      <rect x="20" y="33" width="2" height="2" rx="0.2"/>
+      <rect x="24" y="33" width="2" height="2" rx="0.2"/>
+      <rect x="28" y="33" width="2" height="2" rx="0.2"/>
+      <rect x="32" y="33" width="2" height="2" rx="0.2"/>
+      
+      <!-- Entrance -->
+      <rect x="24" y="35" width="6" height="5" rx="1" fill="url(#mobileAccent)"/>
+    </g>
+    
+    <!-- Base -->
+    <rect x="0" y="40" width="36" height="2" fill="url(#mobileDark)" rx="1"/>
+  </g>
+
+  <!-- Compact typography -->
+  <g transform="translate(48, 15)">
+    <!-- B4 -->
+    <text x="0" y="18" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="800" fill="url(#mobileGold)" letter-spacing="-0.5px">
+      B4
+    </text>
+    
+    <!-- Brothers -->
+    <text x="28" y="18" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="300" fill="#1F2937" letter-spacing="0.3px">
+      Brothers
+    </text>
+    
+    <!-- Subtitle -->
+    <text x="0" y="32" font-family="Inter, system-ui, sans-serif" font-size="7" font-weight="600" fill="#6B7280" letter-spacing="1px">
+      INFRATECH
+    </text>
+    
+    <!-- Mobile tagline -->
+    <text x="0" y="42" font-family="Inter, system-ui, sans-serif" font-size="6" font-weight="400" fill="url(#mobileAccent)" letter-spacing="0.3px" opacity="0.8">
+      Best Builds Bold
+    </text>
+  </g>
+</svg>

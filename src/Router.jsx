@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import App from './App.jsx';
 import CareerPage from './pages/CareerPage.jsx';
+import BuySellPage from './pages/BuySellPage.jsx';
 import AdminPage from './pages/AdminPage.jsx';
 import AdminLogin from './components/AdminLogin.jsx';
 import ApiTester from './pages/ApiTester.jsx';

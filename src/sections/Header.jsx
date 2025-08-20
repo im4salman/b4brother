@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaBars, FaXmark, FaPhone, FaWhatsapp } from 'react-icons/fa6';
 import { Link } from 'react-scroll';
 import Modal from './Modal';
-import logoIcon from '../assets/b4-brothers-logo-aesthetic.svg';
+import logoIcon from '../assets/b4-brothers-logo-big-unique.svg';
 import '../components/LogoStyles.css';
 import { useAnalytics } from '../contexts/AnalyticsContext';
 

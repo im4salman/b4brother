@@ -80,7 +80,11 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
 
   return (
     <div
-      className="relative w-full h-screen overflow-hidden"
+      className="relative w-full min-h-screen overflow-hidden"
+      style={{
+        height: `calc(100vh - ${headerHeight}px)`,
+        minHeight: `calc(100svh - ${headerHeight}px)` // Support for newer viewport units
+      }}
       role="region"
       aria-label="Featured projects carousel"
     >

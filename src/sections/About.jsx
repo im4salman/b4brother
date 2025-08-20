@@ -23,12 +23,12 @@ const About = () => {
                     <div className="w-24 h-px bg-gradient-to-r from-transparent via-primary-500 to-transparent mx-auto mb-8"></div>
                 </motion.div>
 
-                <div className='grid lg:grid-cols-12 gap-16 items-center'>
+                <div className='grid lg:grid-cols-12 gap-8 lg:gap-16 items-center'>
                     <motion.div
                         initial='hidden'
                         whileInView='visible'
                         variants={slideUpVariants}
-                        className='lg:col-span-7 space-y-12'
+                        className='lg:col-span-7 space-y-8 lg:space-y-12'
                     >
                         {/* Main Content */}
                         <div className='space-y-8'>

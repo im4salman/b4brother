@@ -84,17 +84,32 @@ const Header = () => {
                             className="cursor-pointer group flex items-center gap-4"
                             aria-label="B4Brothers homepage"
                         >
-                            <img
-                                src={logoIcon}
-                                alt="B4 Brothers Infratech - Believe in Best Builds Bold"
-                                className={`transition-all duration-500 object-contain ${
-                                    isScrolled ? 'h-14 w-auto max-w-[200px]' : 'h-18 w-auto max-w-[240px]'
-                                }`}
-                                style={{
-                                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
-                                    width: 'auto'
-                                }}
-                            />
+                            <>
+                                {/* Desktop Logo */}
+                                <img
+                                    src={logoIcon}
+                                    alt="B4 Brothers Infratech - Believe in Best Builds Bold"
+                                    className={`hidden md:block transition-all duration-500 object-contain ${
+                                        isScrolled ? 'h-14 w-auto max-w-[200px]' : 'h-18 w-auto max-w-[240px]'
+                                    }`}
+                                    style={{
+                                        filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
+                                        width: 'auto'
+                                    }}
+                                />
+                                {/* Mobile Logo */}
+                                <img
+                                    src={logoMobile}
+                                    alt="B4 Brothers Infratech"
+                                    className={`block md:hidden transition-all duration-500 object-contain ${
+                                        isScrolled ? 'h-10 w-auto max-w-[120px]' : 'h-12 w-auto max-w-[140px]'
+                                    }`}
+                                    style={{
+                                        filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
+                                        width: 'auto'
+                                    }}
+                                />
+                            </>
                         </Link>
 
                         {/* Desktop Navigation */}

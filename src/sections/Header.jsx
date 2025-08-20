@@ -87,7 +87,7 @@ const Header = () => {
                                 src={logoIcon}
                                 alt="B4 Brothers Infratech - Believe in Best Builds Bold"
                                 className={`transition-all duration-500 object-contain ${
-                                    isScrolled ? 'h-12 w-auto' : 'h-16 w-auto'
+                                    isScrolled ? 'h-14 w-auto max-w-[200px]' : 'h-18 w-auto max-w-[240px]'
                                 }`}
                                 style={{
                                     filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',

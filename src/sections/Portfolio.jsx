@@ -1,33 +1,8 @@
-import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import ProjectCard from '../components/ProjectCard';
-import ProjectModal from '../components/ProjectModal';
-import { projects } from '../data/projects';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { slideUpVariants, zoomInVariants } from './animation';
 
 const Portfolio = () => {
-  const [selected, setSelected] = useState(null);
-  const [activeFilter, setActiveFilter] = useState('All');
-
-  // Get unique categories for filter buttons
-  const categories = useMemo(() => {
-    const cats = ['All', ...new Set(projects.map(project => project.category))];
-    return cats;
-  }, []);
-
-  // Filter projects based on active filter
-  const filteredProjects = useMemo(() => {
-    if (activeFilter === 'All') return projects;
-    return projects.filter(project => project.category === activeFilter);
-  }, [activeFilter]);
-
-  // Handle keyboard navigation for filter buttons
-  const handleFilterKeyDown = (event, category) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      setActiveFilter(category);
-    }
-  };
 
   return (
     <section id="projects" className="w-full bg-white py-20 md:py-32">
@@ -66,11 +41,11 @@ const Portfolio = () => {
           className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 p-8 bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl"
         >
           <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-primary-500 mb-2">50+</div>
+            <div className="text-3xl md:text-4xl font-bold text-primary-500 mb-2">40</div>
             <div className="text-sm text-secondary-600 uppercase tracking-wide">Projects Delivered</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-primary-500 mb-2">15M+</div>
+            <div className="text-3xl md:text-4xl font-bold text-primary-500 mb-2">5M</div>
             <div className="text-sm text-secondary-600 uppercase tracking-wide">Sq Ft Built</div>
           </div>
           <div className="text-center">
@@ -83,84 +58,6 @@ const Portfolio = () => {
           </div>
         </motion.div>
 
-        {/* Filter Buttons */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          variants={slideUpVariants}
-          className="flex flex-wrap justify-center gap-4 mb-12"
-          role="tablist"
-          aria-label="Project category filters"
-        >
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveFilter(category)}
-              onKeyDown={(e) => handleFilterKeyDown(e, category)}
-              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-primary-200 ${
-                activeFilter === category
-                  ? 'bg-primary-500 text-white shadow-glow'
-                  : 'bg-gray-100 text-secondary-600 hover:bg-primary-100 hover:text-primary-500'
-              }`}
-              role="tab"
-              aria-selected={activeFilter === category}
-              aria-controls="projects-grid"
-            >
-              {category}
-              <span className="ml-2 text-sm opacity-75">
-                ({category === 'All' ? projects.length : projects.filter(p => p.category === category).length})
-              </span>
-            </button>
-          ))}
-        </motion.div>
-
-        {/* Projects Grid */}
-        <motion.div
-          id="projects-grid"
-          layout
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
-          role="tabpanel"
-        >
-          <AnimatePresence mode="wait">
-            {filteredProjects.map((proj, index) => (
-              <motion.div
-                key={`${activeFilter}-${proj.id}`}
-                layout
-                initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.8, y: -20 }}
-                transition={{ 
-                  duration: 0.3, 
-                  delay: index * 0.1,
-                  layout: { duration: 0.3 }
-                }}
-                className="group"
-              >
-                <ProjectCard
-                  project={proj}
-                  onClick={setSelected}
-                />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* No Projects Message */}
-        {filteredProjects.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center py-16"
-          >
-            <div className="text-gray-400 mb-4">
-              <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-semibold text-secondary-600 mb-2">No projects found</h3>
-            <p className="text-secondary-500">Try selecting a different category to see our work.</p>
-          </motion.div>
-        )}
 
         {/* Call to Action */}
         <motion.div
@@ -201,15 +98,6 @@ const Portfolio = () => {
         </motion.div>
       </div>
 
-      {/* Project Detail Modal */}
-      <AnimatePresence>
-        {selected && (
-          <ProjectModal
-            project={selected}
-            onClose={() => setSelected(null)}
-          />
-        )}
-      </AnimatePresence>
     </section>
   );
 };

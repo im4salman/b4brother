@@ -2,6 +2,8 @@ import './App.css'
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { useAnalytics } from './contexts/AnalyticsContext';
 import ErrorBoundary from './components/ErrorBoundary';
+import { useEffect } from 'react';
+import { preloadCriticalResources, addTouchOptimizations, registerServiceWorker } from './utils/mobileOptimizations';
 import Header from './sections/Header';
 import About from './sections/About';
 import Services from './sections/Services';
@@ -10,7 +12,7 @@ import Contact from './sections/Contact';
 import Footer from './sections/Footer';
 import Working from './sections/Working';
 import Testimonials from './sections/Testimonials';
-import Carousel from './components/Carousel';
+import HeroSlider from './components/HeroSlider';
 import constructionVideo from './assets/introvideo.mp4';
 
 import carousel1 from './assets/carousel1.png';
@@ -59,6 +61,30 @@ const media = [
 ];
 
 function App() {
+  // Mobile performance optimizations
+  useEffect(() => {
+    // Preload critical resources
+    preloadCriticalResources();
+
+    // Add touch optimizations
+    addTouchOptimizations();
+
+    // Register service worker for caching
+    registerServiceWorker();
+
+    // Optimize font loading
+    const link = document.createElement('link');
+    link.rel = 'preconnect';
+    link.href = 'https://fonts.googleapis.com';
+    document.head.appendChild(link);
+
+    const link2 = document.createElement('link');
+    link2.rel = 'preconnect';
+    link2.href = 'https://fonts.gstatic.com';
+    link2.crossOrigin = '';
+    document.head.appendChild(link2);
+  }, []);
+
   return (
     <ErrorBoundary>
       <HelmetProvider>
@@ -142,7 +168,7 @@ function App() {
         <Header/>
         
         <main id="main-content" role="main">
-          <Carousel mediaItems={media} />
+          <HeroSlider mediaItems={media} />
           <About/>
           <Services/>
           <Portfolio/>

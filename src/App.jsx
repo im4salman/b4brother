@@ -2,6 +2,8 @@ import './App.css'
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { useAnalytics } from './contexts/AnalyticsContext';
 import ErrorBoundary from './components/ErrorBoundary';
+import { useEffect } from 'react';
+import { preloadCriticalResources, addTouchOptimizations, registerServiceWorker } from './utils/mobileOptimizations';
 import Header from './sections/Header';
 import About from './sections/About';
 import Services from './sections/Services';

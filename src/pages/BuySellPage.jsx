@@ -426,7 +426,7 @@ const BuySellPage = () => {
         <Header />
 
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-primary-500 via-primary-600 to-accent-500 text-white pt-24 pb-16">
+        <section className="bg-gradient-to-br from-primary-500 via-primary-600 to-accent-500 text-white pt-20 pb-8">
           <div className="container mx-auto px-6 lg:px-8">
             <div className="text-center max-w-4xl mx-auto">
               <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 mb-6">

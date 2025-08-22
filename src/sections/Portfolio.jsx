@@ -98,15 +98,6 @@ const Portfolio = () => {
         </motion.div>
       </div>
 
-      {/* Project Detail Modal */}
-      <AnimatePresence>
-        {selected && (
-          <ProjectModal
-            project={selected}
-            onClose={() => setSelected(null)}
-          />
-        )}
-      </AnimatePresence>
     </section>
   );
 };

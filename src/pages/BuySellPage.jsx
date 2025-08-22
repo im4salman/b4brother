@@ -439,7 +439,7 @@ const BuySellPage = () => {
               </p>
 
               {/* Trust Indicators */}
-              <div className="flex flex-wrap justify-center gap-4 mb-6 text-sm text-white/80">
+              <div className="flex flex-wrap justify-center gap-3 mb-4 text-xs text-white/80">
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
                   <span>Verified Properties</span>

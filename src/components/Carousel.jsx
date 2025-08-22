@@ -80,10 +80,10 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
 
   return (
     <div
-      className="relative w-full overflow-hidden"
+      className="relative w-full overflow-hidden h-screen"
       style={{
-        height: `calc(100vh - ${headerHeight}px)`,
-        minHeight: `calc(100vh - ${headerHeight}px)`
+        marginTop: `-${headerHeight}px`,
+        paddingTop: `${headerHeight}px`
       }}
       role="region"
       aria-label="Featured projects carousel"

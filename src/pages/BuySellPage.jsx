@@ -429,12 +429,38 @@ const BuySellPage = () => {
         <section className="bg-gradient-to-br from-primary-500 via-primary-600 to-accent-500 text-white pt-24 pb-16">
           <div className="container mx-auto px-6 lg:px-8">
             <div className="text-center max-w-4xl mx-auto">
+              <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 mb-6">
+                <div className="w-2 h-2 bg-primary-300 rounded-full animate-pulse mr-3"></div>
+                <span className="text-sm font-medium">Premium Real Estate Marketplace</span>
+              </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
-                Buy & Sell Properties
+                Professional Real Estate Solutions
               </h1>
-              <p className="text-lg sm:text-xl text-white/90 mb-8">
-                Your trusted marketplace for real estate. Find your dream property or sell with confidence.
+              <p className="text-lg sm:text-xl text-white/90 mb-8 leading-relaxed">
+                Connect with verified buyers and sellers in West Bengal's premier real estate marketplace.
+                <br className="hidden sm:block" />
+                Professional support, transparent transactions, and trusted expertise since 2019.
               </p>
+
+              {/* Trust Indicators */}
+              <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm text-white/80">
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+                  <span>Verified Properties</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+                  <span>Legal Support</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+                  <span>Professional Guidance</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+                  <span>40+ Projects Delivered</span>
+                </div>
+              </div>
               
               {/* Tab Navigation */}
               <div className="inline-flex bg-white/10 backdrop-blur-sm rounded-xl p-2 mb-8">

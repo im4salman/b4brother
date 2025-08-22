@@ -459,7 +459,7 @@ const BuySellPage = () => {
               </div>
               
               {/* Tab Navigation */}
-              <div className="inline-flex bg-white/10 backdrop-blur-sm rounded-xl p-2 mb-8">
+              <div className="inline-flex bg-white/10 backdrop-blur-sm rounded-xl p-1 mb-4">
                 <button
                   onClick={() => setActiveTab('buy')}
                   className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${

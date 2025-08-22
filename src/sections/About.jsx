@@ -80,11 +80,11 @@ const About = () => {
                             <h4 className='text-xl font-bold mb-6 font-space'>Excellence in Numbers</h4>
                             <div className='grid grid-cols-2 gap-6'>
                                 <div className='text-center'>
-                                    <div className='text-3xl font-bold text-primary-400 mb-2'>150+</div>
+                                    <div className='text-3xl font-bold text-primary-400 mb-2'>40+</div>
                                     <div className='text-sm text-gray-300'>Projects Delivered</div>
                                 </div>
                                 <div className='text-center'>
-                                    <div className='text-3xl font-bold text-accent-400 mb-2'>4.9★</div>
+                                    <div className='text-3xl font-bold text-accent-400 mb-2'>4.9��</div>
                                     <div className='text-sm text-gray-300'>Client Rating</div>
                                 </div>
                                 <div className='text-center'>
@@ -102,7 +102,7 @@ const About = () => {
                         <div className='space-y-6'>
                             <h4 className='text-xl font-bold text-secondary-900 font-space'>Ready to Build Bold?</h4>
                             <p className='text-secondary-600 leading-relaxed'>
-                                Join 150+ satisfied clients who trusted us with their construction dreams. 
+                                Join 40+ satisfied clients who trusted us with their construction dreams. 
                                 Let's create something extraordinary together.
                             </p>
                             <div className='space-y-4'>

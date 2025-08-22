@@ -486,13 +486,22 @@ const BuySellPage = () => {
                 </button>
               </div>
 
-              <button
-                onClick={() => setShowPostForm(true)}
-                className="bg-white text-primary-600 hover:bg-primary-50 font-semibold px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl inline-flex items-center"
-              >
-                <FaPlus className="w-5 h-5 mr-3" />
-                {activeTab === 'sell' ? 'Post Property for Sale' : 'Post Buying Requirement'}
-              </button>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  onClick={() => setShowPostForm(true)}
+                  className="bg-white text-primary-600 hover:bg-primary-50 font-semibold px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl inline-flex items-center justify-center"
+                >
+                  <FaPlus className="w-5 h-5 mr-3" />
+                  {activeTab === 'sell' ? 'List Your Property' : 'Post Your Requirement'}
+                </button>
+                <a
+                  href="#contact"
+                  className="border-2 border-white/30 hover:border-white text-white hover:bg-white/10 font-semibold px-8 py-4 rounded-xl transition-all duration-300 backdrop-blur-sm inline-flex items-center justify-center"
+                >
+                  <FaPhone className="w-5 h-5 mr-3" />
+                  Get Expert Consultation
+                </a>
+              </div>
             </div>
           </div>
         </section>

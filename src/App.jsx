@@ -12,7 +12,7 @@ import Contact from './sections/Contact';
 import Footer from './sections/Footer';
 import Working from './sections/Working';
 import Testimonials from './sections/Testimonials';
-import Carousel from './components/Carousel';
+import HeroSlider from './components/HeroSlider';
 import constructionVideo from './assets/introvideo.mp4';
 
 import carousel1 from './assets/carousel1.png';

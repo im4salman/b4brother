@@ -433,10 +433,10 @@ const BuySellPage = () => {
                 <div className="w-2 h-2 bg-primary-300 rounded-full animate-pulse mr-3"></div>
                 <span className="text-sm font-medium">Premium Real Estate Marketplace</span>
               </div>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">
                 Professional Real Estate Solutions
               </h1>
-              <p className="text-lg sm:text-xl text-white/90 mb-8 leading-relaxed">
+              <p className="text-base sm:text-lg text-white/90 mb-6 leading-relaxed">
                 Connect with verified buyers and sellers in West Bengal's premier real estate marketplace.
                 <br className="hidden sm:block" />
                 Professional support, transparent transactions, and trusted expertise since 2019.

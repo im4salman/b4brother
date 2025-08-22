@@ -66,11 +66,11 @@ const Portfolio = () => {
           className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 p-8 bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl"
         >
           <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-primary-500 mb-2">50+</div>
+            <div className="text-3xl md:text-4xl font-bold text-primary-500 mb-2">40</div>
             <div className="text-sm text-secondary-600 uppercase tracking-wide">Projects Delivered</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-primary-500 mb-2">15M+</div>
+            <div className="text-3xl md:text-4xl font-bold text-primary-500 mb-2">5M</div>
             <div className="text-sm text-secondary-600 uppercase tracking-wide">Sq Ft Built</div>
           </div>
           <div className="text-center">

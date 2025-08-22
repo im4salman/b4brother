@@ -482,20 +482,20 @@ const BuySellPage = () => {
                 </button>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-2 justify-center">
                 <button
                   onClick={() => setShowPostForm(true)}
-                  className="bg-white text-primary-600 hover:bg-primary-50 font-semibold px-8 py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl inline-flex items-center justify-center"
+                  className="bg-white text-primary-600 hover:bg-primary-50 font-semibold px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl inline-flex items-center justify-center text-sm"
                 >
-                  <FaPlus className="w-5 h-5 mr-3" />
-                  {activeTab === 'sell' ? 'List Your Property' : 'Post Your Requirement'}
+                  <FaPlus className="w-4 h-4 mr-2" />
+                  {activeTab === 'sell' ? 'List Property' : 'Post Requirement'}
                 </button>
                 <a
                   href="#contact"
-                  className="border-2 border-white/30 hover:border-white text-white hover:bg-white/10 font-semibold px-8 py-4 rounded-xl transition-all duration-300 backdrop-blur-sm inline-flex items-center justify-center"
+                  className="border border-white/30 hover:border-white text-white hover:bg-white/10 font-semibold px-4 py-2 rounded-lg transition-all duration-300 backdrop-blur-sm inline-flex items-center justify-center text-sm"
                 >
-                  <FaPhone className="w-5 h-5 mr-3" />
-                  Get Expert Consultation
+                  <FaPhone className="w-4 h-4 mr-2" />
+                  Get Consultation
                 </a>
               </div>
             </div>

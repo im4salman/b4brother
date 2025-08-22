@@ -219,7 +219,7 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
                             </div>
                             <div className="flex items-center space-x-2">
                               <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
-                              <span>150+ Projects</span>
+                              <span>40+ Projects</span>
                             </div>
                           </div>
                         </div>
@@ -231,7 +231,7 @@ const Carousel = ({ mediaItems = [], autoPlay = true }) => {
                       <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 animate-fade-in" style={{animationDelay: '1.0s'}}>
                         <div className="grid grid-cols-2 gap-8">
                           <div className="text-center space-y-2">
-                            <div className="text-4xl font-bold text-primary-400">150+</div>
+                            <div className="text-4xl font-bold text-primary-400">40+</div>
                             <div className="text-white/80 text-sm uppercase tracking-wide">Projects</div>
                           </div>
                           <div className="text-center space-y-2">

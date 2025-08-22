@@ -1,33 +1,8 @@
-import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import ProjectCard from '../components/ProjectCard';
-import ProjectModal from '../components/ProjectModal';
-import { projects } from '../data/projects';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { slideUpVariants, zoomInVariants } from './animation';
 
 const Portfolio = () => {
-  const [selected, setSelected] = useState(null);
-  const [activeFilter, setActiveFilter] = useState('All');
-
-  // Get unique categories for filter buttons
-  const categories = useMemo(() => {
-    const cats = ['All', ...new Set(projects.map(project => project.category))];
-    return cats;
-  }, []);
-
-  // Filter projects based on active filter
-  const filteredProjects = useMemo(() => {
-    if (activeFilter === 'All') return projects;
-    return projects.filter(project => project.category === activeFilter);
-  }, [activeFilter]);
-
-  // Handle keyboard navigation for filter buttons
-  const handleFilterKeyDown = (event, category) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      setActiveFilter(category);
-    }
-  };
 
   return (
     <section id="projects" className="w-full bg-white py-20 md:py-32">

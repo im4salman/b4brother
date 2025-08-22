@@ -168,7 +168,7 @@ function App() {
         <Header/>
         
         <main id="main-content" role="main">
-          <Carousel mediaItems={media} />
+          <HeroSlider mediaItems={media} />
           <About/>
           <Services/>
           <Portfolio/>

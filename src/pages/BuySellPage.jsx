@@ -75,10 +75,11 @@ const BuySellPage = () => {
   const locations = [
     'all',
     'Kolkata, West Bengal',
-    'Howrah, West Bengal', 
+    'Howrah, West Bengal',
     'Durgapur, West Bengal',
     'Asansol, West Bengal',
-    'Siliguri, West Bengal'
+    'Siliguri, West Bengal',
+    'Raniganj, West Bengal'
   ];
 
   useEffect(() => {

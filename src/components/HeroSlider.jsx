@@ -37,7 +37,7 @@ const HeroSlider = ({ mediaItems = [] }) => {
   }
 
   return (
-    <section className="relative w-full overflow-hidden" style={{ height: 'calc(100vh - 80px)' }}>
+    <section className="relative w-full h-screen overflow-hidden pt-20">
       {/* Media Items */}
       {mediaItems.map((item, index) => (
         <div

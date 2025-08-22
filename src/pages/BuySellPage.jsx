@@ -462,7 +462,7 @@ const BuySellPage = () => {
               <div className="inline-flex bg-white/10 backdrop-blur-sm rounded-xl p-1 mb-4">
                 <button
                   onClick={() => setActiveTab('buy')}
-                  className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+                  className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 text-sm ${
                     activeTab === 'buy'
                       ? 'bg-white text-primary-600 shadow-lg'
                       : 'text-white hover:bg-white/10'
@@ -472,7 +472,7 @@ const BuySellPage = () => {
                 </button>
                 <button
                   onClick={() => setActiveTab('sell')}
-                  className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+                  className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 text-sm ${
                     activeTab === 'sell'
                       ? 'bg-white text-primary-600 shadow-lg'
                       : 'text-white hover:bg-white/10'

@@ -30,12 +30,12 @@ export const allservices = [
 • Interior remodeling and space optimization
 • Clear timeline and transparent pricing`,
     insights: [
-      "⭐️ Over 120 renovation projects completed successfully",
+      "⭐️ Over 45 renovation projects completed successfully",
       "⭐️ Average project delivery 10% ahead of schedule",
       "⭐️ Client satisfaction rating of 4.9/5",
     ],
     stats: [
-      { label: "Projects Completed", value: 120 },
+      { label: "Projects Completed", value: 45 },
       { label: "On-time Delivery (%)", value: 90 },
       { label: "Customer Satisfaction (%)", value: 98 },
     ],
@@ -53,12 +53,12 @@ export const allservices = [
 • Vendor coordination & procurement
 • Real-time progress tracking`,
     insights: [
-      "✅ 200+ sites delivered nationwide",
+      "✅ 40+ sites delivered nationwide",
       "✅ Zero safety incidents in last 3 years",
       "✅ Built 15M+ sqft of commercial space",
     ],
     stats: [
-      { label: "Sites Delivered", value: 200 },
+      { label: "Sites Delivered", value: 40 },
       { label: "Incident-Free Years", value: 3 },
       { label: "Sqft Built (M)", value: 15 },
     ],
@@ -81,7 +81,7 @@ export const allservices = [
       "💡 30% average cost savings via optimization",
     ],
     stats: [
-      { label: "Designs Delivered", value: 150 },
+      { label: "Designs Delivered", value: 35 },
       { label: "VR Walkthroughs Used", value: 75 },
       { label: "Cost Savings (%)", value: 30 },
     ],
@@ -122,12 +122,12 @@ export const allservices = [
 • Custom millwork & furnishings
 • Styling, art curation & soft-goods`,
     insights: [
-      "🎨 50+ residential and commercial projects",
+      "🎨 30+ residential and commercial projects",
       "🎨 Average project ROI uplift of 20%",
       "🎨 End-to-end styling by in-house design team",
     ],
     stats: [
-      { label: "Projects Styled", value: 50 },
+      { label: "Projects Styled", value: 30 },
       { label: "ROI Uplift (%)", value: 20 },
       { label: "Art Curations", value: 200 },
     ],

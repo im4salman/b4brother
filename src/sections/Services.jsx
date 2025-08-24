@@ -55,28 +55,6 @@ const Services = () => {
             </p>
           </motion.div>
 
-          {/* Trust Indicators */}
-          <motion.div 
-            variants={slideUpVariants}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
-          >
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary-500 mb-2">200+</div>
-              <div className="text-sm text-secondary-600 uppercase tracking-wide">Projects Completed</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary-500 mb-2">5+</div>
-              <div className="text-sm text-secondary-600 uppercase tracking-wide">Years Experience</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary-500 mb-2">98%</div>
-              <div className="text-sm text-secondary-600 uppercase tracking-wide">Client Satisfaction</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary-500 mb-2">24/7</div>
-              <div className="text-sm text-secondary-600 uppercase tracking-wide">Customer Support</div>
-            </div>
-          </motion.div>
         </motion.div>
         
         {/* Services Grid */}

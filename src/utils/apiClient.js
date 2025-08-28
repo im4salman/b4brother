@@ -41,6 +41,7 @@ class B4BrothersAPI {
     const config = {
       ...options,
       headers,
+      mode: 'cors', // Explicitly set CORS mode
     };
 
     console.log(`🔍 API Request: ${options.method || 'GET'} ${url}`);
@@ -77,6 +78,14 @@ class B4BrothersAPI {
       console.log(`✅ API Success:`, data);
       return data;
     } catch (error) {
+      // Enhanced error handling for CORS and network issues
+      if (error.name === 'TypeError' && error.message === 'Failed to fetch') {
+        const corsError = new Error(`CORS/Network Error: Unable to connect to API server at ${this.baseURL}. This may be due to:\n1. CORS policy restrictions\n2. Network connectivity issues\n3. Server downtime\n\nFalling back to local storage.`);
+        corsError.isCorsError = true;
+        console.error(`🌐 CORS/Network Error for ${endpoint}:`, corsError.message);
+        throw corsError;
+      }
+
       console.error(`🚨 API Request failed for ${endpoint}:`, error);
       throw error;
     }
@@ -91,7 +100,8 @@ class B4BrothersAPI {
     const results = {
       baseUrl: this.baseURL,
       timestamp: new Date().toISOString(),
-      endpoints: {}
+      endpoints: {},
+      corsIssue: false
     };
 
     const endpointsToTest = [
@@ -107,10 +117,11 @@ class B4BrothersAPI {
       try {
         console.log(`🔍 Testing ${endpoint.name} endpoint...`);
 
-        // Try a simple GET request
+        // Try a simple GET request with CORS mode
         const response = await fetch(`${this.baseURL}${endpoint.path}`, {
           method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 'Content-Type': 'application/json' },
+          mode: 'cors'
         });
 
         results.endpoints[endpoint.name] = {
@@ -122,14 +133,24 @@ class B4BrothersAPI {
 
         console.log(`✅ ${endpoint.name}: ${response.status} ${response.statusText}`);
       } catch (error) {
+        const isCorsError = error.name === 'TypeError' && error.message === 'Failed to fetch';
+        if (isCorsError) {
+          results.corsIssue = true;
+        }
+
         results.endpoints[endpoint.name] = {
           status: null,
           statusText: null,
           available: false,
-          error: error.message
+          error: isCorsError ? 'CORS/Network Error' : error.message,
+          isCorsError
         };
-        console.log(`❌ ${endpoint.name}: ${error.message}`);
+        console.log(`❌ ${endpoint.name}: ${isCorsError ? 'CORS/Network Error' : error.message}`);
       }
+    }
+
+    if (results.corsIssue) {
+      console.warn('🌐 CORS issues detected. The backend may need to configure CORS headers to allow requests from this origin.');
     }
 
     console.log('🏥 API Health Check Complete:', results);

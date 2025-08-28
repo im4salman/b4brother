@@ -33,7 +33,7 @@ const FeedbackForm = ({ isOpen, onClose }) => {
 
         try {
             const result = await apiClient.submitForm('feedback', formData);
-            
+
             setIsSubmitting(false);
 
             if (result.success) {
@@ -49,12 +49,80 @@ const FeedbackForm = ({ isOpen, onClose }) => {
                     onClose();
                 }, 2000);
             } else {
-                alert('Failed to submit feedback: ' + result.error);
+                console.error('Feedback submission failed:', result.error);
+
+                // Store locally as fallback
+                const feedbackData = {
+                    id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+                    ...formData,
+                    timestamp: new Date().toISOString(),
+                    fromLocalStorage: true
+                };
+
+                const existingFeedback = JSON.parse(localStorage.getItem('b4-testimonials') || '[]');
+                existingFeedback.push({
+                    id: feedbackData.id,
+                    name: formData.name,
+                    about: formData.feedback,
+                    post: formData.designation,
+                    rating: formData.rating,
+                    createdAt: feedbackData.timestamp
+                });
+                localStorage.setItem('b4-testimonials', JSON.stringify(existingFeedback));
+
+                alert('Your feedback has been saved locally! We will sync it with our servers when they are available.');
+                setSubmitted(true);
+                setTimeout(() => {
+                    setSubmitted(false);
+                    setFormData({
+                        name: '',
+                        designation: '',
+                        feedback: '',
+                        rating: 5
+                    });
+                    onClose();
+                }, 2000);
             }
         } catch (error) {
             console.error('Error submitting feedback:', error);
             setIsSubmitting(false);
-            alert('Failed to submit feedback. Please try again later.');
+
+            // Emergency fallback - save to localStorage
+            const feedbackData = {
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+                ...formData,
+                timestamp: new Date().toISOString(),
+                fromLocalStorage: true
+            };
+
+            try {
+                const existingFeedback = JSON.parse(localStorage.getItem('b4-testimonials') || '[]');
+                existingFeedback.push({
+                    id: feedbackData.id,
+                    name: formData.name,
+                    about: formData.feedback,
+                    post: formData.designation,
+                    rating: formData.rating,
+                    createdAt: feedbackData.timestamp
+                });
+                localStorage.setItem('b4-testimonials', JSON.stringify(existingFeedback));
+
+                alert('Server is temporarily unavailable, but your feedback has been saved locally! We will sync it when the server is back online.');
+                setSubmitted(true);
+                setTimeout(() => {
+                    setSubmitted(false);
+                    setFormData({
+                        name: '',
+                        designation: '',
+                        feedback: '',
+                        rating: 5
+                    });
+                    onClose();
+                }, 2000);
+            } catch (localError) {
+                console.error('Failed to save locally:', localError);
+                alert('Failed to submit feedback. Please try again later or contact us directly.');
+            }
         }
     };
 

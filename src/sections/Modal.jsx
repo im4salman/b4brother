@@ -31,42 +31,43 @@ const Modal = ({ isOpen, onClose }) => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const { name, phone, email, query } = formData;
 
-    // Store form data locally
-    const submissionData = {
-      id: Date.now().toString(36) + Math.random().toString(36).substr(2),
-      type: 'Quick Contact Modal',
-      timestamp: new Date().toISOString(),
-      data: formData
-    };
+    try {
+      // Track form submission
+      trackFormSubmission('contact_enquiry', formData);
 
-    // Save to localStorage
-    const existingSubmissions = JSON.parse(localStorage.getItem('b4-form-submissions') || '[]');
-    existingSubmissions.push(submissionData);
-    localStorage.setItem('b4-form-submissions', JSON.stringify(existingSubmissions));
+      // Create WhatsApp message
+      const whatsappMessage = `*New Enquiry*
 
-    // Track form submission
-    trackFormSubmission('contact_enquiry', formData);
+*Name*: ${name}
+*Phone*: ${phone}
+*Email*: ${email}
+*Query*: ${query}`;
 
-    // Use WhatsApp Markdown-like formatting and URL-encode line breaks:
-    const message =
-      `*New Enquiry*%0A` +
-      `*Name*: ${encodeURIComponent(name)}%0A` +
-      `*Phone*: ${encodeURIComponent(phone)}%0A` +
-      `*Email*: ${encodeURIComponent(email)}%0A` +
-      `*Query*: ${encodeURIComponent(query)}`;
+      // Submit to API and WhatsApp
+      const result = await apiClient.submitFormWithWhatsApp('reach_us', formData, whatsappMessage);
 
-    const url = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${message}`;
+      if (result.success) {
+        // Track WhatsApp redirect
+        trackWhatsAppRedirect(whatsappMessage, formData);
 
-    // Track WhatsApp redirect
-    trackWhatsAppRedirect(message, formData);
+        handleClose();
 
-    window.open(url, '_blank');
-    handleClose();
+        // Show success message
+        alert(result.apiSubmitted
+          ? 'Thank you for your enquiry! Your message has been submitted successfully and you will be redirected to WhatsApp.'
+          : 'Thank you for your enquiry! Your message has been stored and you will be redirected to WhatsApp. We will process it soon.');
+      } else {
+        alert('Failed to submit enquiry: ' + result.error);
+      }
+    } catch (error) {
+      console.error('Error submitting enquiry:', error);
+      alert('Failed to submit enquiry. Please try again or contact us directly.');
+    }
   };
 
   return (

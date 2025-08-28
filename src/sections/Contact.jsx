@@ -32,25 +32,11 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Store form data locally
-      const submissionData = {
-        id: Date.now().toString(36) + Math.random().toString(36).substr(2),
-        type: 'Contact Form',
-        timestamp: new Date().toISOString(),
-        data: formData
-      };
-
-      // Save to localStorage
-      const existingSubmissions = JSON.parse(localStorage.getItem('b4-form-submissions') || '[]');
-      existingSubmissions.push(submissionData);
-      localStorage.setItem('b4-form-submissions', JSON.stringify(existingSubmissions));
-
       // Track with analytics
       trackFormSubmission('Contact Form', formData);
 
       // Create WhatsApp message
-      const whatsappNumber = '919733221114';
-      const message = `Hi B4Brothers! I'm interested in your services.
+      const whatsappMessage = `Hi B4Brothers! I'm interested in your services.
 
 Name: ${formData.name}
 Email: ${formData.email}
@@ -63,32 +49,37 @@ Message: ${formData.message}
 
 Please get in touch with me. Thank you!`;
 
-      // Track WhatsApp redirect
-      trackWhatsAppRedirect(message, formData);
-
-      // Open WhatsApp
-      const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
-      window.open(whatsappUrl, '_blank');
+      // Submit to API and WhatsApp
+      const result = await apiClient.submitFormWithWhatsApp('contact', formData, whatsappMessage);
 
       setIsSubmitting(false);
-      setSubmitted(true);
 
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setSubmitted(false);
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          service: '',
-          message: '',
-          budget: '',
-          timeline: ''
-        });
-      }, 3000);
+      if (result.success) {
+        // Track WhatsApp redirect
+        trackWhatsAppRedirect(whatsappMessage, formData);
+
+        setSubmitted(true);
+
+        // Reset form after 3 seconds
+        setTimeout(() => {
+          setSubmitted(false);
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            service: '',
+            message: '',
+            budget: '',
+            timeline: ''
+          });
+        }, 3000);
+      } else {
+        alert('Failed to submit form: ' + result.error);
+      }
     } catch (error) {
       console.error('Error submitting form:', error);
       setIsSubmitting(false);
+      alert('Failed to submit form. Please try again or contact us directly.');
     }
   };
 

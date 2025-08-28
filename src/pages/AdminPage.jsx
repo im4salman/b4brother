@@ -145,39 +145,39 @@ const AdminPage = ({ onLogout }) => {
 
     const stats = [
         {
-            title: 'Total Page Views',
-            value: filterByDate(analytics.pageViews || []).length,
-            icon: <FaEye className="w-6 h-6" />,
+            title: 'Job Applications',
+            value: apiData.applications.length,
+            icon: <FaBriefcase className="w-6 h-6" />,
             color: 'bg-blue-500'
         },
         {
-            title: 'Unique Visitors',
-            value: analytics.uniqueVisitorsCount || 0,
-            icon: <FaUsers className="w-6 h-6" />,
+            title: 'Contact Submissions',
+            value: apiData.contacts.length,
+            icon: <FaEnvelope className="w-6 h-6" />,
             color: 'bg-green-500'
         },
         {
-            title: 'Total Clicks',
-            value: filterByDate(analytics.buttonClicks || []).length,
-            icon: <FaMousePointer className="w-6 h-6" />,
+            title: 'Client Feedback',
+            value: apiData.feedback.length,
+            icon: <FaHeart className="w-6 h-6" />,
             color: 'bg-purple-500'
         },
         {
-            title: 'WhatsApp Redirects',
-            value: filterByDate(analytics.whatsappRedirects || []).length,
+            title: 'Reach Us Queries',
+            value: apiData.reachUs.length,
             icon: <FaWhatsapp className="w-6 h-6" />,
             color: 'bg-green-600'
         },
         {
-            title: 'Form Submissions',
+            title: 'Local Analytics',
             value: filterByDate(analytics.formSubmissions || []).length,
             icon: <FaWpforms className="w-6 h-6" />,
             color: 'bg-orange-500'
         },
         {
-            title: 'Stored Form Data',
+            title: 'Local Storage',
             value: filterByDate(formSubmissions || []).length,
-            icon: <FaEnvelope className="w-6 h-6" />,
+            icon: <FaGlobe className="w-6 h-6" />,
             color: 'bg-indigo-500'
         }
     ];

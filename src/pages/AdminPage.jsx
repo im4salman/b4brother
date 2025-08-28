@@ -17,7 +17,9 @@ import {
     FaPhone,
     FaSignOutAlt,
     FaChartLine,
-    FaGlobe
+    FaGlobe,
+    FaBriefcase,
+    FaHeart
 } from 'react-icons/fa';
 import { useAnalytics } from '../contexts/AnalyticsContext';
 

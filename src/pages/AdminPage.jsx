@@ -730,6 +730,84 @@ const AdminPage = ({ onLogout }) => {
                     </div>
                 </div>
 
+                {/* API Health Check Results */}
+                {apiHealth && (
+                    <div className="bg-white rounded-lg shadow-soft mt-8">
+                        <div className="p-6 border-b">
+                            <h2 className="text-lg font-semibold text-gray-800">
+                                API Health Check Results
+                            </h2>
+                            <p className="text-sm text-gray-600">
+                                Last checked: {new Date(apiHealth.timestamp).toLocaleString()}
+                            </p>
+                        </div>
+                        <div className="p-6">
+                            <div className="mb-4">
+                                <p className="text-sm font-medium text-gray-700">
+                                    Base URL: <span className="text-blue-600">{apiHealth.baseUrl}</span>
+                                </p>
+                            </div>
+
+                            {apiHealth.error ? (
+                                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                                    <p className="text-red-800 font-medium">Health Check Failed</p>
+                                    <p className="text-red-600 text-sm">{apiHealth.error}</p>
+                                </div>
+                            ) : (
+                                <div className="grid md:grid-cols-2 gap-4">
+                                    {Object.entries(apiHealth.endpoints || {}).map(([name, result]) => (
+                                        <div
+                                            key={name}
+                                            className={`border rounded-lg p-4 ${
+                                                result.available
+                                                    ? result.status === 200
+                                                        ? 'border-green-200 bg-green-50'
+                                                        : 'border-yellow-200 bg-yellow-50'
+                                                    : 'border-red-200 bg-red-50'
+                                            }`}
+                                        >
+                                            <div className="flex items-center justify-between mb-2">
+                                                <h3 className="font-medium text-gray-800 capitalize">
+                                                    {name.replace('-', ' ')}
+                                                </h3>
+                                                <span className={`text-xs px-2 py-1 rounded-full ${
+                                                    result.available
+                                                        ? result.status === 200
+                                                            ? 'bg-green-100 text-green-800'
+                                                            : 'bg-yellow-100 text-yellow-800'
+                                                        : 'bg-red-100 text-red-800'
+                                                }`}>
+                                                    {result.available ? 'Available' : 'Unavailable'}
+                                                </span>
+                                            </div>
+
+                                            <div className="text-sm text-gray-600">
+                                                {result.status ? (
+                                                    <>
+                                                        <p>Status: {result.status} {result.statusText}</p>
+                                                        {result.status === 404 && (
+                                                            <p className="text-yellow-600 mt-1">
+                                                                ⚠️ Endpoint exists but returns no data
+                                                            </p>
+                                                        )}
+                                                        {result.status === 200 && (
+                                                            <p className="text-green-600 mt-1">
+                                                                ✅ Endpoint working correctly
+                                                            </p>
+                                                        )}
+                                                    </>
+                                                ) : (
+                                                    <p className="text-red-600">Error: {result.error}</p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+
                 {/* Testimonials Management */}
                 <div className="bg-white rounded-lg shadow-soft mt-8">
                     <div className="p-6 border-b">

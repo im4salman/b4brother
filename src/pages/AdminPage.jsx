@@ -29,15 +29,54 @@ const AdminPage = ({ onLogout }) => {
     const [testimonials, setTestimonials] = useState([]);
     const [showTestimonialForm, setShowTestimonialForm] = useState(false);
     const [editingTestimonial, setEditingTestimonial] = useState(null);
+    const [apiData, setApiData] = useState({
+        applications: [],
+        contacts: [],
+        feedback: [],
+        reachUs: []
+    });
+    const [loading, setLoading] = useState(true);
 
-    // Load form submissions from localStorage
+    // Load data from localStorage and API
     useEffect(() => {
-        const stored = JSON.parse(localStorage.getItem('b4-form-submissions') || '[]');
-        setFormSubmissions(stored);
-
-        const storedTestimonials = JSON.parse(localStorage.getItem('b4-testimonials') || '[]');
-        setTestimonials(storedTestimonials);
+        loadData();
     }, []);
+
+    const loadData = async () => {
+        try {
+            setLoading(true);
+
+            // Load local data
+            const stored = JSON.parse(localStorage.getItem('b4-form-submissions') || '[]');
+            setFormSubmissions(stored);
+
+            const storedTestimonials = JSON.parse(localStorage.getItem('b4-testimonials') || '[]');
+            setTestimonials(storedTestimonials);
+
+            // Load data from API
+            const dashboardData = await apiClient.getAdminDashboard();
+            setApiData(dashboardData);
+
+            // Merge API feedback with local testimonials
+            const apiFeedback = dashboardData.feedback.map(feedback => ({
+                id: feedback.id,
+                name: feedback.name,
+                about: feedback.feedback,
+                post: feedback.designation,
+                rating: feedback.rating,
+                createdAt: feedback.createdAt || new Date().toISOString(),
+                updatedAt: feedback.updatedAt || new Date().toISOString(),
+                fromAPI: true
+            }));
+
+            setTestimonials([...storedTestimonials, ...apiFeedback]);
+
+        } catch (error) {
+            console.error('Error loading data:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleString('en-IN', {

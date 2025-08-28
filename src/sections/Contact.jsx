@@ -4,6 +4,7 @@ import { slideUpVariants, zoomInVariants } from './animation';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaWhatsapp, FaClock } from 'react-icons/fa';
 import { FaShieldHalved as FaShield } from 'react-icons/fa6';
 import { useAnalytics } from '../contexts/AnalyticsContext';
+import apiClient from '../utils/apiClient';
 
 const Contact = () => {
   const { trackFormSubmission, trackWhatsAppRedirect } = useAnalytics();

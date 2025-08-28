@@ -95,10 +95,10 @@ class B4BrothersAPI {
     };
 
     const endpointsToTest = [
-      { name: 'applications', path: '/applications' },
-      { name: 'feedback', path: '/feedback' },
-      { name: 'contact', path: '/contact' },
-      { name: 'reach-us', path: '/reach-us' }
+      { name: 'applications', path: '/api/applications' },
+      { name: 'feedback', path: '/api/feedback' },
+      { name: 'contact', path: '/api/contact' },
+      { name: 'reach-us', path: '/api/reach-us' }
     ];
 
     console.log('🏥 Starting API Health Check...');
@@ -142,7 +142,7 @@ class B4BrothersAPI {
 
   // Create Job Application
   async createApplication(applicationData) {
-    return this.request('/applications', {
+    return this.request('/api/applications', {
       method: 'POST',
       body: JSON.stringify(applicationData),
     });
@@ -150,17 +150,17 @@ class B4BrothersAPI {
 
   // Get All Job Applications
   async getAllApplications() {
-    return this.request('/applications');
+    return this.request('/api/applications');
   }
 
   // Get Single Job Application
   async getApplication(id) {
-    return this.request(`/applications/${id}`);
+    return this.request(`/api/applications/${id}`);
   }
 
   // Update Job Application
   async updateApplication(id, updates) {
-    return this.request(`/applications/${id}`, {
+    return this.request(`/api/applications/${id}`, {
       method: 'PUT',
       body: JSON.stringify(updates),
     });
@@ -168,14 +168,14 @@ class B4BrothersAPI {
 
   // Delete Job Application
   async deleteApplication(id) {
-    return this.request(`/applications/${id}`, {
+    return this.request(`/api/applications/${id}`, {
       method: 'DELETE',
     });
   }
 
   // Submit Application via WhatsApp
   async submitApplicationViaWhatsApp(applicationData) {
-    return this.request('/applications/whatsapp', {
+    return this.request('/api/applications/whatsapp', {
       method: 'POST',
       body: JSON.stringify(applicationData),
     });
@@ -187,7 +187,7 @@ class B4BrothersAPI {
 
   // Create Feedback
   async createFeedback(feedbackData) {
-    return this.request('/feedback', {
+    return this.request('/api/feedback', {
       method: 'POST',
       body: JSON.stringify(feedbackData),
     });
@@ -195,17 +195,17 @@ class B4BrothersAPI {
 
   // Get All Feedback
   async getAllFeedback() {
-    return this.request('/feedback');
+    return this.request('/api/feedback');
   }
 
   // Get Single Feedback
   async getFeedback(id) {
-    return this.request(`/feedback/${id}`);
+    return this.request(`/api/feedback/${id}`);
   }
 
   // Update Feedback
   async updateFeedback(id, updates) {
-    return this.request(`/feedback/${id}`, {
+    return this.request(`/api/feedback/${id}`, {
       method: 'PUT',
       body: JSON.stringify(updates),
     });
@@ -213,7 +213,7 @@ class B4BrothersAPI {
 
   // Delete Feedback
   async deleteFeedback(id) {
-    return this.request(`/feedback/${id}`, {
+    return this.request(`/api/feedback/${id}`, {
       method: 'DELETE',
     });
   }
@@ -224,7 +224,7 @@ class B4BrothersAPI {
 
   // Create Contact
   async createContact(contactData) {
-    return this.request('/contact', {
+    return this.request('/api/contact', {
       method: 'POST',
       body: JSON.stringify(contactData),
     });
@@ -232,17 +232,17 @@ class B4BrothersAPI {
 
   // Get All Contacts
   async getAllContacts() {
-    return this.request('/contact');
+    return this.request('/api/contact');
   }
 
   // Get Single Contact
   async getContact(id) {
-    return this.request(`/contact/${id}`);
+    return this.request(`/api/contact/${id}`);
   }
 
   // Update Contact
   async updateContact(id, updates) {
-    return this.request(`/contact/${id}`, {
+    return this.request(`/api/contact/${id}`, {
       method: 'PUT',
       body: JSON.stringify(updates),
     });
@@ -250,7 +250,7 @@ class B4BrothersAPI {
 
   // Delete Contact
   async deleteContact(id) {
-    return this.request(`/contact/${id}`, {
+    return this.request(`/api/contact/${id}`, {
       method: 'DELETE',
     });
   }
@@ -261,7 +261,7 @@ class B4BrothersAPI {
 
   // Create Reach Us Entry
   async createReachUs(reachUsData) {
-    return this.request('/reach-us', {
+    return this.request('/api/reach-us', {
       method: 'POST',
       body: JSON.stringify(reachUsData),
     });
@@ -269,17 +269,17 @@ class B4BrothersAPI {
 
   // Get All Reach Us Entries
   async getAllReachUs() {
-    return this.request('/reach-us');
+    return this.request('/api/reach-us');
   }
 
   // Get Single Reach Us Entry
   async getReachUs(id) {
-    return this.request(`/reach-us/${id}`);
+    return this.request(`/api/reach-us/${id}`);
   }
 
   // Update Reach Us Entry
   async updateReachUs(id, updates) {
-    return this.request(`/reach-us/${id}`, {
+    return this.request(`/api/reach-us/${id}`, {
       method: 'PUT',
       body: JSON.stringify(updates),
     });
@@ -287,7 +287,7 @@ class B4BrothersAPI {
 
   // Delete Reach Us Entry
   async deleteReachUs(id) {
-    return this.request(`/reach-us/${id}`, {
+    return this.request(`/api/reach-us/${id}`, {
       method: 'DELETE',
     });
   }

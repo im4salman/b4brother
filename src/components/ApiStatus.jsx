@@ -50,19 +50,25 @@ const ApiStatus = () => {
     };
 
     useEffect(() => {
-        // Check status on component mount
-        checkApiStatus();
-        
-        // Check periodically (every 5 minutes)
-        const interval = setInterval(checkApiStatus, 5 * 60 * 1000);
-        
-        return () => clearInterval(interval);
+        // Check status on component mount (with a small delay to avoid blocking initial render)
+        const initialCheck = setTimeout(() => {
+            checkApiStatus();
+        }, 2000);
+
+        // Check periodically (every 10 minutes to reduce CORS errors)
+        const interval = setInterval(checkApiStatus, 10 * 60 * 1000);
+
+        return () => {
+            clearTimeout(initialCheck);
+            clearInterval(interval);
+        };
     }, []);
 
     const getStatusColor = () => {
         switch (status) {
             case 'online': return 'bg-green-500';
             case 'offline': return 'bg-red-500';
+            case 'cors-error': return 'bg-orange-500';
             default: return 'bg-yellow-500';
         }
     };
@@ -71,8 +77,23 @@ const ApiStatus = () => {
         switch (status) {
             case 'online': return 'API Connected';
             case 'offline': return 'API Offline - Using Local Storage';
+            case 'cors-error': return 'CORS Issue - Using Local Storage';
             default: return 'Checking API Status...';
         }
+    };
+
+    const getNotificationTitle = () => {
+        if (corsIssue) {
+            return 'CORS Connection Issue';
+        }
+        return 'Server Connection Issue';
+    };
+
+    const getNotificationMessage = () => {
+        if (corsIssue) {
+            return 'The API server has CORS restrictions. Forms will work using local storage backup.';
+        }
+        return 'Our servers are temporarily unavailable. Your form submissions will be saved locally and synced when the connection is restored.';
     };
 
     return (
@@ -89,31 +110,47 @@ const ApiStatus = () => {
 
             {/* Notification */}
             <AnimatePresence>
-                {showNotification && status === 'offline' && (
+                {showNotification && (status === 'offline' || status === 'cors-error') && (
                     <motion.div
                         initial={{ opacity: 0, y: -50 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -50 }}
                         className="fixed top-16 left-4 right-4 md:left-4 md:right-auto md:max-w-md z-50"
                     >
-                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 shadow-lg">
+                        <div className={`border rounded-lg p-4 shadow-lg ${
+                            corsIssue
+                                ? 'bg-orange-50 border-orange-200'
+                                : 'bg-yellow-50 border-yellow-200'
+                        }`}>
                             <div className="flex items-start gap-3">
-                                <div className="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center">
-                                    <svg className="w-4 h-4 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                                    corsIssue ? 'bg-orange-100' : 'bg-yellow-100'
+                                }`}>
+                                    <svg className={`w-4 h-4 ${
+                                        corsIssue ? 'text-orange-600' : 'text-yellow-600'
+                                    }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.962-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
                                     </svg>
                                 </div>
                                 <div className="flex-1">
-                                    <h3 className="text-sm font-medium text-yellow-800">
-                                        Server Connection Issue
+                                    <h3 className={`text-sm font-medium ${
+                                        corsIssue ? 'text-orange-800' : 'text-yellow-800'
+                                    }`}>
+                                        {getNotificationTitle()}
                                     </h3>
-                                    <p className="text-xs text-yellow-700 mt-1">
-                                        Our servers are temporarily unavailable. Your form submissions will be saved locally and synced when the connection is restored.
+                                    <p className={`text-xs mt-1 ${
+                                        corsIssue ? 'text-orange-700' : 'text-yellow-700'
+                                    }`}>
+                                        {getNotificationMessage()}
                                     </p>
                                 </div>
                                 <button
                                     onClick={() => setShowNotification(false)}
-                                    className="text-yellow-600 hover:text-yellow-800"
+                                    className={`${
+                                        corsIssue
+                                            ? 'text-orange-600 hover:text-orange-800'
+                                            : 'text-yellow-600 hover:text-yellow-800'
+                                    }`}
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

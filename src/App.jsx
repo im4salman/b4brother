@@ -3,6 +3,7 @@ import { HelmetProvider, Helmet } from 'react-helmet-async';
 import { useAnalytics } from './contexts/AnalyticsContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import ApiTest from './components/ApiTest';
+import ApiStatus from './components/ApiStatus';
 import { useEffect } from 'react';
 import { preloadCriticalResources, addTouchOptimizations, registerServiceWorker } from './utils/mobileOptimizations';
 import Header from './sections/Header';

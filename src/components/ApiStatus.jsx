@@ -3,29 +3,49 @@ import { motion, AnimatePresence } from 'framer-motion';
 import apiClient from '../utils/apiClient';
 
 const ApiStatus = () => {
-    const [status, setStatus] = useState('unknown'); // 'online', 'offline', 'unknown'
+    const [status, setStatus] = useState('unknown'); // 'online', 'offline', 'cors-error', 'unknown'
     const [showNotification, setShowNotification] = useState(false);
     const [lastCheck, setLastCheck] = useState(null);
+    const [corsIssue, setCorsIssue] = useState(false);
 
     const checkApiStatus = async () => {
         try {
             const health = await apiClient.testApiHealth();
             const hasWorkingEndpoints = Object.values(health.endpoints || {}).some(endpoint => endpoint.available);
-            
-            const newStatus = hasWorkingEndpoints ? 'online' : 'offline';
-            setStatus(newStatus);
-            setLastCheck(new Date());
-            
-            // Show notification if status changed to offline
-            if (newStatus === 'offline') {
+
+            if (health.corsIssue) {
+                setStatus('cors-error');
+                setCorsIssue(true);
                 setShowNotification(true);
-                setTimeout(() => setShowNotification(false), 5000);
+                setTimeout(() => setShowNotification(false), 8000);
+            } else {
+                const newStatus = hasWorkingEndpoints ? 'online' : 'offline';
+                setStatus(newStatus);
+                setCorsIssue(false);
+
+                // Show notification if status changed to offline
+                if (newStatus === 'offline') {
+                    setShowNotification(true);
+                    setTimeout(() => setShowNotification(false), 5000);
+                }
             }
+
+            setLastCheck(new Date());
         } catch (error) {
-            setStatus('offline');
+            const isCorsError = error.isCorsError || (error.name === 'TypeError' && error.message === 'Failed to fetch');
+
+            if (isCorsError) {
+                setStatus('cors-error');
+                setCorsIssue(true);
+                console.log('🌐 CORS issue detected:', error.message);
+            } else {
+                setStatus('offline');
+                setCorsIssue(false);
+            }
+
             setLastCheck(new Date());
             setShowNotification(true);
-            setTimeout(() => setShowNotification(false), 5000);
+            setTimeout(() => setShowNotification(false), 8000);
         }
     };
 

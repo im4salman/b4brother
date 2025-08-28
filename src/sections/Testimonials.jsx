@@ -37,29 +37,44 @@ const Testimonials = () => {
   }, []);
 
   const loadTestimonials = async () => {
+    console.log('🔄 Loading testimonials...');
+
     try {
-      // Load from localStorage
+      // Always load from localStorage first
       const stored = JSON.parse(localStorage.getItem('b4-testimonials') || '[]');
+      console.log('📁 Local testimonials loaded:', stored.length);
 
-      // Load from API
-      const apiFeedback = await apiClient.getAllFeedback();
-
-      // Convert API feedback to testimonial format
-      const apiTestimonials = apiFeedback.map(feedback => ({
-        name: feedback.name,
-        about: feedback.feedback,
-        post: feedback.designation,
-        rating: feedback.rating
-      }));
-
-      // Combine all testimonials
-      const combinedTestimonials = [...clients, ...stored, ...apiTestimonials];
+      // Start with local data
+      let combinedTestimonials = [...clients, ...stored];
       setAllTestimonials(combinedTestimonials);
+
+      // Try to load from API (optional enhancement)
+      try {
+        console.log('🌐 Attempting to load testimonials from API...');
+        const apiFeedback = await apiClient.getAllFeedback();
+        console.log('✅ API feedback loaded:', apiFeedback.length);
+
+        // Convert API feedback to testimonial format
+        const apiTestimonials = apiFeedback.map(feedback => ({
+          name: feedback.name,
+          about: feedback.feedback,
+          post: feedback.designation,
+          rating: feedback.rating,
+          fromAPI: true
+        }));
+
+        // Combine all testimonials
+        combinedTestimonials = [...clients, ...stored, ...apiTestimonials];
+        setAllTestimonials(combinedTestimonials);
+        console.log('🎉 All testimonials combined:', combinedTestimonials.length);
+      } catch (apiError) {
+        console.warn('⚠️ API feedback loading failed, using local data only:', apiError.message);
+        // Continue with local data - this is not a critical error
+      }
     } catch (error) {
-      console.error('Error loading testimonials:', error);
-      // Fallback to local data only
-      const stored = JSON.parse(localStorage.getItem('b4-testimonials') || '[]');
-      setAllTestimonials([...clients, ...stored]);
+      console.error('❌ Critical error loading testimonials:', error);
+      // Ultimate fallback - just use the default clients
+      setAllTestimonials(clients);
     }
   };
 

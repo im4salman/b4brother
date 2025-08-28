@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { clients } from '../export';
 import { slideUpVariants, zoomInVariants } from './animation';
+import apiClient from '../utils/apiClient';
+import FeedbackForm from '../components/FeedbackForm';
 import {
   FaChevronLeft,
   FaChevronRight,
@@ -26,15 +28,59 @@ const Testimonials = () => {
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const [allTestimonials, setAllTestimonials] = useState(clients);
+  const [showFeedbackForm, setShowFeedbackForm] = useState(false);
   const len = allTestimonials.length;
 
-  // Load stored testimonials
+  // Load stored testimonials and API feedback
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem('b4-testimonials') || '[]');
-    if (stored.length > 0) {
-      setAllTestimonials([...clients, ...stored]);
-    }
+    loadTestimonials();
   }, []);
+
+  const loadTestimonials = async () => {
+    console.log('🔄 Loading testimonials...');
+
+    try {
+      // Always load from localStorage first
+      const stored = JSON.parse(localStorage.getItem('b4-testimonials') || '[]');
+      console.log('📁 Local testimonials loaded:', stored.length);
+
+      // Start with local data
+      let combinedTestimonials = [...clients, ...stored];
+      setAllTestimonials(combinedTestimonials);
+
+      // Try to load from API (optional enhancement)
+      try {
+        console.log('🌐 Attempting to load testimonials from API...');
+        const apiFeedback = await apiClient.getAllFeedback();
+        console.log('✅ API feedback loaded:', apiFeedback.length);
+
+        // Convert API feedback to testimonial format
+        const apiTestimonials = apiFeedback.map(feedback => ({
+          name: feedback.name,
+          about: feedback.feedback,
+          post: feedback.designation,
+          rating: feedback.rating,
+          fromAPI: true
+        }));
+
+        // Combine all testimonials
+        combinedTestimonials = [...clients, ...stored, ...apiTestimonials];
+        setAllTestimonials(combinedTestimonials);
+        console.log('🎉 All testimonials combined:', combinedTestimonials.length);
+      } catch (apiError) {
+        if (apiError.isCorsError || (apiError.name === 'TypeError' && apiError.message === 'Failed to fetch')) {
+          console.warn('🌐 CORS/Network issue loading API feedback. Using local data only.');
+        } else {
+          console.warn('⚠️ API feedback loading failed, using local data only:', apiError.message);
+        }
+        // Continue with local data - this is not a critical error
+      }
+    } catch (error) {
+      console.error('❌ Critical error loading testimonials:', error);
+      // Ultimate fallback - just use the default clients
+      setAllTestimonials(clients);
+    }
+  };
 
   const next = useCallback(() => setIdx((i) => (i + 1) % len), [len]);
   const prev = useCallback(() => setIdx((i) => (i - 1 + len) % len), [len]);
@@ -309,6 +355,15 @@ const Testimonials = () => {
                 </svg>
                 Start Your Project
               </a>
+              <button
+                onClick={() => setShowFeedbackForm(true)}
+                className="bg-white text-secondary-800 hover:bg-gray-100 font-semibold px-8 py-4 rounded-lg transition-all duration-300 shadow-medium hover:shadow-glow transform hover:-translate-y-1 inline-flex items-center justify-center"
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                </svg>
+                Share Your Feedback
+              </button>
               <a
                 href="https://wa.me/919733221114"
                 target="_blank"
@@ -324,6 +379,15 @@ const Testimonials = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Feedback Form Modal */}
+      <FeedbackForm
+        isOpen={showFeedbackForm}
+        onClose={() => {
+          setShowFeedbackForm(false);
+          loadTestimonials(); // Reload testimonials after feedback submission
+        }}
+      />
     </section>
   );
 };

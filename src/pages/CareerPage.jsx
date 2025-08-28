@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useAnalytics } from '../contexts/AnalyticsContext';
+import apiClient from '../utils/apiClient';
 import {
     FaUsers,
     FaAward,
@@ -49,43 +50,56 @@ const CareerPage = () => {
         e.preventDefault();
         setIsSubmitting(true);
 
-        // Track form submission
-        trackFormSubmission('career_application', formData);
+        try {
+            // Track form submission
+            trackFormSubmission('career_application', formData);
 
-        // Create WhatsApp message
-        const message = `*Career Application - B4 Brothers Infratech PVT LTD*%0A%0A` +
-            `*Name:* ${encodeURIComponent(formData.name)}%0A` +
-            `*Email:* ${encodeURIComponent(formData.email)}%0A` +
-            `*Phone:* ${encodeURIComponent(formData.phone)}%0A` +
-            `*Position:* ${encodeURIComponent(formData.position)}%0A` +
-            `*Experience:* ${encodeURIComponent(formData.experience)}%0A` +
-            `*Education:* ${encodeURIComponent(formData.education)}%0A` +
-            `*Message:* ${encodeURIComponent(formData.message)}%0A%0A` +
-            `Thank you for considering me for a position at your company.`;
+            // Create WhatsApp message
+            const whatsappMessage = `*Career Application - B4 Brothers Infratech PVT LTD*
 
-        // Simulate form processing
-        setTimeout(() => {
+*Name:* ${formData.name}
+*Email:* ${formData.email}
+*Phone:* ${formData.phone}
+*Position:* ${formData.position}
+*Experience:* ${formData.experience}
+*Education:* ${formData.education}
+
+*Cover Letter:*
+${formData.message}
+
+Thank you for considering me for a position at your company.`;
+
+            // Submit to API and WhatsApp
+            const result = await apiClient.submitFormWithWhatsApp('job_application', formData, whatsappMessage);
+
             setIsSubmitting(false);
 
-            // Track WhatsApp redirect
-            trackWhatsAppRedirect(message, formData);
+            if (result.success) {
+                // Track WhatsApp redirect
+                trackWhatsAppRedirect(whatsappMessage, formData);
 
-            // Open WhatsApp with the message
-            window.open(`https://wa.me/919733221114?text=${message}`, '_blank');
+                // Reset form
+                setFormData({
+                    name: '',
+                    email: '',
+                    phone: '',
+                    position: '',
+                    experience: '',
+                    education: '',
+                    message: ''
+                });
 
-            // Reset form
-            setFormData({
-                name: '',
-                email: '',
-                phone: '',
-                position: '',
-                experience: '',
-                education: '',
-                message: ''
-            });
-
-            alert('Thank you for your application! You will be redirected to WhatsApp to complete your submission.');
-        }, 1500);
+                alert(result.apiSubmitted
+                    ? 'Thank you for your application! Your application has been submitted successfully and you will be redirected to WhatsApp.'
+                    : 'Thank you for your application! Your application has been stored locally and you will be redirected to WhatsApp. We will process it soon.');
+            } else {
+                alert('Failed to submit application: ' + result.error);
+            }
+        } catch (error) {
+            console.error('Error submitting career application:', error);
+            setIsSubmitting(false);
+            alert('Failed to submit application. Please try again or contact us directly.');
+        }
     };
 
     const coreValues = [

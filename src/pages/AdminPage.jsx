@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import apiClient from '../utils/apiClient';
 import {
     FaEye,
     FaUsers,
@@ -16,7 +17,9 @@ import {
     FaPhone,
     FaSignOutAlt,
     FaChartLine,
-    FaGlobe
+    FaGlobe,
+    FaBriefcase,
+    FaHeart
 } from 'react-icons/fa';
 import { useAnalytics } from '../contexts/AnalyticsContext';
 
@@ -28,15 +31,72 @@ const AdminPage = ({ onLogout }) => {
     const [testimonials, setTestimonials] = useState([]);
     const [showTestimonialForm, setShowTestimonialForm] = useState(false);
     const [editingTestimonial, setEditingTestimonial] = useState(null);
+    const [apiData, setApiData] = useState({
+        applications: [],
+        contacts: [],
+        feedback: [],
+        reachUs: []
+    });
+    const [loading, setLoading] = useState(true);
+    const [apiHealth, setApiHealth] = useState(null);
+    const [healthChecking, setHealthChecking] = useState(false);
 
-    // Load form submissions from localStorage
+    // Load data from localStorage and API
     useEffect(() => {
-        const stored = JSON.parse(localStorage.getItem('b4-form-submissions') || '[]');
-        setFormSubmissions(stored);
-
-        const storedTestimonials = JSON.parse(localStorage.getItem('b4-testimonials') || '[]');
-        setTestimonials(storedTestimonials);
+        loadData();
     }, []);
+
+    const loadData = async () => {
+        try {
+            setLoading(true);
+
+            // Load local data
+            const stored = JSON.parse(localStorage.getItem('b4-form-submissions') || '[]');
+            setFormSubmissions(stored);
+
+            const storedTestimonials = JSON.parse(localStorage.getItem('b4-testimonials') || '[]');
+            setTestimonials(storedTestimonials);
+
+            // Load data from API
+            const dashboardData = await apiClient.getAdminDashboard();
+            setApiData(dashboardData);
+
+            // Merge API feedback with local testimonials
+            const apiFeedback = dashboardData.feedback.map(feedback => ({
+                id: feedback.id,
+                name: feedback.name,
+                about: feedback.feedback,
+                post: feedback.designation,
+                rating: feedback.rating,
+                createdAt: feedback.createdAt || new Date().toISOString(),
+                updatedAt: feedback.updatedAt || new Date().toISOString(),
+                fromAPI: true
+            }));
+
+            setTestimonials([...storedTestimonials, ...apiFeedback]);
+
+        } catch (error) {
+            console.error('Error loading data:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const runHealthCheck = async () => {
+        try {
+            setHealthChecking(true);
+            const healthResults = await apiClient.testApiHealth();
+            setApiHealth(healthResults);
+        } catch (error) {
+            console.error('Health check failed:', error);
+            setApiHealth({
+                error: error.message,
+                timestamp: new Date().toISOString()
+            });
+        } finally {
+            setHealthChecking(false);
+        }
+    };
 
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleString('en-IN', {
@@ -73,79 +133,173 @@ const AdminPage = ({ onLogout }) => {
 
     const getFilteredData = () => {
         let data = [];
-        
+
         switch (filter) {
-            case 'forms':
-                data = analytics.formSubmissions || [];
+            case 'applications':
+                data = apiData.applications.map(item => ({ ...item, type: 'application', timestamp: item.createdAt || item.timestamp })) || [];
                 break;
-            case 'stored-forms':
+            case 'contacts':
+                data = apiData.contacts.map(item => ({ ...item, type: 'contact', timestamp: item.createdAt || item.timestamp })) || [];
+                break;
+            case 'feedback':
+                data = apiData.feedback.map(item => ({ ...item, type: 'feedback', timestamp: item.createdAt || item.timestamp })) || [];
+                break;
+            case 'reach-us':
+                data = apiData.reachUs.map(item => ({ ...item, type: 'reach-us', timestamp: item.createdAt || item.timestamp })) || [];
+                break;
+            case 'local-forms':
                 data = formSubmissions.map(item => ({ ...item, type: 'stored-form' })) || [];
                 break;
-            case 'whatsapp':
-                data = analytics.whatsappRedirects || [];
-                break;
-            case 'clicks':
-                data = analytics.buttonClicks || [];
-                break;
-            case 'pageviews':
-                data = analytics.pageViews || [];
+            case 'analytics':
+                data = [
+                    ...(analytics.formSubmissions || []).map(item => ({ ...item, type: 'form' })),
+                    ...(analytics.whatsappRedirects || []).map(item => ({ ...item, type: 'whatsapp' })),
+                    ...(analytics.buttonClicks || []).map(item => ({ ...item, type: 'click' })),
+                    ...(analytics.pageViews || []).map(item => ({ ...item, type: 'pageview' }))
+                ];
                 break;
             default:
                 data = [
-                    ...(analytics.formSubmissions || []).map(item => ({ ...item, type: 'form' })),
+                    ...(apiData.applications || []).map(item => ({ ...item, type: 'application', timestamp: item.createdAt })),
+                    ...(apiData.contacts || []).map(item => ({ ...item, type: 'contact', timestamp: item.createdAt })),
+                    ...(apiData.feedback || []).map(item => ({ ...item, type: 'feedback', timestamp: item.createdAt })),
+                    ...(apiData.reachUs || []).map(item => ({ ...item, type: 'reach-us', timestamp: item.createdAt })),
                     ...(formSubmissions || []).map(item => ({ ...item, type: 'stored-form' })),
+                    ...(analytics.formSubmissions || []).map(item => ({ ...item, type: 'form' })),
                     ...(analytics.whatsappRedirects || []).map(item => ({ ...item, type: 'whatsapp' })),
                     ...(analytics.buttonClicks || []).map(item => ({ ...item, type: 'click' })),
                     ...(analytics.pageViews || []).map(item => ({ ...item, type: 'pageview' }))
                 ];
         }
-        
-        return filterByDate(data).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+        return filterByDate(data).sort((a, b) => new Date(b.timestamp || b.createdAt) - new Date(a.timestamp || a.createdAt));
     };
 
     const stats = [
         {
-            title: 'Total Page Views',
-            value: filterByDate(analytics.pageViews || []).length,
-            icon: <FaEye className="w-6 h-6" />,
+            title: 'Job Applications',
+            value: apiData.applications.length,
+            icon: <FaBriefcase className="w-6 h-6" />,
             color: 'bg-blue-500'
         },
         {
-            title: 'Unique Visitors',
-            value: analytics.uniqueVisitorsCount || 0,
-            icon: <FaUsers className="w-6 h-6" />,
+            title: 'Contact Submissions',
+            value: apiData.contacts.length,
+            icon: <FaEnvelope className="w-6 h-6" />,
             color: 'bg-green-500'
         },
         {
-            title: 'Total Clicks',
-            value: filterByDate(analytics.buttonClicks || []).length,
-            icon: <FaMousePointer className="w-6 h-6" />,
+            title: 'Client Feedback',
+            value: apiData.feedback.length,
+            icon: <FaHeart className="w-6 h-6" />,
             color: 'bg-purple-500'
         },
         {
-            title: 'WhatsApp Redirects',
-            value: filterByDate(analytics.whatsappRedirects || []).length,
+            title: 'Reach Us Queries',
+            value: apiData.reachUs.length,
             icon: <FaWhatsapp className="w-6 h-6" />,
             color: 'bg-green-600'
         },
         {
-            title: 'Form Submissions',
+            title: 'Local Analytics',
             value: filterByDate(analytics.formSubmissions || []).length,
             icon: <FaWpforms className="w-6 h-6" />,
             color: 'bg-orange-500'
         },
         {
-            title: 'Stored Form Data',
+            title: 'Local Storage',
             value: filterByDate(formSubmissions || []).length,
-            icon: <FaEnvelope className="w-6 h-6" />,
+            icon: <FaGlobe className="w-6 h-6" />,
             color: 'bg-indigo-500'
         }
     ];
 
     const renderDataItem = (item) => {
         const baseClasses = "bg-white rounded-lg shadow-soft p-4 border-l-4";
-        
+
         switch (item.type) {
+            case 'application':
+                return (
+                    <div key={item.id} className={`${baseClasses} border-blue-500`}>
+                        <div className="flex items-start justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                                <FaBriefcase className="w-4 h-4 text-blue-500" />
+                                <span className="font-medium text-blue-700">Job Application (API)</span>
+                            </div>
+                            <span className="text-sm text-gray-500">{formatDate(item.timestamp || item.createdAt)}</span>
+                        </div>
+                        <div className="text-sm space-y-1">
+                            <p><strong>Name:</strong> {item.fullName}</p>
+                            <p><strong>Email:</strong> {item.email}</p>
+                            <p><strong>Phone:</strong> {item.phone}</p>
+                            <p><strong>Position:</strong> {item.position}</p>
+                            <p><strong>Experience:</strong> {item.yearsOfExperience}</p>
+                            <p><strong>Education:</strong> {item.education}</p>
+                            {item.coverLetter && <p><strong>Cover Letter:</strong> {item.coverLetter.substring(0, 100)}...</p>}
+                        </div>
+                    </div>
+                );
+
+            case 'contact':
+                return (
+                    <div key={item.id} className={`${baseClasses} border-green-500`}>
+                        <div className="flex items-start justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                                <FaEnvelope className="w-4 h-4 text-green-500" />
+                                <span className="font-medium text-green-700">Contact Form (API)</span>
+                            </div>
+                            <span className="text-sm text-gray-500">{formatDate(item.timestamp || item.createdAt)}</span>
+                        </div>
+                        <div className="text-sm space-y-1">
+                            <p><strong>Name:</strong> {item.fullName}</p>
+                            <p><strong>Email:</strong> {item.email}</p>
+                            <p><strong>Phone:</strong> {item.phone}</p>
+                            <p><strong>Service:</strong> {item.serviceRequired}</p>
+                            {item.budgetRange && <p><strong>Budget:</strong> {item.budgetRange}</p>}
+                            {item.projectTimeline && <p><strong>Timeline:</strong> {item.projectTimeline}</p>}
+                            {item.projectDescription && <p><strong>Description:</strong> {item.projectDescription.substring(0, 100)}...</p>}
+                        </div>
+                    </div>
+                );
+
+            case 'feedback':
+                return (
+                    <div key={item.id} className={`${baseClasses} border-purple-500`}>
+                        <div className="flex items-start justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                                <FaHeart className="w-4 h-4 text-purple-500" />
+                                <span className="font-medium text-purple-700">Client Feedback (API)</span>
+                            </div>
+                            <span className="text-sm text-gray-500">{formatDate(item.timestamp || item.createdAt)}</span>
+                        </div>
+                        <div className="text-sm space-y-1">
+                            <p><strong>Name:</strong> {item.name}</p>
+                            <p><strong>Designation:</strong> {item.designation}</p>
+                            <p><strong>Rating:</strong> {item.rating}/5 ⭐</p>
+                            <p><strong>Feedback:</strong> {item.feedback.substring(0, 100)}...</p>
+                        </div>
+                    </div>
+                );
+
+            case 'reach-us':
+                return (
+                    <div key={item.id} className={`${baseClasses} border-teal-500`}>
+                        <div className="flex items-start justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                                <FaWhatsapp className="w-4 h-4 text-teal-500" />
+                                <span className="font-medium text-teal-700">Reach Us Query (API)</span>
+                            </div>
+                            <span className="text-sm text-gray-500">{formatDate(item.timestamp || item.createdAt)}</span>
+                        </div>
+                        <div className="text-sm space-y-1">
+                            <p><strong>Name:</strong> {item.name}</p>
+                            <p><strong>Email:</strong> {item.email}</p>
+                            <p><strong>Phone:</strong> {item.phone}</p>
+                            <p><strong>Query:</strong> {item.query.substring(0, 100)}...</p>
+                        </div>
+                    </div>
+                );
+
             case 'form':
                 return (
                     <div key={item.id} className={`${baseClasses} border-orange-500`}>
@@ -251,31 +405,66 @@ const AdminPage = ({ onLogout }) => {
         }
     };
 
-    const saveTestimonial = (testimonialData) => {
-        const newTestimonial = {
-            id: editingTestimonial?.id || Date.now().toString(36) + Math.random().toString(36).substr(2),
-            ...testimonialData,
-            createdAt: editingTestimonial?.createdAt || new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-        };
+    const saveTestimonial = async (testimonialData) => {
+        try {
+            const feedbackData = {
+                feedback: testimonialData.about,
+                rating: testimonialData.rating,
+                name: testimonialData.name,
+                designation: testimonialData.post
+            };
 
-        let updatedTestimonials;
-        if (editingTestimonial) {
-            updatedTestimonials = testimonials.map(t => t.id === editingTestimonial.id ? newTestimonial : t);
-        } else {
-            updatedTestimonials = [...testimonials, newTestimonial];
+            let result;
+            if (editingTestimonial) {
+                // Update existing testimonial via API
+                result = await apiClient.updateFeedback(editingTestimonial.id, feedbackData);
+            } else {
+                // Create new testimonial via API
+                result = await apiClient.createFeedback(feedbackData);
+            }
+
+            // Also update local storage as backup
+            const newTestimonial = {
+                id: editingTestimonial?.id || result.id || Date.now().toString(36) + Math.random().toString(36).substr(2),
+                ...testimonialData,
+                createdAt: editingTestimonial?.createdAt || new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+
+            let updatedTestimonials;
+            if (editingTestimonial) {
+                updatedTestimonials = testimonials.map(t => t.id === editingTestimonial.id ? newTestimonial : t);
+            } else {
+                updatedTestimonials = [...testimonials, newTestimonial];
+            }
+
+            setTestimonials(updatedTestimonials);
+            localStorage.setItem('b4-testimonials', JSON.stringify(updatedTestimonials));
+            setShowTestimonialForm(false);
+            setEditingTestimonial(null);
+
+            alert('Testimonial saved successfully!');
+        } catch (error) {
+            console.error('Error saving testimonial:', error);
+            alert('Failed to save testimonial: ' + error.message);
         }
-
-        setTestimonials(updatedTestimonials);
-        localStorage.setItem('b4-testimonials', JSON.stringify(updatedTestimonials));
-        setShowTestimonialForm(false);
-        setEditingTestimonial(null);
     };
 
-    const deleteTestimonial = (id) => {
-        const updatedTestimonials = testimonials.filter(t => t.id !== id);
-        setTestimonials(updatedTestimonials);
-        localStorage.setItem('b4-testimonials', JSON.stringify(updatedTestimonials));
+    const deleteTestimonial = async (id) => {
+        try {
+            // Delete from API
+            await apiClient.deleteFeedback(id);
+
+            // Also remove from local storage
+            const updatedTestimonials = testimonials.filter(t => t.id !== id);
+            setTestimonials(updatedTestimonials);
+            localStorage.setItem('b4-testimonials', JSON.stringify(updatedTestimonials));
+
+            alert('Testimonial deleted successfully!');
+        } catch (error) {
+            console.error('Error deleting testimonial:', error);
+            alert('Failed to delete testimonial: ' + error.message);
+        }
     };
 
     const TestimonialForm = () => {
@@ -444,12 +633,13 @@ const AdminPage = ({ onLogout }) => {
                                     onChange={(e) => setFilter(e.target.value)}
                                     className="border border-gray-300 rounded-lg px-3 py-2 text-sm"
                                 >
-                                    <option value="all">All Activities</option>
-                                    <option value="forms">Form Submissions</option>
-                                    <option value="stored-forms">Stored Form Data</option>
-                                    <option value="whatsapp">WhatsApp Redirects</option>
-                                    <option value="clicks">Button Clicks</option>
-                                    <option value="pageviews">Page Views</option>
+                                    <option value="all">All Data</option>
+                                    <option value="applications">Job Applications (API)</option>
+                                    <option value="contacts">Contact Forms (API)</option>
+                                    <option value="feedback">Client Feedback (API)</option>
+                                    <option value="reach-us">Reach Us Queries (API)</option>
+                                    <option value="local-forms">Local Form Storage</option>
+                                    <option value="analytics">Analytics Data</option>
                                 </select>
                             </div>
                             <div>
@@ -467,6 +657,36 @@ const AdminPage = ({ onLogout }) => {
                             </div>
                         </div>
                         <div className="flex gap-2">
+                            <button
+                                onClick={loadData}
+                                disabled={loading}
+                                className="flex items-center gap-2 bg-green-500 hover:bg-green-600 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg transition-colors text-sm"
+                            >
+                                {loading ? (
+                                    <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                ) : (
+                                    <FaDownload className="w-4 h-4" />
+                                )}
+                                {loading ? 'Loading...' : 'Refresh Data'}
+                            </button>
+                            <button
+                                onClick={runHealthCheck}
+                                disabled={healthChecking}
+                                className="flex items-center gap-2 bg-purple-500 hover:bg-purple-600 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg transition-colors text-sm"
+                            >
+                                {healthChecking ? (
+                                    <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                ) : (
+                                    <FaHeart className="w-4 h-4" />
+                                )}
+                                {healthChecking ? 'Checking...' : 'API Health Check'}
+                            </button>
                             <button
                                 onClick={exportAnalytics}
                                 className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors text-sm"
@@ -509,6 +729,84 @@ const AdminPage = ({ onLogout }) => {
                         )}
                     </div>
                 </div>
+
+                {/* API Health Check Results */}
+                {apiHealth && (
+                    <div className="bg-white rounded-lg shadow-soft mt-8">
+                        <div className="p-6 border-b">
+                            <h2 className="text-lg font-semibold text-gray-800">
+                                API Health Check Results
+                            </h2>
+                            <p className="text-sm text-gray-600">
+                                Last checked: {new Date(apiHealth.timestamp).toLocaleString()}
+                            </p>
+                        </div>
+                        <div className="p-6">
+                            <div className="mb-4">
+                                <p className="text-sm font-medium text-gray-700">
+                                    Base URL: <span className="text-blue-600">{apiHealth.baseUrl}</span>
+                                </p>
+                            </div>
+
+                            {apiHealth.error ? (
+                                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                                    <p className="text-red-800 font-medium">Health Check Failed</p>
+                                    <p className="text-red-600 text-sm">{apiHealth.error}</p>
+                                </div>
+                            ) : (
+                                <div className="grid md:grid-cols-2 gap-4">
+                                    {Object.entries(apiHealth.endpoints || {}).map(([name, result]) => (
+                                        <div
+                                            key={name}
+                                            className={`border rounded-lg p-4 ${
+                                                result.available
+                                                    ? result.status === 200
+                                                        ? 'border-green-200 bg-green-50'
+                                                        : 'border-yellow-200 bg-yellow-50'
+                                                    : 'border-red-200 bg-red-50'
+                                            }`}
+                                        >
+                                            <div className="flex items-center justify-between mb-2">
+                                                <h3 className="font-medium text-gray-800 capitalize">
+                                                    {name.replace('-', ' ')}
+                                                </h3>
+                                                <span className={`text-xs px-2 py-1 rounded-full ${
+                                                    result.available
+                                                        ? result.status === 200
+                                                            ? 'bg-green-100 text-green-800'
+                                                            : 'bg-yellow-100 text-yellow-800'
+                                                        : 'bg-red-100 text-red-800'
+                                                }`}>
+                                                    {result.available ? 'Available' : 'Unavailable'}
+                                                </span>
+                                            </div>
+
+                                            <div className="text-sm text-gray-600">
+                                                {result.status ? (
+                                                    <>
+                                                        <p>Status: {result.status} {result.statusText}</p>
+                                                        {result.status === 404 && (
+                                                            <p className="text-yellow-600 mt-1">
+                                                                ⚠️ Endpoint exists but returns no data
+                                                            </p>
+                                                        )}
+                                                        {result.status === 200 && (
+                                                            <p className="text-green-600 mt-1">
+                                                                ✅ Endpoint working correctly
+                                                            </p>
+                                                        )}
+                                                    </>
+                                                ) : (
+                                                    <p className="text-red-600">Error: {result.error}</p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
 
                 {/* Testimonials Management */}
                 <div className="bg-white rounded-lg shadow-soft mt-8">

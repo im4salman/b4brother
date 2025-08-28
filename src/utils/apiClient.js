@@ -1,9 +1,7 @@
 // B4 Brothers API Client Utility
-// Use this to integrate backend APIs throughout your React app
+// Updated to integrate with real backend APIs
 
-const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://your-backend-domain.com/api'  // Update with your production backend URL
-  : 'http://localhost:5000/api';
+const API_BASE_URL = 'https://b4brother-backend.onrender.com';
 
 class B4BrothersAPI {
   constructor() {
@@ -43,22 +41,432 @@ class B4BrothersAPI {
     const config = {
       ...options,
       headers,
+      mode: 'cors', // Explicitly set CORS mode
     };
+
+    console.log(`🔍 API Request: ${options.method || 'GET'} ${url}`);
 
     try {
       const response = await fetch(url, config);
-      const data = await response.json();
+
+      console.log(`📡 API Response: ${response.status} ${response.statusText}`);
 
       if (!response.ok) {
-        throw new Error(data.error || `HTTP ${response.status}`);
+        const errorText = await response.text();
+        let errorMessage;
+
+        console.error(`❌ API Error Response (${response.status}):`, errorText);
+
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage = errorData.error || errorData.message || `HTTP ${response.status} - ${response.statusText}`;
+        } catch {
+          errorMessage = errorText || `HTTP ${response.status} - ${response.statusText}`;
+        }
+
+        // Add more specific error context
+        if (response.status === 404) {
+          errorMessage = `Endpoint not found: ${endpoint}. Please check if this API endpoint exists on the server.`;
+        } else if (response.status === 500) {
+          errorMessage = `Server error: ${errorMessage}`;
+        }
+
+        throw new Error(errorMessage);
       }
 
+      const data = await response.json();
+      console.log(`✅ API Success:`, data);
       return data;
     } catch (error) {
-      console.error('API Request failed:', error);
+      // Enhanced error handling for CORS and network issues
+      if (error.name === 'TypeError' && error.message === 'Failed to fetch') {
+        const corsError = new Error(`CORS/Network Error: Unable to connect to API server at ${this.baseURL}. This may be due to:\n1. CORS policy restrictions\n2. Network connectivity issues\n3. Server downtime\n\nFalling back to local storage.`);
+        corsError.isCorsError = true;
+        console.error(`🌐 CORS/Network Error for ${endpoint}:`, corsError.message);
+        throw corsError;
+      }
+
+      console.error(`🚨 API Request failed for ${endpoint}:`, error);
       throw error;
     }
   }
+
+  // =========================
+  // HEALTH CHECK & VALIDATION
+  // =========================
+
+  // Test API connectivity and available endpoints
+  async testApiHealth() {
+    const results = {
+      baseUrl: this.baseURL,
+      timestamp: new Date().toISOString(),
+      endpoints: {},
+      corsIssue: false
+    };
+
+    const endpointsToTest = [
+      { name: 'applications', path: '/api/applications' },
+      { name: 'feedback', path: '/api/feedback' },
+      { name: 'contact', path: '/api/contact' },
+      { name: 'reach-us', path: '/api/reach-us' }
+    ];
+
+    console.log('🏥 Starting API Health Check...');
+
+    for (const endpoint of endpointsToTest) {
+      try {
+        console.log(`🔍 Testing ${endpoint.name} endpoint...`);
+
+        // Try a simple GET request with CORS mode
+        const response = await fetch(`${this.baseURL}${endpoint.path}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+          mode: 'cors'
+        });
+
+        results.endpoints[endpoint.name] = {
+          status: response.status,
+          statusText: response.statusText,
+          available: response.status < 500, // 404 is "available" but empty, 500+ is server error
+          error: null
+        };
+
+        console.log(`✅ ${endpoint.name}: ${response.status} ${response.statusText}`);
+      } catch (error) {
+        const isCorsError = error.name === 'TypeError' && error.message === 'Failed to fetch';
+        if (isCorsError) {
+          results.corsIssue = true;
+        }
+
+        results.endpoints[endpoint.name] = {
+          status: null,
+          statusText: null,
+          available: false,
+          error: isCorsError ? 'CORS/Network Error' : error.message,
+          isCorsError
+        };
+        console.log(`❌ ${endpoint.name}: ${isCorsError ? 'CORS/Network Error' : error.message}`);
+      }
+    }
+
+    if (results.corsIssue) {
+      console.warn('🌐 CORS issues detected. The backend may need to configure CORS headers to allow requests from this origin.');
+    }
+
+    console.log('🏥 API Health Check Complete:', results);
+    return results;
+  }
+
+  // =========================
+  // JOB APPLICATION APIs
+  // =========================
+
+  // Create Job Application
+  async createApplication(applicationData) {
+    return this.request('/api/applications', {
+      method: 'POST',
+      body: JSON.stringify(applicationData),
+    });
+  }
+
+  // Get All Job Applications
+  async getAllApplications() {
+    return this.request('/api/applications');
+  }
+
+  // Get Single Job Application
+  async getApplication(id) {
+    return this.request(`/api/applications/${id}`);
+  }
+
+  // Update Job Application
+  async updateApplication(id, updates) {
+    return this.request(`/api/applications/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(updates),
+    });
+  }
+
+  // Delete Job Application
+  async deleteApplication(id) {
+    return this.request(`/api/applications/${id}`, {
+      method: 'DELETE',
+    });
+  }
+
+  // Submit Application via WhatsApp
+  async submitApplicationViaWhatsApp(applicationData) {
+    return this.request('/api/applications/whatsapp', {
+      method: 'POST',
+      body: JSON.stringify(applicationData),
+    });
+  }
+
+  // =========================
+  // FEEDBACK APIs
+  // =========================
+
+  // Create Feedback
+  async createFeedback(feedbackData) {
+    return this.request('/api/feedback', {
+      method: 'POST',
+      body: JSON.stringify(feedbackData),
+    });
+  }
+
+  // Get All Feedback
+  async getAllFeedback() {
+    return this.request('/api/feedback');
+  }
+
+  // Get Single Feedback
+  async getFeedback(id) {
+    return this.request(`/api/feedback/${id}`);
+  }
+
+  // Update Feedback
+  async updateFeedback(id, updates) {
+    return this.request(`/api/feedback/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(updates),
+    });
+  }
+
+  // Delete Feedback
+  async deleteFeedback(id) {
+    return this.request(`/api/feedback/${id}`, {
+      method: 'DELETE',
+    });
+  }
+
+  // =========================
+  // CONTACT APIs
+  // =========================
+
+  // Create Contact
+  async createContact(contactData) {
+    return this.request('/api/contact', {
+      method: 'POST',
+      body: JSON.stringify(contactData),
+    });
+  }
+
+  // Get All Contacts
+  async getAllContacts() {
+    return this.request('/api/contact');
+  }
+
+  // Get Single Contact
+  async getContact(id) {
+    return this.request(`/api/contact/${id}`);
+  }
+
+  // Update Contact
+  async updateContact(id, updates) {
+    return this.request(`/api/contact/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(updates),
+    });
+  }
+
+  // Delete Contact
+  async deleteContact(id) {
+    return this.request(`/api/contact/${id}`, {
+      method: 'DELETE',
+    });
+  }
+
+  // =========================
+  // REACH US APIs
+  // =========================
+
+  // Create Reach Us Entry
+  async createReachUs(reachUsData) {
+    return this.request('/api/reach-us', {
+      method: 'POST',
+      body: JSON.stringify(reachUsData),
+    });
+  }
+
+  // Get All Reach Us Entries
+  async getAllReachUs() {
+    return this.request('/api/reach-us');
+  }
+
+  // Get Single Reach Us Entry
+  async getReachUs(id) {
+    return this.request(`/api/reach-us/${id}`);
+  }
+
+  // Update Reach Us Entry
+  async updateReachUs(id, updates) {
+    return this.request(`/api/reach-us/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(updates),
+    });
+  }
+
+  // Delete Reach Us Entry
+  async deleteReachUs(id) {
+    return this.request(`/api/reach-us/${id}`, {
+      method: 'DELETE',
+    });
+  }
+
+  // =========================
+  // CONVENIENCE METHODS
+  // =========================
+
+  // Submit form data to appropriate endpoint based on type
+  async submitForm(formType, formData) {
+    try {
+      let result;
+      
+      switch (formType.toLowerCase()) {
+        case 'contact':
+        case 'contact_form':
+          // Map form data to contact API format
+          const contactData = {
+            fullName: formData.name || formData.fullName,
+            phone: formData.phone,
+            email: formData.email,
+            serviceRequired: formData.service || formData.serviceRequired || 'General Inquiry',
+            budgetRange: formData.budget || formData.budgetRange || '',
+            projectTimeline: formData.timeline || formData.projectTimeline || '',
+            projectDescription: formData.message || formData.query || formData.projectDescription
+          };
+          result = await this.createContact(contactData);
+          break;
+
+        case 'career':
+        case 'job_application':
+        case 'application':
+          // Map form data to application API format
+          const applicationData = {
+            fullName: formData.name || formData.fullName,
+            email: formData.email,
+            phone: formData.phone,
+            position: formData.position,
+            yearsOfExperience: formData.experience || formData.yearsOfExperience || '',
+            education: formData.education || '',
+            coverLetter: formData.message || formData.coverLetter || ''
+          };
+          result = await this.createApplication(applicationData);
+          break;
+
+        case 'feedback':
+        case 'testimonial':
+          // Map form data to feedback API format
+          const feedbackData = {
+            feedback: formData.feedback || formData.message || formData.review,
+            rating: formData.rating || 5,
+            name: formData.name,
+            designation: formData.designation || formData.position || ''
+          };
+          result = await this.createFeedback(feedbackData);
+          break;
+
+        case 'reach_us':
+        case 'reach-us':
+        case 'quick_contact':
+          // Map form data to reach-us API format
+          const reachUsData = {
+            name: formData.name,
+            phone: formData.phone,
+            email: formData.email,
+            query: formData.query || formData.message
+          };
+          result = await this.createReachUs(reachUsData);
+          break;
+
+        default:
+          throw new Error(`Unknown form type: ${formType}`);
+      }
+
+      return { success: true, data: result };
+    } catch (error) {
+      console.error(`Error submitting ${formType} form:`, error);
+      return { success: false, error: error.message };
+    }
+  }
+
+  // Handle WhatsApp submission with API backup
+  async submitFormWithWhatsApp(formType, formData, whatsappMessage) {
+    try {
+      // Try to submit to API first
+      const apiResult = await this.submitForm(formType, formData);
+      
+      // Store locally as backup
+      const submissionData = {
+        id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+        type: formType,
+        timestamp: new Date().toISOString(),
+        data: formData,
+        apiSubmitted: apiResult.success,
+        apiError: apiResult.error || null
+      };
+
+      const existingSubmissions = JSON.parse(localStorage.getItem('b4-form-submissions') || '[]');
+      existingSubmissions.push(submissionData);
+      localStorage.setItem('b4-form-submissions', JSON.stringify(existingSubmissions));
+
+      // Open WhatsApp regardless of API result
+      const whatsappNumber = '919733221114';
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(whatsappMessage)}`;
+      window.open(whatsappUrl, '_blank');
+
+      return {
+        success: true,
+        apiSubmitted: apiResult.success,
+        localStored: true,
+        message: apiResult.success 
+          ? 'Form submitted successfully to server and WhatsApp opened!'
+          : 'Form stored locally and WhatsApp opened. Server submission failed but data is safe.'
+      };
+    } catch (error) {
+      console.error('Error in submitFormWithWhatsApp:', error);
+      return {
+        success: false,
+        error: error.message
+      };
+    }
+  }
+
+  // =========================
+  // ADMIN METHODS (for future use)
+  // =========================
+
+  // Get all data for admin dashboard
+  async getAdminDashboard() {
+    try {
+      const [applications, contacts, feedback, reachUs] = await Promise.allSettled([
+        this.getAllApplications(),
+        this.getAllContacts(),
+        this.getAllFeedback(),
+        this.getAllReachUs()
+      ]);
+
+      return {
+        applications: applications.status === 'fulfilled' ? applications.value : [],
+        contacts: contacts.status === 'fulfilled' ? contacts.value : [],
+        feedback: feedback.status === 'fulfilled' ? feedback.value : [],
+        reachUs: reachUs.status === 'fulfilled' ? reachUs.value : [],
+        errors: {
+          applications: applications.status === 'rejected' ? applications.reason.message : null,
+          contacts: contacts.status === 'rejected' ? contacts.reason.message : null,
+          feedback: feedback.status === 'rejected' ? feedback.reason.message : null,
+          reachUs: reachUs.status === 'rejected' ? reachUs.reason.message : null,
+        }
+      };
+    } catch (error) {
+      console.error('Error fetching admin dashboard data:', error);
+      throw error;
+    }
+  }
+
+  // =========================
+  // LEGACY METHODS (maintained for compatibility)
+  // =========================
 
   // Generate visitor ID for analytics
   generateVisitorId() {
@@ -80,240 +488,65 @@ class B4BrothersAPI {
     return sessionId;
   }
 
-  // =========================
-  // PUBLIC API METHODS
-  // =========================
-
-  // Get server health
-  async getHealth() {
-    return this.request('/health');
-  }
-
-  // Submit contact form
-  async submitForm(type, formData) {
-    return this.request('/forms/submit', {
-      method: 'POST',
-      body: JSON.stringify({
-        type,
-        formData,
-        visitorId: this.generateVisitorId(),
-        sessionId: this.generateSessionId(),
-        source: 'website'
-      }),
-    });
-  }
-
-  // Track analytics event
+  // Track analytics event (local storage for now)
   async trackEvent(eventType, eventData) {
-    return this.request('/analytics/track', {
-      method: 'POST',
-      body: JSON.stringify({
-        visitorId: this.generateVisitorId(),
-        sessionId: this.generateSessionId(),
-        eventType,
-        eventData,
-        userAgent: navigator.userAgent,
-        referrer: document.referrer
-      }),
-    });
-  }
+    const event = {
+      visitorId: this.generateVisitorId(),
+      sessionId: this.generateSessionId(),
+      eventType,
+      eventData,
+      timestamp: new Date().toISOString(),
+      userAgent: navigator.userAgent,
+      referrer: document.referrer
+    };
 
-  // Get projects
-  async getProjects(filters = {}) {
-    const params = new URLSearchParams(filters);
-    return this.request(`/projects?${params}`);
-  }
+    const events = JSON.parse(localStorage.getItem('b4-analytics-events') || '[]');
+    events.push(event);
+    localStorage.setItem('b4-analytics-events', JSON.stringify(events));
 
-  // Get testimonials
-  async getTestimonials(filters = {}) {
-    const params = new URLSearchParams(filters);
-    return this.request(`/testimonials?${params}`);
-  }
-
-  // Get services
-  async getServices(filters = {}) {
-    const params = new URLSearchParams(filters);
-    return this.request(`/services?${params}`);
-  }
-
-  // Get configuration
-  async getConfig(category = '') {
-    const params = category ? `?category=${category}` : '';
-    return this.request(`/config${params}`);
-  }
-
-  // Get contact information
-  async getContactInfo(type = '') {
-    const params = type ? `?type=${type}` : '';
-    return this.request(`/contact-info${params}`);
-  }
-
-  // =========================
-  // ADMIN API METHODS
-  // =========================
-
-  // Admin login
-  async login(username, password) {
-    const response = await this.request('/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({ username, password }),
-    });
-
-    if (response.token) {
-      this.setToken(response.token);
-    }
-
-    return response;
-  }
-
-  // Change password
-  async changePassword(currentPassword, newPassword) {
-    return this.request('/auth/change-password', {
-      method: 'POST',
-      body: JSON.stringify({ currentPassword, newPassword }),
-    });
-  }
-
-  // Get analytics dashboard
-  async getAnalyticsDashboard(filters = {}) {
-    const params = new URLSearchParams(filters);
-    return this.request(`/analytics/dashboard?${params}`);
-  }
-
-  // Get form submissions
-  async getFormSubmissions(filters = {}) {
-    const params = new URLSearchParams(filters);
-    return this.request(`/forms/submissions?${params}`);
-  }
-
-  // Update form submission
-  async updateFormSubmission(id, updates) {
-    return this.request(`/forms/submissions/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify(updates),
-    });
-  }
-
-  // Create testimonial
-  async createTestimonial(testimonialData, imageFile = null) {
-    if (imageFile) {
-      // Handle file upload
-      const formData = new FormData();
-      Object.keys(testimonialData).forEach(key => {
-        formData.append(key, testimonialData[key]);
-      });
-      formData.append('image', imageFile);
-
-      return this.request('/testimonials', {
-        method: 'POST',
-        headers: {}, // Don't set Content-Type for FormData
-        body: formData,
-      });
-    } else {
-      return this.request('/testimonials', {
-        method: 'POST',
-        body: JSON.stringify(testimonialData),
-      });
-    }
-  }
-
-  // Update testimonial
-  async updateTestimonial(id, testimonialData, imageFile = null) {
-    if (imageFile) {
-      const formData = new FormData();
-      Object.keys(testimonialData).forEach(key => {
-        formData.append(key, testimonialData[key]);
-      });
-      formData.append('image', imageFile);
-
-      return this.request(`/testimonials/${id}`, {
-        method: 'PUT',
-        headers: {},
-        body: formData,
-      });
-    } else {
-      return this.request(`/testimonials/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify(testimonialData),
-      });
-    }
-  }
-
-  // Delete testimonial
-  async deleteTestimonial(id) {
-    return this.request(`/testimonials/${id}`, {
-      method: 'DELETE',
-    });
-  }
-
-  // Create project
-  async createProject(projectData, imageFiles = []) {
-    const formData = new FormData();
-    Object.keys(projectData).forEach(key => {
-      if (Array.isArray(projectData[key])) {
-        formData.append(key, JSON.stringify(projectData[key]));
-      } else {
-        formData.append(key, projectData[key]);
-      }
-    });
-
-    imageFiles.forEach((file, index) => {
-      formData.append('images', file);
-    });
-
-    return this.request('/projects', {
-      method: 'POST',
-      headers: {},
-      body: formData,
-    });
-  }
-
-  // Update project
-  async updateProject(id, projectData, imageFiles = []) {
-    const formData = new FormData();
-    Object.keys(projectData).forEach(key => {
-      if (Array.isArray(projectData[key])) {
-        formData.append(key, JSON.stringify(projectData[key]));
-      } else {
-        formData.append(key, projectData[key]);
-      }
-    });
-
-    imageFiles.forEach((file, index) => {
-      formData.append('images', file);
-    });
-
-    return this.request(`/projects/${id}`, {
-      method: 'PUT',
-      headers: {},
-      body: formData,
-    });
-  }
-
-  // Delete project
-  async deleteProject(id) {
-    return this.request(`/projects/${id}`, {
-      method: 'DELETE',
-    });
-  }
-
-  // Update configuration
-  async updateConfig(key, value, description = '', category = '') {
-    return this.request(`/config/${key}`, {
-      method: 'PUT',
-      body: JSON.stringify({ value, description, category }),
-    });
-  }
-
-  // Export data
-  async exportData(collections = 'all') {
-    const params = new URLSearchParams({ collections });
-    return this.request(`/export/data?${params}`);
+    return event;
   }
 }
 
 // Create singleton instance
 const apiClient = new B4BrothersAPI();
+
+// Add global test function for debugging (development only)
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+  window.testB4API = async () => {
+    console.log('🧪 Testing B4 Brothers API...');
+
+    try {
+      const health = await apiClient.testApiHealth();
+      console.log('🏥 Health Check Results:', health);
+
+      // Test a simple form submission
+      console.log('📝 Testing form submission...');
+      const testResult = await apiClient.submitForm('reach_us', {
+        name: 'Test User',
+        email: 'test@example.com',
+        phone: '+91 9999999999',
+        query: 'This is a test query from the debugging console'
+      });
+
+      console.log('📋 Form submission result:', testResult);
+
+      return {
+        health,
+        formTest: testResult,
+        message: 'All tests completed! Check console for details.'
+      };
+    } catch (error) {
+      console.error('❌ API Test failed:', error);
+      return {
+        error: error.message,
+        message: 'API test failed. Check console for details.'
+      };
+    }
+  };
+
+  console.log('🔧 Debug function available: window.testB4API()');
+}
 
 export default apiClient;
 
@@ -331,75 +564,65 @@ export { B4BrothersAPI };
 import apiClient from '../utils/apiClient';
 
 // In a component:
-const MyComponent = () => {
-  const [projects, setProjects] = useState([]);
-
-  useEffect(() => {
-    // Get projects on component mount
-    apiClient.getProjects({ category: 'Residential', limit: 6 })
-      .then(data => setProjects(data.projects))
-      .catch(error => console.error('Failed to load projects:', error));
-  }, []);
-
-  const handleFormSubmit = async (formData) => {
+const ContactForm = () => {
+  const handleSubmit = async (formData) => {
     try {
-      await apiClient.submitForm('contact', formData);
-      // Track the form submission
-      await apiClient.trackEvent('form_submission', { 
-        formType: 'contact', 
-        formData 
-      });
-      alert('Form submitted successfully!');
+      const result = await apiClient.submitForm('contact', formData);
+      if (result.success) {
+        alert('Contact form submitted successfully!');
+      } else {
+        alert('Failed to submit: ' + result.error);
+      }
     } catch (error) {
       alert('Failed to submit form: ' + error.message);
     }
   };
 
-  const handleWhatsAppClick = async () => {
-    await apiClient.trackEvent('whatsapp_redirect', {
-      message: 'Clicked WhatsApp button',
-      location: window.location.pathname
-    });
+  const handleSubmitWithWhatsApp = async (formData) => {
+    const whatsappMessage = `Contact Form Submission:
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Message: ${formData.message}`;
+
+    try {
+      const result = await apiClient.submitFormWithWhatsApp('contact', formData, whatsappMessage);
+      alert(result.message);
+    } catch (error) {
+      alert('Failed to submit form: ' + error.message);
+    }
   };
 
   return (
-    <div>
-      {projects.map(project => (
-        <div key={project.id}>{project.title}</div>
-      ))}
-    </div>
+    <form onSubmit={handleSubmit}>
+      // Form fields...
+    </form>
   );
 };
 
 // Admin usage:
 const AdminComponent = () => {
-  const [analytics, setAnalytics] = useState(null);
+  const [dashboardData, setDashboardData] = useState(null);
 
-  const loadAnalytics = async () => {
+  const loadDashboard = async () => {
     try {
-      const data = await apiClient.getAnalyticsDashboard({
-        startDate: '2024-01-01',
-        endDate: '2024-01-31'
-      });
-      setAnalytics(data);
+      const data = await apiClient.getAdminDashboard();
+      setDashboardData(data);
     } catch (error) {
-      console.error('Failed to load analytics:', error);
-    }
-  };
-
-  const handleLogin = async () => {
-    try {
-      await apiClient.login('admin', 'b4brothers2024');
-      loadAnalytics();
-    } catch (error) {
-      alert('Login failed: ' + error.message);
+      console.error('Failed to load dashboard:', error);
     }
   };
 
   return (
     <div>
-      <button onClick={handleLogin}>Login</button>
-      <button onClick={loadAnalytics}>Load Analytics</button>
+      <button onClick={loadDashboard}>Load Dashboard</button>
+      {dashboardData && (
+        <div>
+          <p>Applications: {dashboardData.applications.length}</p>
+          <p>Contacts: {dashboardData.contacts.length}</p>
+          <p>Feedback: {dashboardData.feedback.length}</p>
+        </div>
+      )}
     </div>
   );
 };

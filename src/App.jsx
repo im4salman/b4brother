@@ -181,6 +181,9 @@ function App() {
         
         <Footer/>
 
+        {/* API Status Indicator */}
+        <ApiStatus />
+
         {/* Development API Test Tool */}
         <ApiTest />
       </div>

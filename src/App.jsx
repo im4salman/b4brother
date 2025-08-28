@@ -179,6 +179,9 @@ function App() {
         </main>
         
         <Footer/>
+
+        {/* Development API Test Tool */}
+        <ApiTest />
       </div>
       </HelmetProvider>
     </ErrorBoundary>

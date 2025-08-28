@@ -533,12 +533,13 @@ const AdminPage = ({ onLogout }) => {
                                     onChange={(e) => setFilter(e.target.value)}
                                     className="border border-gray-300 rounded-lg px-3 py-2 text-sm"
                                 >
-                                    <option value="all">All Activities</option>
-                                    <option value="forms">Form Submissions</option>
-                                    <option value="stored-forms">Stored Form Data</option>
-                                    <option value="whatsapp">WhatsApp Redirects</option>
-                                    <option value="clicks">Button Clicks</option>
-                                    <option value="pageviews">Page Views</option>
+                                    <option value="all">All Data</option>
+                                    <option value="applications">Job Applications (API)</option>
+                                    <option value="contacts">Contact Forms (API)</option>
+                                    <option value="feedback">Client Feedback (API)</option>
+                                    <option value="reach-us">Reach Us Queries (API)</option>
+                                    <option value="local-forms">Local Form Storage</option>
+                                    <option value="analytics">Analytics Data</option>
                                 </select>
                             </div>
                             <div>

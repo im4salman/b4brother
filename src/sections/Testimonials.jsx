@@ -28,6 +28,7 @@ const Testimonials = () => {
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const [allTestimonials, setAllTestimonials] = useState(clients);
+  const [showFeedbackForm, setShowFeedbackForm] = useState(false);
   const len = allTestimonials.length;
 
   // Load stored testimonials and API feedback

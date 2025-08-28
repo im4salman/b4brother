@@ -29,13 +29,37 @@ const Testimonials = () => {
   const [allTestimonials, setAllTestimonials] = useState(clients);
   const len = allTestimonials.length;
 
-  // Load stored testimonials
+  // Load stored testimonials and API feedback
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem('b4-testimonials') || '[]');
-    if (stored.length > 0) {
+    loadTestimonials();
+  }, []);
+
+  const loadTestimonials = async () => {
+    try {
+      // Load from localStorage
+      const stored = JSON.parse(localStorage.getItem('b4-testimonials') || '[]');
+
+      // Load from API
+      const apiFeedback = await apiClient.getAllFeedback();
+
+      // Convert API feedback to testimonial format
+      const apiTestimonials = apiFeedback.map(feedback => ({
+        name: feedback.name,
+        about: feedback.feedback,
+        post: feedback.designation,
+        rating: feedback.rating
+      }));
+
+      // Combine all testimonials
+      const combinedTestimonials = [...clients, ...stored, ...apiTestimonials];
+      setAllTestimonials(combinedTestimonials);
+    } catch (error) {
+      console.error('Error loading testimonials:', error);
+      // Fallback to local data only
+      const stored = JSON.parse(localStorage.getItem('b4-testimonials') || '[]');
       setAllTestimonials([...clients, ...stored]);
     }
-  }, []);
+  };
 
   const next = useCallback(() => setIdx((i) => (i + 1) % len), [len]);
   const prev = useCallback(() => setIdx((i) => (i - 1 + len) % len), [len]);

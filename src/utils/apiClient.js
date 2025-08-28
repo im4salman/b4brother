@@ -128,7 +128,7 @@ class B4BrothersAPI {
           available: false,
           error: error.message
         };
-        console.log(`��� ${endpoint.name}: ${error.message}`);
+        console.log(`❌ ${endpoint.name}: ${error.message}`);
       }
     }
 
@@ -489,6 +489,43 @@ class B4BrothersAPI {
 
 // Create singleton instance
 const apiClient = new B4BrothersAPI();
+
+// Add global test function for debugging (development only)
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+  window.testB4API = async () => {
+    console.log('🧪 Testing B4 Brothers API...');
+
+    try {
+      const health = await apiClient.testApiHealth();
+      console.log('🏥 Health Check Results:', health);
+
+      // Test a simple form submission
+      console.log('📝 Testing form submission...');
+      const testResult = await apiClient.submitForm('reach_us', {
+        name: 'Test User',
+        email: 'test@example.com',
+        phone: '+91 9999999999',
+        query: 'This is a test query from the debugging console'
+      });
+
+      console.log('📋 Form submission result:', testResult);
+
+      return {
+        health,
+        formTest: testResult,
+        message: 'All tests completed! Check console for details.'
+      };
+    } catch (error) {
+      console.error('❌ API Test failed:', error);
+      return {
+        error: error.message,
+        message: 'API test failed. Check console for details.'
+      };
+    }
+  };
+
+  console.log('🔧 Debug function available: window.testB4API()');
+}
 
 export default apiClient;
 

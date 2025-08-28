@@ -198,8 +198,90 @@ const AdminPage = ({ onLogout }) => {
 
     const renderDataItem = (item) => {
         const baseClasses = "bg-white rounded-lg shadow-soft p-4 border-l-4";
-        
+
         switch (item.type) {
+            case 'application':
+                return (
+                    <div key={item.id} className={`${baseClasses} border-blue-500`}>
+                        <div className="flex items-start justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                                <FaBriefcase className="w-4 h-4 text-blue-500" />
+                                <span className="font-medium text-blue-700">Job Application (API)</span>
+                            </div>
+                            <span className="text-sm text-gray-500">{formatDate(item.timestamp || item.createdAt)}</span>
+                        </div>
+                        <div className="text-sm space-y-1">
+                            <p><strong>Name:</strong> {item.fullName}</p>
+                            <p><strong>Email:</strong> {item.email}</p>
+                            <p><strong>Phone:</strong> {item.phone}</p>
+                            <p><strong>Position:</strong> {item.position}</p>
+                            <p><strong>Experience:</strong> {item.yearsOfExperience}</p>
+                            <p><strong>Education:</strong> {item.education}</p>
+                            {item.coverLetter && <p><strong>Cover Letter:</strong> {item.coverLetter.substring(0, 100)}...</p>}
+                        </div>
+                    </div>
+                );
+
+            case 'contact':
+                return (
+                    <div key={item.id} className={`${baseClasses} border-green-500`}>
+                        <div className="flex items-start justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                                <FaEnvelope className="w-4 h-4 text-green-500" />
+                                <span className="font-medium text-green-700">Contact Form (API)</span>
+                            </div>
+                            <span className="text-sm text-gray-500">{formatDate(item.timestamp || item.createdAt)}</span>
+                        </div>
+                        <div className="text-sm space-y-1">
+                            <p><strong>Name:</strong> {item.fullName}</p>
+                            <p><strong>Email:</strong> {item.email}</p>
+                            <p><strong>Phone:</strong> {item.phone}</p>
+                            <p><strong>Service:</strong> {item.serviceRequired}</p>
+                            {item.budgetRange && <p><strong>Budget:</strong> {item.budgetRange}</p>}
+                            {item.projectTimeline && <p><strong>Timeline:</strong> {item.projectTimeline}</p>}
+                            {item.projectDescription && <p><strong>Description:</strong> {item.projectDescription.substring(0, 100)}...</p>}
+                        </div>
+                    </div>
+                );
+
+            case 'feedback':
+                return (
+                    <div key={item.id} className={`${baseClasses} border-purple-500`}>
+                        <div className="flex items-start justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                                <FaHeart className="w-4 h-4 text-purple-500" />
+                                <span className="font-medium text-purple-700">Client Feedback (API)</span>
+                            </div>
+                            <span className="text-sm text-gray-500">{formatDate(item.timestamp || item.createdAt)}</span>
+                        </div>
+                        <div className="text-sm space-y-1">
+                            <p><strong>Name:</strong> {item.name}</p>
+                            <p><strong>Designation:</strong> {item.designation}</p>
+                            <p><strong>Rating:</strong> {item.rating}/5 ⭐</p>
+                            <p><strong>Feedback:</strong> {item.feedback.substring(0, 100)}...</p>
+                        </div>
+                    </div>
+                );
+
+            case 'reach-us':
+                return (
+                    <div key={item.id} className={`${baseClasses} border-teal-500`}>
+                        <div className="flex items-start justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                                <FaWhatsapp className="w-4 h-4 text-teal-500" />
+                                <span className="font-medium text-teal-700">Reach Us Query (API)</span>
+                            </div>
+                            <span className="text-sm text-gray-500">{formatDate(item.timestamp || item.createdAt)}</span>
+                        </div>
+                        <div className="text-sm space-y-1">
+                            <p><strong>Name:</strong> {item.name}</p>
+                            <p><strong>Email:</strong> {item.email}</p>
+                            <p><strong>Phone:</strong> {item.phone}</p>
+                            <p><strong>Query:</strong> {item.query.substring(0, 100)}...</p>
+                        </div>
+                    </div>
+                );
+
             case 'form':
                 return (
                     <div key={item.id} className={`${baseClasses} border-orange-500`}>

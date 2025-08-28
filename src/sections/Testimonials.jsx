@@ -360,6 +360,15 @@ const Testimonials = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Feedback Form Modal */}
+      <FeedbackForm
+        isOpen={showFeedbackForm}
+        onClose={() => {
+          setShowFeedbackForm(false);
+          loadTestimonials(); // Reload testimonials after feedback submission
+        }}
+      />
     </section>
   );
 };

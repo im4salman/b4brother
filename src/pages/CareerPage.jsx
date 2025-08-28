@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useAnalytics } from '../contexts/AnalyticsContext';
+import apiClient from '../utils/apiClient';
 import {
     FaUsers,
     FaAward,

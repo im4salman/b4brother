@@ -43,25 +43,41 @@ class B4BrothersAPI {
       headers,
     };
 
+    console.log(`🔍 API Request: ${options.method || 'GET'} ${url}`);
+
     try {
       const response = await fetch(url, config);
-      
+
+      console.log(`📡 API Response: ${response.status} ${response.statusText}`);
+
       if (!response.ok) {
         const errorText = await response.text();
         let errorMessage;
+
+        console.error(`❌ API Error Response (${response.status}):`, errorText);
+
         try {
           const errorData = JSON.parse(errorText);
-          errorMessage = errorData.error || errorData.message || `HTTP ${response.status}`;
+          errorMessage = errorData.error || errorData.message || `HTTP ${response.status} - ${response.statusText}`;
         } catch {
-          errorMessage = errorText || `HTTP ${response.status}`;
+          errorMessage = errorText || `HTTP ${response.status} - ${response.statusText}`;
         }
+
+        // Add more specific error context
+        if (response.status === 404) {
+          errorMessage = `Endpoint not found: ${endpoint}. Please check if this API endpoint exists on the server.`;
+        } else if (response.status === 500) {
+          errorMessage = `Server error: ${errorMessage}`;
+        }
+
         throw new Error(errorMessage);
       }
 
       const data = await response.json();
+      console.log(`✅ API Success:`, data);
       return data;
     } catch (error) {
-      console.error('API Request failed:', error);
+      console.error(`🚨 API Request failed for ${endpoint}:`, error);
       throw error;
     }
   }

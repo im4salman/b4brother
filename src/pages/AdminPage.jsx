@@ -38,6 +38,8 @@ const AdminPage = ({ onLogout }) => {
         reachUs: []
     });
     const [loading, setLoading] = useState(true);
+    const [apiHealth, setApiHealth] = useState(null);
+    const [healthChecking, setHealthChecking] = useState(false);
 
     // Load data from localStorage and API
     useEffect(() => {

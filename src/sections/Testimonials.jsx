@@ -68,7 +68,11 @@ const Testimonials = () => {
         setAllTestimonials(combinedTestimonials);
         console.log('🎉 All testimonials combined:', combinedTestimonials.length);
       } catch (apiError) {
-        console.warn('⚠️ API feedback loading failed, using local data only:', apiError.message);
+        if (apiError.isCorsError || (apiError.name === 'TypeError' && apiError.message === 'Failed to fetch')) {
+          console.warn('🌐 CORS/Network issue loading API feedback. Using local data only.');
+        } else {
+          console.warn('⚠️ API feedback loading failed, using local data only:', apiError.message);
+        }
         // Continue with local data - this is not a critical error
       }
     } catch (error) {

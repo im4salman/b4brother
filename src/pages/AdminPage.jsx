@@ -82,6 +82,22 @@ const AdminPage = ({ onLogout }) => {
         }
     };
 
+    const runHealthCheck = async () => {
+        try {
+            setHealthChecking(true);
+            const healthResults = await apiClient.testApiHealth();
+            setApiHealth(healthResults);
+        } catch (error) {
+            console.error('Health check failed:', error);
+            setApiHealth({
+                error: error.message,
+                timestamp: new Date().toISOString()
+            });
+        } finally {
+            setHealthChecking(false);
+        }
+    };
+
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleString('en-IN', {
             year: 'numeric',

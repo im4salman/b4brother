@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { clients } from '../export';
 import { slideUpVariants, zoomInVariants } from './animation';
+import apiClient from '../utils/apiClient';
 import {
   FaChevronLeft,
   FaChevronRight,

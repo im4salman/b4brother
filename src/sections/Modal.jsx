@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useAnalytics } from '../contexts/AnalyticsContext';
+import apiClient from '../utils/apiClient';
 
 const whatsappNumber = '919733221114'; 
 // e.g. '919876543210' for +91 9876543210

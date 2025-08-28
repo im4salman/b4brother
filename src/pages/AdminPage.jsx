@@ -115,34 +115,46 @@ const AdminPage = ({ onLogout }) => {
 
     const getFilteredData = () => {
         let data = [];
-        
+
         switch (filter) {
-            case 'forms':
-                data = analytics.formSubmissions || [];
+            case 'applications':
+                data = apiData.applications.map(item => ({ ...item, type: 'application', timestamp: item.createdAt || item.timestamp })) || [];
                 break;
-            case 'stored-forms':
+            case 'contacts':
+                data = apiData.contacts.map(item => ({ ...item, type: 'contact', timestamp: item.createdAt || item.timestamp })) || [];
+                break;
+            case 'feedback':
+                data = apiData.feedback.map(item => ({ ...item, type: 'feedback', timestamp: item.createdAt || item.timestamp })) || [];
+                break;
+            case 'reach-us':
+                data = apiData.reachUs.map(item => ({ ...item, type: 'reach-us', timestamp: item.createdAt || item.timestamp })) || [];
+                break;
+            case 'local-forms':
                 data = formSubmissions.map(item => ({ ...item, type: 'stored-form' })) || [];
                 break;
-            case 'whatsapp':
-                data = analytics.whatsappRedirects || [];
-                break;
-            case 'clicks':
-                data = analytics.buttonClicks || [];
-                break;
-            case 'pageviews':
-                data = analytics.pageViews || [];
+            case 'analytics':
+                data = [
+                    ...(analytics.formSubmissions || []).map(item => ({ ...item, type: 'form' })),
+                    ...(analytics.whatsappRedirects || []).map(item => ({ ...item, type: 'whatsapp' })),
+                    ...(analytics.buttonClicks || []).map(item => ({ ...item, type: 'click' })),
+                    ...(analytics.pageViews || []).map(item => ({ ...item, type: 'pageview' }))
+                ];
                 break;
             default:
                 data = [
-                    ...(analytics.formSubmissions || []).map(item => ({ ...item, type: 'form' })),
+                    ...(apiData.applications || []).map(item => ({ ...item, type: 'application', timestamp: item.createdAt })),
+                    ...(apiData.contacts || []).map(item => ({ ...item, type: 'contact', timestamp: item.createdAt })),
+                    ...(apiData.feedback || []).map(item => ({ ...item, type: 'feedback', timestamp: item.createdAt })),
+                    ...(apiData.reachUs || []).map(item => ({ ...item, type: 'reach-us', timestamp: item.createdAt })),
                     ...(formSubmissions || []).map(item => ({ ...item, type: 'stored-form' })),
+                    ...(analytics.formSubmissions || []).map(item => ({ ...item, type: 'form' })),
                     ...(analytics.whatsappRedirects || []).map(item => ({ ...item, type: 'whatsapp' })),
                     ...(analytics.buttonClicks || []).map(item => ({ ...item, type: 'click' })),
                     ...(analytics.pageViews || []).map(item => ({ ...item, type: 'pageview' }))
                 ];
         }
-        
-        return filterByDate(data).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+        return filterByDate(data).sort((a, b) => new Date(b.timestamp || b.createdAt) - new Date(a.timestamp || a.createdAt));
     };
 
     const stats = [

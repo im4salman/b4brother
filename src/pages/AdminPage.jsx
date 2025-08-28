@@ -252,31 +252,66 @@ const AdminPage = ({ onLogout }) => {
         }
     };
 
-    const saveTestimonial = (testimonialData) => {
-        const newTestimonial = {
-            id: editingTestimonial?.id || Date.now().toString(36) + Math.random().toString(36).substr(2),
-            ...testimonialData,
-            createdAt: editingTestimonial?.createdAt || new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-        };
+    const saveTestimonial = async (testimonialData) => {
+        try {
+            const feedbackData = {
+                feedback: testimonialData.about,
+                rating: testimonialData.rating,
+                name: testimonialData.name,
+                designation: testimonialData.post
+            };
 
-        let updatedTestimonials;
-        if (editingTestimonial) {
-            updatedTestimonials = testimonials.map(t => t.id === editingTestimonial.id ? newTestimonial : t);
-        } else {
-            updatedTestimonials = [...testimonials, newTestimonial];
+            let result;
+            if (editingTestimonial) {
+                // Update existing testimonial via API
+                result = await apiClient.updateFeedback(editingTestimonial.id, feedbackData);
+            } else {
+                // Create new testimonial via API
+                result = await apiClient.createFeedback(feedbackData);
+            }
+
+            // Also update local storage as backup
+            const newTestimonial = {
+                id: editingTestimonial?.id || result.id || Date.now().toString(36) + Math.random().toString(36).substr(2),
+                ...testimonialData,
+                createdAt: editingTestimonial?.createdAt || new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+
+            let updatedTestimonials;
+            if (editingTestimonial) {
+                updatedTestimonials = testimonials.map(t => t.id === editingTestimonial.id ? newTestimonial : t);
+            } else {
+                updatedTestimonials = [...testimonials, newTestimonial];
+            }
+
+            setTestimonials(updatedTestimonials);
+            localStorage.setItem('b4-testimonials', JSON.stringify(updatedTestimonials));
+            setShowTestimonialForm(false);
+            setEditingTestimonial(null);
+
+            alert('Testimonial saved successfully!');
+        } catch (error) {
+            console.error('Error saving testimonial:', error);
+            alert('Failed to save testimonial: ' + error.message);
         }
-
-        setTestimonials(updatedTestimonials);
-        localStorage.setItem('b4-testimonials', JSON.stringify(updatedTestimonials));
-        setShowTestimonialForm(false);
-        setEditingTestimonial(null);
     };
 
-    const deleteTestimonial = (id) => {
-        const updatedTestimonials = testimonials.filter(t => t.id !== id);
-        setTestimonials(updatedTestimonials);
-        localStorage.setItem('b4-testimonials', JSON.stringify(updatedTestimonials));
+    const deleteTestimonial = async (id) => {
+        try {
+            // Delete from API
+            await apiClient.deleteFeedback(id);
+
+            // Also remove from local storage
+            const updatedTestimonials = testimonials.filter(t => t.id !== id);
+            setTestimonials(updatedTestimonials);
+            localStorage.setItem('b4-testimonials', JSON.stringify(updatedTestimonials));
+
+            alert('Testimonial deleted successfully!');
+        } catch (error) {
+            console.error('Error deleting testimonial:', error);
+            alert('Failed to delete testimonial: ' + error.message);
+        }
     };
 
     const TestimonialForm = () => {

@@ -83,6 +83,60 @@ class B4BrothersAPI {
   }
 
   // =========================
+  // HEALTH CHECK & VALIDATION
+  // =========================
+
+  // Test API connectivity and available endpoints
+  async testApiHealth() {
+    const results = {
+      baseUrl: this.baseURL,
+      timestamp: new Date().toISOString(),
+      endpoints: {}
+    };
+
+    const endpointsToTest = [
+      { name: 'applications', path: '/applications' },
+      { name: 'feedback', path: '/feedback' },
+      { name: 'contact', path: '/contact' },
+      { name: 'reach-us', path: '/reach-us' }
+    ];
+
+    console.log('🏥 Starting API Health Check...');
+
+    for (const endpoint of endpointsToTest) {
+      try {
+        console.log(`🔍 Testing ${endpoint.name} endpoint...`);
+
+        // Try a simple GET request
+        const response = await fetch(`${this.baseURL}${endpoint.path}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        results.endpoints[endpoint.name] = {
+          status: response.status,
+          statusText: response.statusText,
+          available: response.status < 500, // 404 is "available" but empty, 500+ is server error
+          error: null
+        };
+
+        console.log(`✅ ${endpoint.name}: ${response.status} ${response.statusText}`);
+      } catch (error) {
+        results.endpoints[endpoint.name] = {
+          status: null,
+          statusText: null,
+          available: false,
+          error: error.message
+        };
+        console.log(`��� ${endpoint.name}: ${error.message}`);
+      }
+    }
+
+    console.log('🏥 API Health Check Complete:', results);
+    return results;
+  }
+
+  // =========================
   // JOB APPLICATION APIs
   // =========================
 

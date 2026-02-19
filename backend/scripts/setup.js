@@ -189,7 +189,7 @@ async function setupDefaultConfigs(client) {
             },
             {
                 key: 'primary_email',
-                value: 'info@b4brothersinfratech.com',
+                value: 'info@b4brothers.com',
                 description: 'Primary contact email',
                 category: 'contact'
             },
@@ -292,7 +292,7 @@ async function setupContactInfo(client) {
             {
                 type: 'email',
                 label: 'Primary Email',
-                value: 'info@b4brothersinfratech.com',
+                value: 'info@b4brothers.com',
                 isPrimary: true,
                 isActive: true,
                 order: 1

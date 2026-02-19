@@ -159,7 +159,7 @@ INSERT INTO configs (key, value, category, created_at) VALUES
 ('site_title', '"B4 Brothers Infratech PVT LTD"', 'general', CURRENT_TIMESTAMP),
 ('site_tagline', '"Believe in best builds bold"', 'general', CURRENT_TIMESTAMP),
 ('primary_phone', '"+91 97332 21114"', 'contact', CURRENT_TIMESTAMP),
-('primary_email', '"info@b4brothersinfratech.com"', 'contact', CURRENT_TIMESTAMP),
+('primary_email', '"info@b4brothers.com"', 'contact', CURRENT_TIMESTAMP),
 ('whatsapp_number', '"919733221114"', 'contact', CURRENT_TIMESTAMP)
 ON CONFLICT (key) DO NOTHING;
 

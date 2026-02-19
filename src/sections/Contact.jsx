@@ -128,8 +128,8 @@ Please get in touch with me. Thank you!`;
     {
       icon: FaEnvelope,
       title: 'Email',
-      value: 'info@b4brothersinfratech.com',
-      link: 'mailto:info@b4brothersinfratech.com',
+      value: 'info@b4brothers.com',
+      link: 'mailto:info@b4brothers.com',
       description: 'Get detailed quotes'
     },
     {

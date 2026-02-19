@@ -37,7 +37,7 @@ INSERT INTO projects (id, title, description, category, location, area, duration
  '₹8.5 Crores',
  2023,
  'completed',
- '["Double-glass façade for energy efficiency", "High-speed elevators with smart controls", "Central air conditioning with zone control", "Rooftop garden and recreational area", "Underground parking for 200+ vehicles", "Conference facilities and business center"]',
+ '["Double-glass façade for energy efficiency", "High-speed elevators with smart controls", "Central air conditioning with zone control", "Rooftop garden and recreational area", "Underground parking for 40+ vehicles", "Conference facilities and business center"]',
  '["LEED Gold certified building", "Pre-leased to 95% capacity before completion", "Advanced fire safety and security systems", "Sustainable design reduces operational costs by 30%"]',
  'TechCorp Solutions',
  true, true, 2,
@@ -161,7 +161,7 @@ ON CONFLICT (key) DO NOTHING;
 
 INSERT INTO contact_info (type, label, value, is_primary, is_active, display_order, created_at) VALUES
 ('phone', 'Primary Phone', '+91 97332 21114', true, true, 1, CURRENT_TIMESTAMP),
-('email', 'Primary Email', 'info@b4brothersinfratech.com', true, true, 1, CURRENT_TIMESTAMP),
+('email', 'Primary Email', 'info@b4brothers.com', true, true, 1, CURRENT_TIMESTAMP),
 ('address', 'Head Office', 'West Bengal, India', true, true, 1, CURRENT_TIMESTAMP),
 ('social', 'WhatsApp', 'https://wa.me/919733221114', true, true, 1, CURRENT_TIMESTAMP)
 ON CONFLICT DO NOTHING;

@@ -318,7 +318,7 @@ ON CONFLICT (key) DO NOTHING;
 INSERT INTO contact_info (type, label, value, is_primary, is_active, display_order, created_at) VALUES
 ('phone', 'Primary Phone', '+91 97332 21114', true, true, 1, CURRENT_TIMESTAMP),
 ('phone', 'Office Phone', '+91 33 2345 6789', false, true, 2, CURRENT_TIMESTAMP),
-('email', 'Primary Email', 'info@b4brothersinfratech.com', true, true, 1, CURRENT_TIMESTAMP),
+('email', 'Primary Email', 'info@b4brothers.com', true, true, 1, CURRENT_TIMESTAMP),
 ('email', 'Projects Email', 'projects@b4brothersinfratech.com', false, true, 2, CURRENT_TIMESTAMP),
 ('email', 'Careers Email', 'careers@b4brothersinfratech.com', false, true, 3, CURRENT_TIMESTAMP),
 ('address', 'Head Office', '123 Construction Street, Kolkata, West Bengal 700001', true, true, 1, CURRENT_TIMESTAMP),

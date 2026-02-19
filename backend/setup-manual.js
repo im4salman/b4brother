@@ -268,7 +268,7 @@ async function setupBasicConfig(client) {
             { key: 'site_title', value: 'B4 Brothers Infratech PVT LTD', category: 'general' },
             { key: 'site_tagline', value: 'Believe in best builds bold', category: 'general' },
             { key: 'primary_phone', value: '+91 97332 21114', category: 'contact' },
-            { key: 'primary_email', value: 'info@b4brothersinfratech.com', category: 'contact' },
+            { key: 'primary_email', value: 'info@b4brothers.com', category: 'contact' },
             { key: 'whatsapp_number', value: '919733221114', category: 'contact' }
         ];
 

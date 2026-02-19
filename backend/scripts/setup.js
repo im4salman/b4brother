@@ -213,8 +213,8 @@ async function setupDefaultConfigs(client) {
                     wednesday: '9:00 AM - 6:00 PM',
                     thursday: '9:00 AM - 6:00 PM',
                     friday: '9:00 AM - 6:00 PM',
-                    saturday: '9:00 AM - 4:00 PM',
-                    sunday: 'Emergency Only'
+                    saturday: '9:00 AM - 6:00 PM',
+                    sunday: '9:00 AM - 6:00 PM'
                 },
                 description: 'Business operating hours',
                 category: 'contact'

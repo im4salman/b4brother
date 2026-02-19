@@ -59,8 +59,7 @@ export const allservices = [
     ],
     stats: [
       { label: "Sites Delivered", value: 40 },
-      { label: "Incident-Free Years", value: 3 },
-      { label: "Sqft Built (M)", value: 15 },
+      { label: "Incident-Free Years", value: 3 }
     ],
   },
   {

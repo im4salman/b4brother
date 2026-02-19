@@ -303,7 +303,7 @@ INSERT INTO services (id, name, description, short_description, category, featur
 INSERT INTO configs (key, value, description, category, created_at) VALUES
 ('company_description', '"Leading construction company in West Bengal specializing in residential, commercial, and industrial projects with over 5 years of experience."', 'Company description for SEO', 'general', CURRENT_TIMESTAMP),
 ('business_address', '"123 Construction Street, Kolkata, West Bengal 700001"', 'Business address', 'contact', CURRENT_TIMESTAMP),
-('business_hours', '{"monday": "9:00 AM - 6:00 PM", "tuesday": "9:00 AM - 6:00 PM", "wednesday": "9:00 AM - 6:00 PM", "thursday": "9:00 AM - 6:00 PM", "friday": "9:00 AM - 6:00 PM", "saturday": "9:00 AM - 4:00 PM", "sunday": "Emergency Only"}', 'Business operating hours', 'contact', CURRENT_TIMESTAMP),
+('business_hours', '{"monday": "9:00 AM - 6:00 PM", "tuesday": "9:00 AM - 6:00 PM", "wednesday": "9:00 AM - 6:00 PM", "thursday": "9:00 AM - 6:00 PM", "friday": "9:00 AM - 6:00 PM", "saturday": "9:00 AM - 6:00 PM", "sunday": "9:00 AM - 6:00 PM"}', 'Business operating hours', 'contact', CURRENT_TIMESTAMP),
 ('social_media', '{"facebook": "https://facebook.com/b4brothers", "instagram": "https://instagram.com/b4brothers", "linkedin": "https://linkedin.com/company/b4brothers", "youtube": "https://youtube.com/b4brothers", "twitter": "https://twitter.com/b4brothers"}', 'Social media links', 'social', CURRENT_TIMESTAMP),
 ('seo_keywords', '"construction company, building contractor, residential construction, commercial construction, West Bengal, Kolkata, renovation, interior design"', 'Default SEO keywords', 'seo', CURRENT_TIMESTAMP),
 ('notification_settings', '{"emailNotifications": true, "smsNotifications": false, "formSubmissionAlerts": true, "dailyReports": true}', 'Notification preferences', 'notifications', CURRENT_TIMESTAMP),
@@ -328,8 +328,8 @@ INSERT INTO contact_info (type, label, value, is_primary, is_active, display_ord
 ('social', 'Instagram', 'https://instagram.com/b4brothers', false, true, 3, CURRENT_TIMESTAMP),
 ('social', 'LinkedIn', 'https://linkedin.com/company/b4brothers', false, true, 4, CURRENT_TIMESTAMP),
 ('hours', 'Monday-Friday', '9:00 AM - 6:00 PM', true, true, 1, CURRENT_TIMESTAMP),
-('hours', 'Saturday', '9:00 AM - 4:00 PM', false, true, 2, CURRENT_TIMESTAMP),
-('hours', 'Sunday', 'Emergency Only', false, true, 3, CURRENT_TIMESTAMP)
+('hours', 'Saturday', '9:00 AM - 6:00 PM', false, true, 2, CURRENT_TIMESTAMP),
+('hours', 'Sunday', '9:00 AM - 6:00 PM', false, true, 3, CURRENT_TIMESTAMP)
 ON CONFLICT DO NOTHING;
 
 -- =========================

@@ -464,11 +464,11 @@ Please get in touch with me. Thank you!`;
                 </div>
                 <div className="flex justify-between">
                   <span className="text-secondary-600">Saturday</span>
-                  <span className="font-medium text-secondary-800">9:00 AM - 4:00 PM</span>
+                  <span className="font-medium text-secondary-800">9:00 AM - 6:00 PM</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-secondary-600">Sunday</span>
-                  <span className="font-medium text-secondary-800">Emergency Only</span>
+                  <span className="font-medium text-secondary-800">9:00 AM - 6:00 PM</span>
                 </div>
                 <div className="mt-4 pt-4 border-t border-gray-100">
                   <p className="text-xs text-secondary-500">

@@ -159,11 +159,11 @@ const Footer = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-400">Saturday</span>
-                  <span className="text-gray-300">9:00 AM - 4:00 PM</span>
+                  <span className="text-gray-300">9:00 AM - 6:00 PM</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-400">Sunday</span>
-                  <span className="text-gray-300">Emergency Only</span>
+                  <span className="text-gray-300">9:00 AM - 6:00 PM</span>
                 </div>
               </div>
             </div>
@@ -251,7 +251,7 @@ const Footer = () => {
               </div>
               <div className="grid grid-cols-2 gap-4 mt-4 text-center">
                 <div>
-                  <div className="text-lg font-bold text-primary-500">200+</div>
+                  <div className="text-lg font-bold text-primary-500">40+</div>
                   <div className="text-xs text-gray-400">Projects</div>
                 </div>
                 <div>
